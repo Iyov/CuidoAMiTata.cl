@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Scroll Smooth para navegación */
 html {
     scroll-behavior: smooth;
@@ -11,7 +15,7 @@ html {
     background: #1e293b;
 }
 ::-webkit-scrollbar-thumb {
-    background: #f97316;
+    background: #10b981;
     border-radius: 10px;
 }
 
@@ -28,7 +32,7 @@ html {
     height: 2px;
     bottom: -4px;
     left: 0;
-    background-color: #f97316;
+    background-color: #10b981;
     transition: width 0.3s;
 }
 .nav-link:hover::after {
@@ -49,7 +53,6 @@ dialog::backdrop {
     from { transform: scale(0.9); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
-
 
 /* Botón Back to Top */
 #backToTop {

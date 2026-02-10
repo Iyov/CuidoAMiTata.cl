@@ -9,13 +9,38 @@ CuidoAMiTata.cl es un sitio web diseñado para conectar familias con servicios d
 ## Tecnologías
 
 - HTML5
-- CSS3
+- CSS3 (Tailwind CSS)
 - JavaScript
 
-## Instalación
+## Instalación y Desarrollo
 
 1. Clona este repositorio
-2. Abre `index.html` en tu navegador
+```bash
+git clone https://github.com/Iyov/CuidoAMiTata.cl.git
+cd CuidoAMiTata.cl
+```
+
+2. Instala las dependencias
+```bash
+npm install
+```
+
+3. Compila el CSS para producción
+```bash
+npm run build:css
+```
+
+4. Para desarrollo con auto-recarga del CSS
+```bash
+npm run watch:css
+```
+
+5. Abre `index.html` en tu navegador o usa Live Server
+
+## Scripts Disponibles
+
+- `npm run build:css` - Compila y minifica el CSS de Tailwind para producción
+- `npm run watch:css` - Modo desarrollo con auto-recarga del CSS
 
 ## Estructura del Proyecto
 
@@ -23,11 +48,15 @@ CuidoAMiTata.cl es un sitio web diseñado para conectar familias con servicios d
 CuidoAMiTata.cl/
 ├── index.html
 ├── css/
-│   └── styles.css
+│   ├── input.css          # CSS fuente con directivas de Tailwind
+│   ├── output.css         # CSS compilado (generado automáticamente)
+│   ├── index.css          # CSS personalizado adicional
+│   └── font-awesome_6.5.1_all.min.css
 ├── js/
-│   └── main.js
+│   └── index.js
 ├── assets/
 │   └── images/
+├── tailwind.config.js     # Configuración de Tailwind
 └── README.md
 ```
 

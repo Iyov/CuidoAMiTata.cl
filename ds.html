@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuidoAMiTata.cl | Servicios de Cuidado para Adultos Mayores</title>
+    <meta name="description" content="Servicios profesionales de cuidado para adultos mayores en Chile. Gestión de medicación, bitácora diaria, seguimiento familiar y alertas de emergencia.">
+    <meta name="keywords" content="cuidado de adultos mayores, servicios geriátricos, cuidado de ancianos, cuidado de tatas, tercera edad, cuidado familiar, Chile">
+    <meta name="author" content="CuidoAMiTata.cl">
+    
+    <!-- Schema.org Structured Data para SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "CuidoAMiTata.cl",
+        "image": "https://cuidoamitata.cl/images/logo.png",
+        "description": "Servicios profesionales de cuidado para adultos mayores en Chile",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CL",
+            "addressRegion": "Región Metropolitana"
+        },
+        "telephone": "+56987629765",
+        "email": "cuidoamitata@gmail.com",
+        "url": "https://cuidoamitata.cl",
+        "priceRange": "$$",
+        "openingHours": "Mo-Su 00:00-23:59",
+        "sameAs": [
+            "https://www.facebook.com/CuidoAMiTata",
+            "https://www.instagram.com/CuidoAMiTata/",
+            "https://x.com/CuidoAMiTata",
+            "https://www.youtube.com/@CuidoAMiTata",
+            "https://www.tiktok.com/@cuidoamitata"
+        ]
+    }
+    </script>
+    
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="CuidoAMiTata.cl | Servicios de Cuidado para Adultos Mayores" />
+    <meta property="og:description" content="Servicios profesionales de cuidado para adultos mayores en Chile. Gestión de medicación, bitácora diaria y seguimiento familiar." />
+    <meta property="og:image" content="https://cuidoamitata.cl/images/og-image.jpg" />
+    <meta property="og:url" content="https://cuidoamitata.cl" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="css/ds.css?v=2026-02-10_1" />
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#4f46e5',
+                            DEFAULT: '#3730a3',
+                            dark: '#312e81'
+                        },
+                        secondary: {
+                            light: '#0ea5e9',
+                            DEFAULT: '#0369a1',
+                            dark: '#075985'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 font-sans transition-colors duration-300">
+    <!-- Barra de progreso de scroll -->
+    <div id="progressBar" class="h-1 bg-gradient-to-r from-primary to-secondary fixed top-0 left-0 z-50"></div>
+    
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/56987629765" target="_blank" class="whatsapp-float" aria-label="Comunícate con nosotros por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Comunícate con nosotros</span>
+    </a>
+    
+    <!-- Botón para volver arriba -->
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Header y navegación -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#inicio" class="flex items-center space-x-2 text-xl font-bold text-primary dark:text-primary-light">
+                    <i class="fas fa-heart-pulse text-2xl"></i>
+                    <span class="hidden sm:inline">CuidoAMiTata.cl</span>
+                </a>
+                
+                <!-- Menú principal para escritorio -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#nosotros" class="nav-link">Nosotros</a>
+                    <a href="#servicios" class="nav-link">Servicios</a>
+                    <a href="#testimonios" class="nav-link">Testimonios</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="#contacto" class="nav-link">Contacto</a>
+                    
+                    <!-- Selector de idioma -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang" class="text-sm font-medium">ES</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="languageDropdown" class="language-dropdown">
+                            <button class="language-option active" data-lang="es">Español</button>
+                            <button class="language-option" data-lang="en">English</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Selector de tema -->
+                    <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" aria-label="Cambiar tema">
+                        <i id="themeIcon" class="fas fa-moon"></i>
+                    </button>
+                </div>
+                
+                <!-- Botón de menú móvil -->
+                <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-800" aria-label="Abrir menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Menú móvil -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#nosotros" class="mobile-nav-link">Nosotros</a>
+                    <a href="#servicios" class="mobile-nav-link">Servicios</a>
+                    <a href="#testimonios" class="mobile-nav-link">Testimonios</a>
+                    <a href="#faq" class="mobile-nav-link">FAQ</a>
+                    <a href="#contacto" class="mobile-nav-link">Contacto</a>
+                    
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-globe text-gray-500"></i>
+                            <div class="flex space-x-1">
+                                <button class="language-option-mobile active" data-lang="es">ES</button>
+                                <button class="language-option-mobile" data-lang="en">EN</button>
+                            </div>
+                        </div>
+                        <button id="themeToggleMobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                            <i id="themeIconMobile" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Contenido principal -->
+    <main>
+        <!-- Sección de inicio/Hero -->
+        <section id="inicio" class="hero-section">
+            <div class="container mx-auto px-4 py-16 md:py-24 text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Cuidado Profesional</span>
+                    <br>
+                    <span class="text-gray-700 dark:text-gray-100">para Adultos Mayores</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Brindamos servicios especializados de cuidado para tus seres queridos con tecnología, compromiso y calidez humana.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#contacto" class="btn-primary">
+                        <i class="fas fa-heart mr-2"></i> Solicitar Servicios
+                    </a>
+                    <a href="#servicios" class="btn-secondary">
+                        <i class="fas fa-info-circle mr-2"></i> Conocer Más
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Nosotros -->
+        <section id="nosotros" class="section-container">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Nosotros</h2>
+                    <p class="section-subtitle">Comprometidos con el bienestar de los adultos mayores</p>
+                </div>
+                
+                <div class="flex flex-col lg:flex-row items-center gap-10">
+                    <div class="lg:w-1/2">
+                        <div class="bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl p-1">
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                                <div class="flex justify-center mb-6">
+                                    <div class="w-48 h-48 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
+                                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=500" alt="CuidoAMiTata - Cuidado de adultos mayores" class="w-full h-full object-cover" loading="lazy">
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">CuidoAMiTata.cl</h3>
+                                    <p class="text-primary dark:text-primary-light font-medium">Tu aliado en el cuidado familiar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2">
+                        <div class="space-y-6">
+                            <h3 class="text-3xl font-bold text-gray-800 dark:text-white">Quiénes Somos</h3>
+                            <p class="text-lg text-gray-600 dark:text-gray-300">
+                                Somos un equipo de profesionales comprometidos con mejorar la calidad de vida de los adultos mayores en Chile. Nuestra misión es brindar servicios de cuidado que combinen tecnología innovadora con calidez humana.
+                            </p>
+                            <p class="text-lg text-gray-600 dark:text-gray-300">
+                                Entendemos los desafíos que enfrentan las familias al cuidar a sus seres queridos de la tercera edad, por eso hemos creado soluciones integrales que facilitan este proceso y garantizan el bienestar de nuestros usuarios.
+                            </p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                                        <i class="fas fa-hand-holding-heart text-primary dark:text-primary-light"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-white">Cuidado Compasivo</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">Trato respetuoso y empático con cada persona.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                        <i class="fas fa-shield-alt text-secondary dark:text-secondary-light"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-white">Seguridad Garantizada</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">Protocolos de seguridad para emergencias y cuidados diarios.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                                        <i class="fas fa-users text-primary dark:text-primary-light"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-white">Enfoque Familiar</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">Involucramos a toda la familia en el proceso de cuidado.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                        <i class="fas fa-brain text-secondary dark:text-secondary-light"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-white">Tecnología Innovadora</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">Soluciones digitales para un cuidado más efectivo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section-container bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Nuestros Servicios</h2>
+                    <p class="section-subtitle">Soluciones integrales para el cuidado de adultos mayores</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Servicio 1 -->
+                    <div class="service-card">
+                        <div class="service-icon bg-gradient-to-br from-blue-500 to-purple-600">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Gestión de Medicación</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Alarmas y confirmación visual para que nunca falte una dosis. Seguimiento detallado de horarios y dosis.
+                        </p>
+                    </div>
+                    
+                    <!-- Servicio 2 -->
+                    <div class="service-card">
+                        <div class="service-icon bg-gradient-to-br from-green-500 to-teal-600">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Bitácora Diaria</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Registro de comidas, ánimo y actividades por parte del cuidador. Información actualizada para la familia.
+                        </p>
+                    </div>
+                    
+                    <!-- Servicio 3 -->
+                    <div class="service-card">
+                        <div class="service-icon bg-gradient-to-br from-orange-500 to-red-600">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Multi-Familiar</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Todos los hermanos e hijos conectados bajo una misma cuenta. Coordinación familiar simplificada.
+                        </p>
+                    </div>
+                    
+                    <!-- Servicio 4 -->
+                    <div class="service-card">
+                        <div class="service-icon bg-gradient-to-br from-pink-500 to-rose-600">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Botón de Pánico</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Alerta instantánea a toda la familia en caso de emergencia. Respuesta rápida cuando más se necesita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Testimonios -->
+        <section id="testimonios" class="section-container">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Testimonios</h2>
+                    <p class="section-subtitle">Lo que dicen las familias que confían en nosotros</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonio 1 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="flex items-center mb-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-primary/30">
+                                    <img src="https://images.unsplash.com/photo-1551836026-d5c2c5af78e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="María González - Hija de usuario" class="w-full h-full object-cover" loading="lazy">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">María González</h4>
+                                    <p class="text-primary dark:text-primary-light text-sm">Hija de usuario</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 italic">
+                                "El servicio de CuidoAMiTata me ha dado paz mental. Saber que mi mamá está bien cuidada y que puedo ver su bitácora diaria desde mi trabajo es invaluable. ¡Recomiendo totalmente sus servicios!"
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonio 2 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="flex items-center mb-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-primary/30">
+                                    <img src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="Carlos Rodríguez - Hijo de usuario" class="w-full h-full object-cover" loading="lazy">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">Carlos Rodríguez</h4>
+                                    <p class="text-primary dark:text-primary-light text-sm">Hijo de usuario</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 italic">
+                                "El botón de pánico ha sido un salvavidas en dos ocasiones. Mi papá tuvo caídas y la alerta llegó inmediatamente a todos en la familia. La respuesta fue rápida y profesional. Gracias CuidoAMiTata."
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonio 3 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="flex items-center mb-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-primary/30">
+                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="Ana Silva - Nieta de usuario" class="w-full h-full object-cover" loading="lazy">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">Ana Silva</h4>
+                                    <p class="text-primary dark:text-primary-light text-sm">Nieta de usuario</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 italic">
+                                "La gestión de medicación ha solucionado uno de nuestros mayores problemas. Mi abuelo nunca más se saltó una dosis. Además, toda la familia puede estar al tanto desde cualquier lugar. Excelente servicio."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Blog -->
+        <section class="section-container bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Blog y Consejos</h2>
+                    <p class="section-subtitle">Artículos útiles para el cuidado de adultos mayores</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Artículo 1 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Consejos para la medicación en adultos mayores" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Organización de Medicamentos para Adultos Mayores</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Aprende técnicas efectivas para gestionar medicamentos y evitar confusiones en las dosis.
+                            </p>
+                            <button class="blog-btn" data-blog="1">
+                                Leer más <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Artículo 2 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1581579431539-a7d3497d7c06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Actividades para adultos mayores" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Actividades Recreativas para Estimular la Mente</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Descubre actividades que promueven el bienestar cognitivo y emocional en la tercera edad.
+                            </p>
+                            <button class="blog-btn" data-blog="2">
+                                Leer más <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Artículo 3 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=300&q=80" alt="Adaptación del hogar para adultos mayores" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Adaptación del Hogar para Mayor Seguridad</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Guía práctica para hacer de tu hogar un lugar más seguro y accesible para adultos mayores.
+                            </p>
+                            <button class="blog-btn" data-blog="3">
+                                Leer más <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección FAQ -->
+        <section id="faq" class="section-container">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Preguntas Frecuentes</h2>
+                    <p class="section-subtitle">Resolvemos tus dudas sobre nuestros servicios</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo funciona el servicio de gestión de medicación?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Nuestro sistema de gestión de medicación incluye alarmas programadas para cada dosis y confirmación visual mediante fotos o check-ins. Los familiares reciben notificaciones cuando se administra cada medicamento y alertas si se omite alguna dosis.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Pueden varios familiares acceder a la información?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, nuestro sistema Multi-Familiar permite que hasta 5 familiares tengan acceso simultáneo a la bitácora diaria, historial de medicación y alertas. Cada familiar puede configurar sus preferencias de notificación según sus necesidades.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué sucede cuando se activa el botón de pánico?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Al activarse el botón de pánico, inmediatamente se envía una alerta a todos los familiares registrados vía SMS, llamada telefónica y notificación push en la app. También contactamos a servicios de emergencia si es necesario, según la configuración preestablecida.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué tipo de información incluye la bitácora diaria?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>La bitácora diaria registra: comidas (qué, cuándo y cuánto), estado de ánimo, actividades realizadas, visitas al baño, horas de sueño, y cualquier observación relevante del cuidador. Toda la información está disponible en tiempo real para la familia.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo puedo contratar los servicios de CuidoAMiTata?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Puedes contactarnos a través del formulario en nuestra sección de Contacto, por WhatsApp, o llamando al +56987629765. Programaremos una visita de evaluación sin costo para entender las necesidades específicas y ofrecerte un plan personalizado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Contacto -->
+        <section id="contacto" class="section-container bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Contáctanos</h2>
+                    <p class="section-subtitle">Estamos aquí para ayudarte</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- Información de contacto -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Conéctate con Nosotros</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-8">
+                            No dudes en contactarnos para cualquier consulta sobre nuestros servicios. Estamos disponibles para asesorarte y encontrar la mejor solución para el cuidado de tu ser querido.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <!-- Email -->
+                            <a href="mailto:cuidoamitata@gmail.com" class="contact-link">
+                                <div class="contact-icon bg-gradient-to-br from-red-500 to-pink-600">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">Email</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">cuidoamitata@gmail.com</p>
+                                </div>
+                            </a>
+                            
+                            <!-- WhatsApp -->
+                            <a href="https://wa.me/56987629765" target="_blank" class="contact-link">
+                                <div class="contact-icon bg-gradient-to-br from-green-500 to-emerald-600">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">WhatsApp</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">+56 9 8762 9765</p>
+                                </div>
+                            </a>
+                            
+                            <!-- Formulario de contacto -->
+                            <a href="#form-contacto" class="contact-link">
+                                <div class="contact-icon bg-gradient-to-br from-blue-500 to-indigo-600">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white">Formulario de Contacto</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Envíanos tus datos y te contactaremos</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <!-- Redes sociales -->
+                        <div class="mt-10">
+                            <h4 class="font-bold text-gray-800 dark:text-white mb-4">Síguenos en Redes Sociales</h4>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://www.instagram.com/CuidoAMiTata/" target="_blank" class="social-icon instagram" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.facebook.com/CuidoAMiTata/" target="_blank" class="social-icon facebook" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://x.com/CuidoAMiTata" target="_blank" class="social-icon twitter" aria-label="Twitter (X)">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="https://www.youtube.com/@CuidoAMiTata" target="_blank" class="social-icon youtube" aria-label="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://www.tiktok.com/@cuidoamitata" target="_blank" class="social-icon tiktok" aria-label="TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario de contacto -->
+                    <div id="form-contacto">
+                        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8">
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Formulario de Contacto</h3>
+                            <form id="contactForm" class="space-y-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre Completo</label>
+                                    <input type="text" id="name" required class="form-input">
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo Electrónico</label>
+                                    <input type="email" id="email" required class="form-input">
+                                </div>
+                                
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Teléfono</label>
+                                    <input type="tel" id="phone" required class="form-input">
+                                </div>
+                                
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mensaje</label>
+                                    <textarea id="message" rows="4" required class="form-input"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn-primary w-full">
+                                    <i class="fas fa-paper-plane mr-2"></i> Enviar Mensaje
+                                </button>
+                            </form>
+                            
+                            <div id="formMessage" class="mt-4 p-4 rounded-lg hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Logo y descripción -->
+                <div>
+                    <a href="#inicio" class="flex items-center space-x-2 text-xl font-bold text-white mb-4">
+                        <i class="fas fa-heart-pulse text-2xl text-primary-light"></i>
+                        <span>CuidoAMiTata.cl</span>
+                    </a>
+                    <p class="mb-6">
+                        Servicios profesionales de cuidado para adultos mayores en Chile. Combinamos tecnología innovadora con calidez humana para el bienestar de tus seres queridos.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/CuidoAMiTata/" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/CuidoAMiTata/" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/CuidoAMiTata" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter (X)">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@CuidoAMiTata" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Enlaces rápidos -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6">Enlaces Rápidos</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#nosotros" class="footer-link">Nosotros</a></li>
+                        <li><a href="#servicios" class="footer-link">Servicios</a></li>
+                        <li><a href="#testimonios" class="footer-link">Testimonios</a></li>
+                        <li><a href="#faq" class="footer-link">Preguntas Frecuentes</a></li>
+                        <li><a href="#contacto" class="footer-link">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Información de contacto -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6">Contacto</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mr-3 mt-1 text-primary-light"></i>
+                            <span>cuidoamitata@gmail.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fab fa-whatsapp mr-3 mt-1 text-primary-light"></i>
+                            <span>+56 9 8762 9765</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mr-3 mt-1 text-primary-light"></i>
+                            <span>Disponibles 24/7 para emergencias</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center">
+                <p>&copy; <span id="currentYear"></span> CuidoAMiTata.cl - Todos los derechos reservados.</p>
+                <p class="mt-2 text-sm text-gray-500">Diseñado con <i class="fas fa-heart text-red-500 mx-1"></i> para el cuidado de adultos mayores en Chile.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal para artículos del blog -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-modal-content">
+            <button class="blog-modal-close" aria-label="Cerrar modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="blogModalBody"></div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/ds.js?v=2026-02-10_1"></script>
+</body>
+</html>

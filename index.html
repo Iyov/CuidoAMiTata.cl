@@ -1,38 +1,202 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
+    <!-- Meta Tags Básicos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CuidoAMiTata | Gestión Colaborativa para el Cuidado de Abuelos</title>
-    <meta name="description" content="La aplicación líder en Chile para conectar familias y cuidadores de adultos mayores. Gestiona medicamentos, bitácoras y bienestar en tiempo real." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
-    <meta property="og:title" content="CuidoAMiTata - Cuidado con Amor" />
-    <meta property="og:description" content="Organiza el cuidado de tu tata con nuestra App y Web." />
-    <meta property="og:url" content="https://cuidoamitata.cl" />
+    <!-- SEO Meta Tags -->
+    <title>CuidoAMiTata | Cuidado Profesional de Adultos Mayores en Chile</title>
+    <meta name="description" content="Plataforma líder en Chile para el cuidado de adultos mayores. Gestión de medicamentos, bitácora diaria, alertas familiares y botón de pánico. Conecta familias con cuidadores profesionales." />
+    <meta name="keywords" content="cuidado adultos mayores chile, cuidado ancianos, cuidadores profesionales, gestión medicamentos, bitácora cuidado, alerta familiar, botón pánico, eldercare chile, cuidado tercera edad" />
+    <meta name="author" content="CuidoAMiTata" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
     <link rel="canonical" href="https://cuidoamitata.cl" />
-
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cuidoamitata.cl" />
+    <meta property="og:title" content="CuidoAMiTata - Cuidado Profesional de Adultos Mayores en Chile" />
+    <meta property="og:description" content="Plataforma líder para conectar familias con cuidadores profesionales. Gestión de medicamentos, bitácora diaria y alertas en tiempo real." />
+    <meta property="og:image" content="https://cuidoamitata.cl/img/CuidoAMiTata_Logo_500.png" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="500" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content="CuidoAMiTata" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://cuidoamitata.cl" />
+    <meta name="twitter:title" content="CuidoAMiTata - Cuidado Profesional de Adultos Mayores" />
+    <meta name="twitter:description" content="Plataforma líder en Chile para el cuidado de adultos mayores con tecnología innovadora." />
+    <meta name="twitter:image" content="https://cuidoamitata.cl/img/CuidoAMiTata_Logo_500.png" />
+    <meta name="twitter:site" content="@CuidoAMiTata" />
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="CL" />
+    <meta name="geo.placename" content="Chile" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#10b981" />
+    <meta name="msapplication-TileColor" content="#10b981" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/CuidoAMiTata_Logo_500.png" />
+    <link rel="apple-touch-icon" href="img/CuidoAMiTata_Logo_500.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/font-awesome_6.5.1_all.min.css" />
     <link rel="stylesheet" href="css/output.css?v=2026-02-10_4">
     <link rel="stylesheet" href="css/index.css?v=2026-02-10_1">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Structured Data - Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
+      "@type": "Organization",
       "name": "CuidoAMiTata",
-      "operatingSystem": "Web, Android, iOS",
-      "applicationCategory": "HealthApplication",
-      "description": "Sistema de gestión para el cuidado de adultos mayores en Chile.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "CLP"
+      "alternateName": "Cuido A Mi Tata",
+      "url": "https://cuidoamitata.cl",
+      "logo": "https://cuidoamitata.cl/img/CuidoAMiTata_Logo_500.png",
+      "description": "Plataforma líder en Chile para el cuidado profesional de adultos mayores",
+      "foundingDate": "2026",
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "CL",
+          "addressRegion": "Chile"
+        }
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+56-9-8762-9765",
+        "contactType": "customer service",
+        "email": "cuidoamitata@gmail.com",
+        "availableLanguage": ["Spanish", "English"],
+        "areaServed": "CL"
+      },
+      "sameAs": [
+        "https://www.instagram.com/CuidoAMiTata/",
+        "https://www.facebook.com/CuidoAMiTata/",
+        "https://www.youtube.com/@CuidoAMiTata",
+        "https://www.tiktok.com/@cuidoamitata",
+        "https://x.com/CuidoAMiTata"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CuidoAMiTata",
+      "url": "https://cuidoamitata.cl",
+      "description": "Plataforma de gestión para el cuidado de adultos mayores en Chile",
+      "inLanguage": ["es", "en"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://cuidoamitata.cl/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
       }
+    }
+    </script>
+    
+    <!-- Structured Data - Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Cuidado de Adultos Mayores",
+      "provider": {
+        "@type": "Organization",
+        "name": "CuidoAMiTata"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Chile"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de Cuidado",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gestión de Medicación",
+              "description": "Sistema de alarmas y confirmación visual para administración de medicamentos"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Bitácora Diaria",
+              "description": "Registro completo de comidas, ánimo y actividades del adulto mayor"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Acceso Multi-Familiar",
+              "description": "Todos los familiares conectados bajo una misma cuenta"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Botón de Pánico",
+              "description": "Alerta instantánea a toda la familia en caso de emergencia"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Structured Data - BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://cuidoamitata.cl"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Nosotros",
+          "item": "https://cuidoamitata.cl#nosotros"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Servicios",
+          "item": "https://cuidoamitata.cl#servicios"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Contacto",
+          "item": "https://cuidoamitata.cl#contacto"
+        }
+      ]
     }
     </script>
 </head>
 <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
-
     <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-500 to-green-500 z-[100] transition-all duration-150 shadow-lg" style="width: 0%;"></div>
 
     <nav class="fixed top-1 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm shadow-md z-50">
@@ -85,11 +249,11 @@
         </div>
     </nav>
 
-    <section id="nosotros" class="pt-32 pb-20 px-4">
+    <section id="nosotros" class="pt-32 pb-20 px-4" itemscope itemtype="https://schema.org/AboutPage">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-emerald-500" data-key="about-title">Cuidamos a quienes más nos cuidaron</h1>
-                <p class="text-lg mb-8 text-slate-600 dark:text-slate-400" data-key="about-desc">
+            <div itemprop="mainContentOfPage">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-emerald-500" data-key="about-title" itemprop="headline">Cuidamos a quienes más nos cuidaron</h1>
+                <p class="text-lg mb-8 text-slate-600 dark:text-slate-400" data-key="about-desc" itemprop="description">
                     Somos una plataforma chilena nacida para devolver la tranquilidad a las familias. Conectamos a hijos, nietos y cuidadores en un ecosistema digital transparente para el bienestar de nuestros tatas.
                 </p>
                 <div class="flex gap-4">

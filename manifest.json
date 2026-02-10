@@ -1,0 +1,24 @@
+{
+  "name": "CuidoAMiTata - Cuidado de Adultos Mayores",
+  "short_name": "CuidoAMiTata",
+  "description": "Plataforma líder en Chile para el cuidado profesional de adultos mayores",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10b981",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/CuidoAMiTata_Logo_500.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle", "medical"],
+  "lang": "es-CL",
+  "dir": "ltr",
+  "scope": "/",
+  "related_applications": [],
+  "prefer_related_applications": false
+}

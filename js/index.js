@@ -125,6 +125,12 @@ function setupEventListeners() {
         backToTop.addEventListener('click', scrollToTop);
     }
     
+    // Formulario de contacto
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactForm);
+    }
+    
     // Scroll
     window.addEventListener('scroll', handleScroll);
 }
@@ -241,4 +247,106 @@ function openBlog(id) {
         `;
         modal.showModal();
     }
+}
+
+
+// Manejo del formulario de contacto
+function handleContactForm(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const btnText = document.getElementById('btnText');
+    const btnLoading = document.getElementById('btnLoading');
+    const formMessage = document.getElementById('formMessage');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    // Obtener datos del formulario
+    const formData = {
+        nombre: form.nombre.value.trim(),
+        email: form.email.value.trim(),
+        mensaje: form.mensaje.value.trim()
+    };
+    
+    // Validación básica
+    if (!formData.nombre || !formData.email || !formData.mensaje) {
+        showFormMessage('Por favor completa todos los campos', 'error');
+        return;
+    }
+    
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+        showFormMessage('Por favor ingresa un email válido', 'error');
+        return;
+    }
+    
+    // Mostrar estado de carga
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+    submitBtn.disabled = true;
+    formMessage.classList.add('hidden');
+    
+    // Simular envío (en producción, aquí harías una llamada a tu backend o servicio de email)
+    setTimeout(() => {
+        // Aquí puedes integrar con servicios como:
+        // - FormSubmit.co
+        // - EmailJS
+        // - Tu propio backend
+        // - Google Forms
+        
+        // Por ahora, simulamos éxito
+        const success = true;
+        
+        if (success) {
+            showFormMessage(
+                currentLang === 'es' 
+                    ? '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.' 
+                    : 'Message sent successfully! We will contact you soon.',
+                'success'
+            );
+            form.reset();
+            
+            // Enviar a WhatsApp como alternativa
+            const whatsappMessage = `Hola, soy ${formData.nombre}. ${formData.mensaje}`;
+            const whatsappUrl = `https://wa.me/56987629765?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Opcional: abrir WhatsApp después de 2 segundos
+            setTimeout(() => {
+                if (confirm(currentLang === 'es' 
+                    ? '¿Deseas continuar la conversación por WhatsApp?' 
+                    : 'Would you like to continue the conversation on WhatsApp?')) {
+                    window.open(whatsappUrl, '_blank');
+                }
+            }, 2000);
+        } else {
+            showFormMessage(
+                currentLang === 'es'
+                    ? 'Hubo un error al enviar el mensaje. Por favor intenta nuevamente.'
+                    : 'There was an error sending the message. Please try again.',
+                'error'
+            );
+        }
+        
+        // Restaurar botón
+        btnText.classList.remove('hidden');
+        btnLoading.classList.add('hidden');
+        submitBtn.disabled = false;
+    }, 1500);
+}
+
+function showFormMessage(message, type) {
+    const formMessage = document.getElementById('formMessage');
+    formMessage.textContent = message;
+    formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+    
+    if (type === 'success') {
+        formMessage.classList.add('bg-green-100', 'text-green-700');
+    } else {
+        formMessage.classList.add('bg-red-100', 'text-red-700');
+    }
+    
+    // Ocultar mensaje después de 5 segundos
+    setTimeout(() => {
+        formMessage.classList.add('hidden');
+    }, 5000);
 }

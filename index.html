@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CuidoAMiTata | Gestión Colaborativa para el Cuidado de Abuelos</title>
+    <meta name="description" content="La aplicación líder en Chile para conectar familias y cuidadores de adultos mayores. Gestiona medicamentos, bitácoras y bienestar en tiempo real." />
+    
+    <meta property="og:title" content="CuidoAMiTata - Cuidado con Amor" />
+    <meta property="og:description" content="Organiza el cuidado de tu tata con nuestra App y Web." />
+    <meta property="og:url" content="https://cuidoamitata.cl" />
+    <link rel="canonical" href="https://cuidoamitata.cl" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/font-awesome_6.5.1_all.min.css" />
+    <link rel="stylesheet" href="index.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CuidoAMiTata",
+      "operatingSystem": "Web, Android, iOS",
+      "applicationCategory": "HealthApplication",
+      "description": "Sistema de gestión para el cuidado de adultos mayores en Chile.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CLP"
+      }
+    }
+    </script>
+</head>
+<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-orange-500 z-[100] transition-all duration-150"></div>
+
+    <nav class="fixed top-0 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" onclick="scrollToTop()" class="text-2xl font-bold flex items-center gap-2 hover:text-orange-500 transition">
+                <i class="fas fa-code"></i> <span class="hidden sm:inline">CuidoAMiTata</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-gap-6 gap-6">
+                <a href="#nosotros" class="nav-link" data-key="nav-about">Nosotros</a>
+                <a href="#servicios" class="nav-link" data-key="nav-services">Servicios</a>
+                <a href="#testimonios" class="nav-link" data-key="nav-testimonials">Testimonios</a>
+                <a href="#faq" class="nav-link" data-key="nav-faq">FAQ</a>
+                <a href="#contacto" class="nav-link" data-key="nav-contact">Contacto</a>
+                
+                <div class="flex items-center border-l pl-4 gap-4">
+                    <button id="theme-toggle" class="p-2 hover:text-orange-500"><i class="fas fa-moon"></i></button>
+                    <div class="relative group">
+                        <button class="p-2 hover:text-orange-500"><i class="fas fa-globe"></i></button>
+                        <div class="absolute right-0 mt-2 bg-white dark:bg-slate-800 shadow-xl rounded-md hidden group-hover:block border dark:border-slate-700">
+                            <button onclick="changeLang('es')" class="block px-4 py-2 hover:bg-orange-100 dark:hover:bg-slate-700 w-full text-left">Español</button>
+                            <button onclick="changeLang('en')" class="block px-4 py-2 hover:bg-orange-100 dark:hover:bg-slate-700 w-full text-left">English</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="md:hidden text-2xl" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <section id="nosotros" class="pt-32 pb-20 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-orange-500" data-key="about-title">Cuidamos a quienes más nos cuidaron</h1>
+                <p class="text-lg mb-8 text-slate-600 dark:text-slate-400" data-key="about-desc">
+                    Somos una plataforma chilena nacida para devolver la tranquilidad a las familias. Conectamos a hijos, nietos y cuidadores en un ecosistema digital transparente para el bienestar de nuestros tatas.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#contacto" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-bold transition" data-key="cta-contact">Empezar ahora</a>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <img src="img/CuidoAMiTata_Logo_500.png" alt="Cuidado de ancianos" class="rounded-full shadow-2xl border-8 border-orange-500/20 object-cover w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-50 dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center" data-key="blog-title">Consejos para el Cuidado</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition" onclick="openBlog(1)">
+                    <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=400" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2" data-key="blog1-h">Alimentación Senior</h3>
+                        <p class="text-sm opacity-70" data-key="blog1-p">Claves para una nutrición balanceada en la tercera edad.</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition" onclick="openBlog(2)">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2" data-key="blog2-h">Salud Mental</h3>
+                        <p class="text-sm opacity-70" data-key="blog2-p">Actividades para mantener la mente activa y feliz.</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition" onclick="openBlog(3)">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=400" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2" data-key="blog3-h">Primeros Auxilios</h3>
+                        <p class="text-sm opacity-70" data-key="blog3-p">Qué hacer ante caídas o emergencias domésticas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <dialog id="blog-modal" class="rounded-2xl p-0 w-11/12 max-w-2xl bg-white dark:bg-slate-800 backdrop:bg-black/50 text-slate-900 dark:text-white">
+        <div id="blog-content" class="p-8"></div>
+        <button onclick="document.getElementById('blog-modal').close()" class="absolute top-4 right-4 text-2xl">&times;</button>
+    </dialog>
+
+    <section id="servicios" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center" data-key="nav-services">Servicios</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 hover:border-orange-500 transition">
+                    <i class="fas fa-pills text-3xl text-orange-500 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2" data-key="serv1-t">Gestión de Medicación</h3>
+                    <p class="text-sm opacity-80" data-key="serv1-d">Alarmas y confirmación visual para que nunca falte una dosis.</p>
+                </div>
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 hover:border-orange-500 transition">
+                    <i class="fas fa-calendar-check text-3xl text-orange-500 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2" data-key="serv2-t">Bitácora Diaria</h3>
+                    <p class="text-sm opacity-80" data-key="serv2-d">Registro de comidas, ánimo y actividades por parte del cuidador.</p>
+                </div>
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 hover:border-orange-500 transition">
+                    <i class="fas fa-users text-3xl text-orange-500 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2" data-key="serv3-t">Multi-Familiar</h3>
+                    <p class="text-sm opacity-80" data-key="serv3-d">Todos los hermanos e hijos conectados bajo una misma cuenta.</p>
+                </div>
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 hover:border-orange-500 transition">
+                    <i class="fas fa-phone-alt text-3xl text-orange-500 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2" data-key="serv4-t">Botón de Pánico</h3>
+                    <p class="text-sm opacity-80" data-key="serv4-d">Alerta instantánea a toda la familia en caso de emergencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="py-20 bg-slate-50 dark:bg-slate-800/50 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center" data-key="nav-testimonials">Testimonios</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md">
+                    <img src="https://i.pravatar.cc/100?u=1" class="w-16 h-16 rounded-full mb-4 mx-auto border-2 border-orange-500">
+                    <p class="italic text-center mb-4" data-key="test1-p">"Gracias a CuidoAMiTata pude volver a trabajar tranquila. ¡Es genial!"</p>
+                    <h4 class="font-bold text-center">María José R.</h4>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md">
+                    <img src="https://i.pravatar.cc/100?u=2" class="w-16 h-16 rounded-full mb-4 mx-auto border-2 border-orange-500">
+                    <p class="italic text-center mb-4" data-key="test2-p">"Mis hermanos y yo nos organizamos increíble. ¡La recomiendo 100%!"</p>
+                    <h4 class="font-bold text-center">Andrés L.</h4>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md">
+                    <img src="https://i.pravatar.cc/100?u=3" class="w-16 h-16 rounded-full mb-4 mx-auto border-2 border-orange-500">
+                    <p class="italic text-center mb-4" data-key="test3-p">"Como cuidadora, me facilita mucho el reporte diario a la familia."</p>
+                    <h4 class="font-bold text-center">Rosa M.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 px-4">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center" data-key="nav-faq">FAQ</h2>
+            <div class="space-y-4">
+                <details class="group bg-white dark:bg-slate-800 p-4 rounded-lg border dark:border-slate-700">
+                    <summary class="list-none cursor-pointer flex justify-between font-bold" data-key="faq1-q">¿Es difícil de usar para el cuidador? <i class="fas fa-chevron-down group-open:rotate-180 transition"></i></summary>
+                    <p class="mt-4 text-sm opacity-80" data-key="faq1-a">No, está diseñada con botones grandes y voz a texto para máxima simplicidad.</p>
+                </details>
+                <details class="group bg-white dark:bg-slate-800 p-4 rounded-lg border dark:border-slate-700">
+                    <summary class="list-none cursor-pointer flex justify-between font-bold" data-key="faq2-q">¿Tiene costo mensual? <i class="fas fa-chevron-down group-open:rotate-180 transition"></i></summary>
+                    <p class="mt-4 text-sm opacity-80" data-key="faq2-a">Tenemos un plan gratuito básico y un plan Premium para familias grandes.</p>
+                </details>
+                <details class="group bg-white dark:bg-slate-800 p-4 rounded-lg border dark:border-slate-700">
+                    <summary class="list-none cursor-pointer flex justify-between font-bold" data-key="faq3-q">¿Funciona sin internet? <i class="fas fa-chevron-down group-open:rotate-180 transition"></i></summary>
+                    <p class="mt-4 text-sm opacity-80" data-key="faq3-a">Los registros se guardan y se sincronizan apenas recuperes la señal.</p>
+                </details>
+                <details class="group bg-white dark:bg-slate-800 p-4 rounded-lg border dark:border-slate-700">
+                    <summary class="list-none cursor-pointer flex justify-between font-bold" data-key="faq4-q">¿Puedo agregar más de un Tata? <i class="fas fa-chevron-down group-open:rotate-180 transition"></i></summary>
+                    <p class="mt-4 text-sm opacity-80" data-key="faq4-a">Sí, puedes gestionar múltiples perfiles bajo una misma suscripción familiar.</p>
+                </details>
+                <details class="group bg-white dark:bg-slate-800 p-4 rounded-lg border dark:border-slate-700">
+                    <summary class="list-none cursor-pointer flex justify-between font-bold" data-key="faq5-q">¿Mis datos están seguros? <i class="fas fa-chevron-down group-open:rotate-180 transition"></i></summary>
+                    <p class="mt-4 text-sm opacity-80" data-key="faq5-a">Cumplimos con toda la normativa chilena de protección de datos de salud.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-20 bg-orange-500 text-white px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-4xl font-bold mb-8" data-key="nav-contact">Contacto</h2>
+                <div class="space-y-6">
+                    <a href="mailto:cuidoamitata@gmail.com" class="flex items-center gap-4 text-xl hover:underline"><i class="fas fa-envelope text-3xl w-10 text-center"></i> cuidoamitata@gmail.com</a>
+                    <a href="https://wa.me/56987629765" target="_blank" class="flex items-center gap-4 text-xl hover:underline"><i class="fab fa-whatsapp text-3xl w-10 text-center"></i> +56 9 8762 9765</a>
+                    <div class="grid grid-cols-4 gap-4 mt-8">
+                        <a href="https://instagram.com/CuidoAMiTata" class="text-3xl hover:scale-110 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com/CuidoAMiTata" class="text-3xl hover:scale-110 transition"><i class="fab fa-facebook"></i></a>
+                        <a href="https://youtube.com/@CuidoAMiTata" class="text-3xl hover:scale-110 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="https://tiktok.com/@cuidoamitata" class="text-3xl hover:scale-110 transition"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://x.com/CuidoAMiTata" class="text-3xl hover:scale-110 transition"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <form class="bg-white p-8 rounded-2xl text-slate-900 shadow-xl space-y-4">
+                <input type="text" placeholder="Nombre" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-orange-500">
+                <input type="email" placeholder="Email" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-orange-500">
+                <textarea placeholder="Mensaje" rows="4" class="w-full p-3 rounded-lg border focus:ring-2 focus:ring-orange-500"></textarea>
+                <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-slate-900 text-white border-t border-slate-800 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <div class="text-2xl font-bold mb-2 flex items-center justify-center md:justify-start gap-2">
+                    <i class="fas fa-code"></i> CuidoAMiTata
+                </div>
+                <p class="text-slate-400 max-w-sm" data-key="footer-desc">Solución líder en gestión de cuidado para el adulto mayor en Chile. Tecnología al servicio del amor familiar.</p>
+            </div>
+            <div class="flex gap-6 text-xl">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-slate-500 text-sm">
+            &copy; 2026 CuidoAMiTata Chile. Desarrollado con <i class="fas fa-heart text-orange-500"></i> para nuestros tatas.
+        </div>
+    </footer>
+
+    <a href="https://wa.me/56987629765" target="_blank" class="fixed bottom-6 left-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition z-50 group">
+        <i class="fab fa-whatsapp"></i>
+        <span class="absolute left-16 bg-white text-slate-900 text-xs px-2 py-1 rounded hidden group-hover:block whitespace-nowrap shadow-md">Comunícate con nosotros</span>
+    </a>
+
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-orange-500 text-white w-12 h-12 rounded-full hidden items-center justify-center text-xl shadow-lg hover:scale-110 transition z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="index.js"></script>
+</body>
+</html>

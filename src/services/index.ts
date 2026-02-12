@@ -5,6 +5,7 @@
 export * from './StorageService';
 export * from './ValidationService';
 export * from './NotificationService';
+export * from './AuthService';
 export * from './MedicationManager';
 export * from './FallPreventionManager';
 export * from './SkinIntegrityManager';

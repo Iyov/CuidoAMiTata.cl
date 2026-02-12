@@ -259,8 +259,8 @@ El enfoque prioriza:
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 
-- [ ] 16. Implementar Auth Service
-  - [ ] 16.1 Crear AuthService con JWT y auto-logout
+- [x] 16. Implementar Auth Service
+  - [x] 16.1 Crear AuthService con JWT y auto-logout
     - Implementar login con JWT
     - Implementar logout
     - Implementar refreshToken
@@ -268,7 +268,7 @@ El enfoque prioriza:
     - Implementar enforceAutoLogout (15 minutos de inactividad)
     - _Requisitos: 12.1, 12.4_
   
-  - [ ] 16.2 Escribir pruebas unitarias para auto-logout
+  - [x] 16.2 Escribir pruebas unitarias para auto-logout
     - Verificar cierre después de 15 minutos
     - Verificar que actividad resetea el temporizador
     - _Requisitos: 12.4_

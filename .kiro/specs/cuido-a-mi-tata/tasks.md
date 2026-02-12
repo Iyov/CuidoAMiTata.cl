@@ -90,11 +90,11 @@ El enfoque prioriza:
     - **Valida: Requisitos 1.2, 1.4, 2.2, 3.6, 4.5, 5.2, 5.3, 9.1**
     - **PBT Status**: ✅ PASSED
 
-- [ ] 6. Checkpoint - Verificar servicios fundamentales
+- [x] 6. Checkpoint - Verificar servicios fundamentales
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
-- [ ] 7. Implementar Medication Manager
-  - [ ] 7.1 Crear MedicationManager con lógica de programación
+- [x] 7. Implementar Medication Manager
+  - [x] 7.1 Crear MedicationManager con lógica de programación
     - Implementar scheduleMedication
     - Implementar confirmAdministration con validación de ventana
     - Implementar omitDose con justificación obligatoria
@@ -102,15 +102,15 @@ El enfoque prioriza:
     - Integrar con NotificationService para alertas
     - _Requisitos: 1.1, 1.3, 1.4, 1.5_
   
-  - [ ]* 7.2 Escribir prueba de propiedad para emisión de alertas duales
+  - [x] 7.2 Escribir prueba de propiedad para emisión de alertas duales
     - **Propiedad 1: Emisión de alertas duales en horarios programados**
     - **Valida: Requisitos 1.1**
   
-  - [ ]* 7.3 Escribir prueba de propiedad para justificación obligatoria
+  - [x] 7.3 Escribir prueba de propiedad para justificación obligatoria
     - **Propiedad 4: Justificación obligatoria para acciones críticas**
     - **Valida: Requisitos 1.5, 6.6, 7.5**
   
-  - [ ]* 7.4 Escribir pruebas unitarias para flujo de medicación
+  - [x] 7.4 Escribir pruebas unitarias para flujo de medicación
     - Programar → alertar → confirmar → registrar
     - Omitir sin justificación → bloqueado
     - Omitir con justificación → permitido

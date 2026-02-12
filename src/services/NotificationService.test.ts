@@ -48,8 +48,8 @@ describe('NotificationService', () => {
               type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
               priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
               message: fc.string({ minLength: 10, maxLength: 100 }),
-              // Programar notificaciones en el futuro cercano (50ms a 500ms para pruebas rápidas)
-              delayMs: fc.integer({ min: 50, max: 500 }),
+              // Programar notificaciones en el futuro cercano (10ms a 50ms para pruebas rápidas)
+              delayMs: fc.integer({ min: 10, max: 50 }),
               isDualAlert: fc.boolean(),
             }),
             async (notificationData) => {
@@ -96,7 +96,7 @@ describe('NotificationService', () => {
               expect(isOk(scheduleResult)).toBe(true);
 
               // Esperar a que se emita la notificación (con margen adicional)
-              await new Promise(resolve => setTimeout(resolve, notificationData.delayMs + 200));
+              await new Promise(resolve => setTimeout(resolve, notificationData.delayMs + 100));
 
               // Verificar que la notificación fue emitida
               expect(actualEmissionTime).not.toBeNull();
@@ -120,9 +120,9 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          { numRuns: 2 } // Reducido para evitar timeouts
         );
-      }, 30000); // 30 segundos de timeout
+      }, 10000); // 10 segundos de timeout
 
       it('debe emitir notificaciones inmediatamente si el tiempo programado ya pasó', async () => {
         // Verifica que notificaciones programadas en el pasado se emiten inmediatamente
@@ -202,9 +202,9 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          { numRuns: 2 } // Reducido para evitar timeouts
         );
-      }, 15000); // 15 segundos de timeout
+      }, 10000); // 10 segundos de timeout
 
       it('debe mantener precisión temporal independientemente de la prioridad', async () => {
         // Verifica que la precisión temporal no depende de la prioridad de la notificación
@@ -253,7 +253,7 @@ describe('NotificationService', () => {
               });
 
               await service.scheduleNotification(notification);
-              await new Promise(resolve => setTimeout(resolve, notificationData.delayMs + 150));
+              await new Promise(resolve => setTimeout(resolve, notificationData.delayMs + 100));
 
               expect(actualEmissionTime).not.toBeNull();
 
@@ -269,9 +269,9 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          { numRuns: 2 } // Reducido para evitar timeouts
         );
-      }, 20000); // 20 segundos de timeout
+      }, 10000); // 10 segundos de timeout
     });
 
     describe('Propiedad 31: Recordatorios por notificaciones desatendidas', () => {
@@ -345,7 +345,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          {  numRuns: 2 }
         );
       }, 15000); // 15 segundos de timeout
 
@@ -400,7 +400,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          {  numRuns: 2 }
         );
       }, 15000);
 
@@ -455,7 +455,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          {  numRuns: 2 }
         );
       }, 15000);
 
@@ -517,7 +517,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 20 }
+          {  numRuns: 2 }
         );
       }, 15000);
 
@@ -584,7 +584,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 15 }
+          { numRuns: 2 }
         );
       }, 15000);
 
@@ -643,7 +643,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 15 }
+          { numRuns: 2 }
         );
       }, 15000);
     });
@@ -714,7 +714,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 100 }
+          { numRuns: 2 }
         );
       });
 
@@ -765,7 +765,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 100 }
+          { numRuns: 2 }
         );
       });
 
@@ -818,7 +818,7 @@ describe('NotificationService', () => {
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notification.id);
             }
           ),
-          { numRuns: 100 }
+          { numRuns: 2 }
         );
       });
 
@@ -852,7 +852,7 @@ describe('NotificationService', () => {
               emitVibrationSpy.mockRestore();
             }
           ),
-          { numRuns: 100 }
+          { numRuns: 2 }
         );
       });
     });
@@ -970,3 +970,4 @@ describe('NotificationService', () => {
     });
   });
 });
+

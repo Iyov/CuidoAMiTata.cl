@@ -405,14 +405,14 @@ El enfoque prioriza:
     - Funcionalidad de carga de fotografía con timestamp
     - _Requisitos: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
 
-- [ ] 26. Implementar pantallas de nutrición e incontinencia
-  - [ ] 26.1 Crear UI para módulo de nutrición
+- [x] 26. Implementar pantallas de nutrición e incontinencia
+  - [x] 26.1 Crear UI para módulo de nutrición
     - Pantalla de plan de comidas SEGG
     - Pantalla de registro de ingesta con contador de vasos
     - Recordatorios de hidratación
     - _Requisitos: 4.1, 4.2, 4.3, 4.4, 4.5_
   
-  - [ ] 26.2 Crear UI para módulo de incontinencia
+  - [x] 26.2 Crear UI para módulo de incontinencia
     - Pantalla de registro de visita al baño
     - Pantalla de registro de episodio
     - Pantalla de análisis de patrones

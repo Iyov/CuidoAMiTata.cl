@@ -15,3 +15,4 @@ export * from './IncontinenceManager';
 export * from './PolypharmacyManager';
 export * from './EthicalCareModule';
 export * from './PatientManager';
+export * from './HistoryService';

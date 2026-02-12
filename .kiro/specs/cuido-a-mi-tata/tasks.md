@@ -298,23 +298,23 @@ El enfoque prioriza:
     - Desconectar → registrar eventos → reconectar → verificar sincronización
     - _Requisitos: 13.1, 13.2, 13.3_
 
-- [ ] 18. Implementar gestión de múltiples pacientes
-  - [ ] 18.1 Crear lógica de gestión de perfiles de paciente
+- [x] 18. Implementar gestión de múltiples pacientes
+  - [x] 18.1 Crear lógica de gestión de perfiles de paciente
     - Implementar createPatientProfile
     - Implementar selectPatient con filtrado de datos
     - Implementar switchPatient
     - Implementar getPatientAlerts
     - _Requisitos: 10.1, 10.2, 10.3, 10.4, 10.5_
   
-  - [ ] 18.2 Escribir prueba de propiedad para aislamiento de datos
+  - [x] 18.2 Escribir prueba de propiedad para aislamiento de datos
     - **Propiedad 26: Aislamiento de datos por paciente**
     - **Valida: Requisitos 10.2, 10.5**
   
-  - [ ] 18.3 Escribir prueba de propiedad para indicadores de alertas
+  - [x] 18.3 Escribir prueba de propiedad para indicadores de alertas
     - **Propiedad 27: Indicadores visuales de alertas pendientes**
     - **Valida: Requisitos 10.3**
   
-  - [ ] 18.4 Escribir pruebas de integración para múltiples pacientes
+  - [x] 18.4 Escribir pruebas de integración para múltiples pacientes
     - Crear 3 pacientes → registrar eventos → cambiar entre pacientes → verificar aislamiento
     - _Requisitos: 10.1, 10.2, 10.5_
 

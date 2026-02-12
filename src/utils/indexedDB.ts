@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'CuidoAMiTataDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 // Nombres de object stores
 export const STORES = {
@@ -13,6 +13,9 @@ export const STORES = {
   NOTIFICATIONS: 'notifications',
   SYNC_QUEUE: 'syncQueue',
   ENCRYPTED_DATA: 'encrypted_data',
+  FALL_INCIDENTS: 'fallIncidents',
+  RISK_CHECKLISTS: 'riskChecklists',
+  RISK_ALERTS: 'riskAlerts',
 } as const;
 
 /**
@@ -71,6 +74,28 @@ export function initDB(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains(STORES.ENCRYPTED_DATA)) {
         const encryptedStore = db.createObjectStore(STORES.ENCRYPTED_DATA, { keyPath: 'id' });
         encryptedStore.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+
+      // Store de incidentes de caída
+      if (!db.objectStoreNames.contains(STORES.FALL_INCIDENTS)) {
+        const fallIncidentStore = db.createObjectStore(STORES.FALL_INCIDENTS, { keyPath: 'id' });
+        fallIncidentStore.createIndex('patientId', 'patientId', { unique: false });
+        fallIncidentStore.createIndex('occurredAt', 'occurredAt', { unique: false });
+      }
+
+      // Store de listas de verificación de riesgos
+      if (!db.objectStoreNames.contains(STORES.RISK_CHECKLISTS)) {
+        const riskChecklistStore = db.createObjectStore(STORES.RISK_CHECKLISTS, { keyPath: 'id' });
+        riskChecklistStore.createIndex('patientId', 'patientId', { unique: false });
+        riskChecklistStore.createIndex('checkDate', 'checkDate', { unique: false });
+      }
+
+      // Store de alertas de riesgo
+      if (!db.objectStoreNames.contains(STORES.RISK_ALERTS)) {
+        const riskAlertStore = db.createObjectStore(STORES.RISK_ALERTS, { keyPath: 'id' });
+        riskAlertStore.createIndex('patientId', 'patientId', { unique: false });
+        riskAlertStore.createIndex('riskType', 'riskType', { unique: false });
+        riskAlertStore.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
   });

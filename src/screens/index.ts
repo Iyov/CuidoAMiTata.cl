@@ -5,3 +5,7 @@ export { FallPreventionScreen } from './FallPreventionScreen';
 export { FallPreventionChecklistScreen } from './FallPreventionChecklistScreen';
 export { FallIncidentScreen } from './FallIncidentScreen';
 export { FallRiskAlertsScreen } from './FallRiskAlertsScreen';
+export { SkinIntegrityScreen } from './SkinIntegrityScreen';
+export { PosturalChangeScreen } from './PosturalChangeScreen';
+export { BedElevationScreen } from './BedElevationScreen';
+export { PressureUlcerScreen } from './PressureUlcerScreen';

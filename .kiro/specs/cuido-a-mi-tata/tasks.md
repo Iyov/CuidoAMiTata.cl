@@ -397,8 +397,8 @@ El enfoque prioriza:
     - Panel de alertas de riesgo (sedantes, cognitivo, visión)
     - _Requisitos: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
 
-- [ ] 25. Implementar pantallas de integridad de piel
-  - [ ] 25.1 Crear UI para módulo de integridad de piel
+- [x] 25. Implementar pantallas de integridad de piel
+  - [x] 25.1 Crear UI para módulo de integridad de piel
     - Pantalla de registro de cambio postural
     - Pantalla de registro de elevación de cama con validación (máx 30°)
     - Pantalla de registro de UPP con clasificación I-IV

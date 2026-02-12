@@ -10,6 +10,10 @@ import {
   FallPreventionChecklistScreen,
   FallIncidentScreen,
   FallRiskAlertsScreen,
+  SkinIntegrityScreen,
+  PosturalChangeScreen,
+  BedElevationScreen,
+  PressureUlcerScreen,
 } from './screens';
 
 const HomePage: React.FC = () => (
@@ -37,6 +41,14 @@ const HomePage: React.FC = () => (
           <h2 className="text-xl font-semibold">Prevención de Caídas</h2>
           <p className="text-sm opacity-90">Evaluación de riesgos y registro de incidentes</p>
         </Link>
+        
+        <Link
+          to="/skin-integrity"
+          className="block p-4 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
+        >
+          <h2 className="text-xl font-semibold">Integridad de la Piel</h2>
+          <p className="text-sm opacity-90">Cambios posturales y monitoreo de úlceras</p>
+        </Link>
       </div>
     </div>
   </div>
@@ -56,6 +68,10 @@ export const App: React.FC = () => {
           <Route path="/fall-prevention/checklist" element={<FallPreventionChecklistScreen />} />
           <Route path="/fall-prevention/incident" element={<FallIncidentScreen />} />
           <Route path="/fall-prevention/alerts" element={<FallRiskAlertsScreen />} />
+          <Route path="/skin-integrity" element={<SkinIntegrityScreen />} />
+          <Route path="/skin-integrity/postural-change" element={<PosturalChangeScreen />} />
+          <Route path="/skin-integrity/bed-elevation" element={<BedElevationScreen />} />
+          <Route path="/skin-integrity/pressure-ulcer" element={<PressureUlcerScreen />} />
         </Routes>
       </Router>
     </ThemeProvider>

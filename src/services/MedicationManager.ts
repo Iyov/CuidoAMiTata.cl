@@ -91,7 +91,7 @@ export class MedicationManager {
           createdAt: new Date(),
         };
 
-        await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, medicationEvent);
+        await IndexedDBUtils.put(IndexedDBUtils.STORES.MEDICATION_EVENTS, medicationEvent);
       }
 
       return Ok(undefined);
@@ -130,18 +130,16 @@ export class MedicationManager {
         });
       }
 
-      // Buscar el evento de medicación más cercano al timestamp
+      // Buscar eventos de medicación por medicationId
       const allEvents = await IndexedDBUtils.getByIndex<MedicationEvent>(
-        IndexedDBUtils.STORES.CARE_EVENTS,
-        'patientId',
-        medication.patientId
+        IndexedDBUtils.STORES.MEDICATION_EVENTS,
+        'medicationId',
+        medicationId
       );
 
-      // Filtrar eventos de este medicamento que estén pendientes
+      // Filtrar eventos pendientes
       const pendingEvents = allEvents.filter(
-        (e) =>
-          (e as any).medicationId === medicationId &&
-          e.status === MedicationEventStatus.PENDING
+        (e) => e.status === MedicationEventStatus.PENDING
       );
 
       if (pendingEvents.length === 0) {
@@ -182,7 +180,7 @@ export class MedicationManager {
       closestEvent.status = MedicationEventStatus.CONFIRMED;
       closestEvent.withinAdherenceWindow = true;
 
-      await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, closestEvent);
+      await IndexedDBUtils.put(IndexedDBUtils.STORES.MEDICATION_EVENTS, closestEvent);
 
       // Cancelar la notificación asociada
       const notificationService = await getNotificationService();
@@ -248,18 +246,16 @@ export class MedicationManager {
         });
       }
 
-      // Buscar el evento de medicación más cercano al timestamp
+      // Buscar eventos de medicación por medicationId
       const allEvents = await IndexedDBUtils.getByIndex<MedicationEvent>(
-        IndexedDBUtils.STORES.CARE_EVENTS,
-        'patientId',
-        medication.patientId
+        IndexedDBUtils.STORES.MEDICATION_EVENTS,
+        'medicationId',
+        medicationId
       );
 
-      // Filtrar eventos de este medicamento que estén pendientes
+      // Filtrar eventos pendientes
       const pendingEvents = allEvents.filter(
-        (e) =>
-          (e as any).medicationId === medicationId &&
-          e.status === MedicationEventStatus.PENDING
+        (e) => e.status === MedicationEventStatus.PENDING
       );
 
       if (pendingEvents.length === 0) {
@@ -287,7 +283,7 @@ export class MedicationManager {
       closestEvent.justification = justification;
       closestEvent.withinAdherenceWindow = false;
 
-      await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, closestEvent);
+      await IndexedDBUtils.put(IndexedDBUtils.STORES.MEDICATION_EVENTS, closestEvent);
 
       // Cancelar la notificación asociada
       const notificationService = await getNotificationService();

@@ -17,6 +17,7 @@ import * as IndexedDBUtils from '../utils/indexedDB';
 const mockStorage: Record<string, Record<string, any>> = {
   patients: {},
   medications: {},
+  medicationEvents: {},
   careEvents: {},
   notifications: {},
   syncQueue: {},
@@ -27,6 +28,7 @@ vi.mock('../utils/indexedDB', () => ({
   STORES: {
     PATIENTS: 'patients',
     MEDICATIONS: 'medications',
+    MEDICATION_EVENTS: 'medicationEvents',
     CARE_EVENTS: 'careEvents',
     NOTIFICATIONS: 'notifications',
     SYNC_QUEUE: 'syncQueue',
@@ -65,6 +67,7 @@ describe('MedicationManager', () => {
     // Limpiar completamente el almacenamiento mock antes de cada prueba
     mockStorage.patients = {};
     mockStorage.medications = {};
+    mockStorage.medicationEvents = {};
     mockStorage.careEvents = {};
     mockStorage.notifications = {};
     mockStorage.syncQueue = {};

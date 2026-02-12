@@ -22,14 +22,14 @@ El enfoque prioriza:
   - Definir tipos base y enums (ErrorCode, Priority, etc.)
   - _Requisitos: 8.3, 9.1_
 
-- [ ] 2. Implementar Storage Service con cifrado
-  - [ ] 2.1 Crear StorageService con métodos de cifrado AES-256
+- [x] 2. Implementar Storage Service con cifrado
+  - [x] 2.1 Crear StorageService con métodos de cifrado AES-256
     - Implementar saveEncrypted, loadEncrypted
     - Implementar savePreference, loadPreference
     - Implementar clearPatientData
     - _Requisitos: 12.3_
   
-  - [ ]* 2.2 Escribir prueba de propiedad para cifrado de datos sensibles
+  - [x] 2.2 Escribir prueba de propiedad para cifrado de datos sensibles
     - **Propiedad 32: Cifrado de datos sensibles**
     - **Valida: Requisitos 12.3**
 

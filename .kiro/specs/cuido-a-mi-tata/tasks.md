@@ -116,23 +116,23 @@ El enfoque prioriza:
     - Omitir con justificación → permitido
     - _Requisitos: 1.1, 1.3, 1.4, 1.5_
 
-- [ ] 8. Implementar Fall Prevention Manager
-  - [ ] 8.1 Crear FallPreventionManager con evaluación de riesgos
+- [x] 8. Implementar Fall Prevention Manager
+  - [x] 8.1 Crear FallPreventionManager con evaluación de riesgos
     - Implementar submitDailyChecklist
     - Implementar recordFallIncident con validación de "tiempo en el suelo"
     - Implementar getRiskAlerts basado en factores de riesgo
     - Implementar calculateRiskScore
     - _Requisitos: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
   
-  - [ ]* 8.2 Escribir prueba de propiedad para campo obligatorio
+  - [x] 8.2 Escribir prueba de propiedad para campo obligatorio
     - **Propiedad 5: Campo obligatorio de tiempo en el suelo**
     - **Valida: Requisitos 2.3**
   
-  - [ ]* 8.3 Escribir prueba de propiedad para alertas por factores de riesgo
+  - [x] 8.3 Escribir prueba de propiedad para alertas por factores de riesgo
     - **Propiedad 6: Alertas automáticas por factores de riesgo**
     - **Valida: Requisitos 2.4, 2.5, 2.6**
   
-  - [ ]* 8.4 Escribir pruebas unitarias para lista de verificación
+  - [x] 8.4 Escribir pruebas unitarias para lista de verificación
     - Verificar campos requeridos: iluminación, suelos, calzado
     - _Requisitos: 2.1_
 

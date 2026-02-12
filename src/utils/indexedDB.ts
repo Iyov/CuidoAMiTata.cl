@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'CuidoAMiTataDB';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 // Nombres de object stores
 export const STORES = {
@@ -16,6 +16,8 @@ export const STORES = {
   FALL_INCIDENTS: 'fallIncidents',
   RISK_CHECKLISTS: 'riskChecklists',
   RISK_ALERTS: 'riskAlerts',
+  POSTURAL_CHANGES: 'posturalChanges',
+  PRESSURE_ULCERS: 'pressureUlcers',
 } as const;
 
 /**
@@ -96,6 +98,21 @@ export function initDB(): Promise<IDBDatabase> {
         riskAlertStore.createIndex('patientId', 'patientId', { unique: false });
         riskAlertStore.createIndex('riskType', 'riskType', { unique: false });
         riskAlertStore.createIndex('createdAt', 'createdAt', { unique: false });
+      }
+
+      // Store de cambios posturales
+      if (!db.objectStoreNames.contains(STORES.POSTURAL_CHANGES)) {
+        const posturalChangeStore = db.createObjectStore(STORES.POSTURAL_CHANGES, { keyPath: 'id' });
+        posturalChangeStore.createIndex('patientId', 'patientId', { unique: false });
+        posturalChangeStore.createIndex('performedAt', 'performedAt', { unique: false });
+      }
+
+      // Store de úlceras por presión
+      if (!db.objectStoreNames.contains(STORES.PRESSURE_ULCERS)) {
+        const pressureUlcerStore = db.createObjectStore(STORES.PRESSURE_ULCERS, { keyPath: 'id' });
+        pressureUlcerStore.createIndex('patientId', 'patientId', { unique: false });
+        pressureUlcerStore.createIndex('grade', 'grade', { unique: false });
+        pressureUlcerStore.createIndex('assessedAt', 'assessedAt', { unique: false });
       }
     };
   });

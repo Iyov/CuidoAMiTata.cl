@@ -381,8 +381,8 @@ El enfoque prioriza:
     - Verificar persistencia después de reload
     - _Requisitos: 8.1, 8.2, 8.5_
 
-- [ ] 23. Implementar pantallas de gestión de medicamentos
-  - [ ] 23.1 Crear UI para módulo de medicación
+- [x] 23. Implementar pantallas de gestión de medicamentos
+  - [x] 23.1 Crear UI para módulo de medicación
     - Pantalla de lista de medicamentos
     - Pantalla de agregar/editar medicamento
     - Pantalla de confirmación de dosis con validación de ventana

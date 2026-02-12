@@ -203,8 +203,8 @@ El enfoque prioriza:
     - **Valida: Requisitos 5.4**
     - **PBT Status**: ✅ PASSED
 
-- [ ] 13. Implementar Polypharmacy Manager
-  - [ ] 13.1 Crear PolypharmacyManager con gestión de medicamentos
+- [x] 13. Implementar Polypharmacy Manager
+  - [x] 13.1 Crear PolypharmacyManager con gestión de medicamentos
     - Implementar addMedication, updateMedicationSheet
     - Implementar exportToPDF con todos los campos requeridos
     - Implementar checkStockLevels con alertas
@@ -212,19 +212,19 @@ El enfoque prioriza:
     - Implementar findNearestSIGREPoint con mapa
     - _Requisitos: 6.1, 6.2, 6.3, 6.4, 6.5_
   
-  - [ ] 13.2 Escribir prueba de propiedad para exportación PDF
+  - [x] 13.2 Escribir prueba de propiedad para exportación PDF
     - **Propiedad 14: Exportación PDF de hoja de medicamentos**
     - **Valida: Requisitos 6.2**
   
-  - [ ] 13.3 Escribir prueba de propiedad para alertas de stock bajo
+  - [x] 13.3 Escribir prueba de propiedad para alertas de stock bajo
     - **Propiedad 15: Alertas de stock bajo**
     - **Valida: Requisitos 6.3**
   
-  - [ ] 13.4 Escribir prueba de propiedad para alertas de caducidad
+  - [x] 13.4 Escribir prueba de propiedad para alertas de caducidad
     - **Propiedad 16: Alertas de caducidad próxima**
     - **Valida: Requisitos 6.4**
   
-  - [ ] 13.5 Escribir pruebas unitarias para exportación PDF
+  - [x] 13.5 Escribir pruebas unitarias para exportación PDF
     - Hoja vacía, 1 medicamento, múltiples medicamentos
     - Verificar formato PDF válido
     - _Requisitos: 6.2_

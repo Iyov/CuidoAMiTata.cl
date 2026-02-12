@@ -33,23 +33,23 @@ El enfoque prioriza:
     - **Propiedad 32: Cifrado de datos sensibles**
     - **Valida: Requisitos 12.3**
 
-- [ ] 3. Implementar Validation Service
-  - [ ] 3.1 Crear ValidationService con validaciones core
+- [x] 3. Implementar Validation Service
+  - [x] 3.1 Crear ValidationService con validaciones core
     - Implementar validateAdherenceWindow (ventana de 3 horas)
     - Implementar validateBedElevation (máx 30 grados)
     - Implementar validateRequiredField
     - Implementar validateDateRange
     - _Requisitos: 1.3, 3.3_
   
-  - [ ]* 3.2 Escribir prueba de propiedad para ventana de adherencia
+  - [x] 3.2 Escribir prueba de propiedad para ventana de adherencia
     - **Propiedad 3: Validación de ventana de adherencia**
     - **Valida: Requisitos 1.3**
   
-  - [ ]* 3.3 Escribir prueba de propiedad para elevación de cama
+  - [x] 3.3 Escribir prueba de propiedad para elevación de cama
     - **Propiedad 9: Validación de elevación de cama**
     - **Valida: Requisitos 3.3**
   
-  - [ ]* 3.4 Escribir pruebas unitarias para casos límite
+  - [x] 3.4 Escribir pruebas unitarias para casos límite
     - Ventana de adherencia: exacto, ±1.5h, ±2h
     - Elevación: 0°, 30°, 31°, valores negativos
     - _Requisitos: 1.3, 3.3_

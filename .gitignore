@@ -12,6 +12,20 @@ Thumbs.db
 # Dependencias
 node_modules/
 npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build
+dist/
+build/
+*.local
+
+# Cobertura de pruebas
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
 
 # Archivos temporales
 *.tmp

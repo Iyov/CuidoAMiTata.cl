@@ -14,7 +14,7 @@ El enfoque prioriza:
 
 ## Tareas
 
-- [ ] 1. Configurar estructura del proyecto y servicios fundamentales
+- [x] 1. Configurar estructura del proyecto y servicios fundamentales
   - Crear estructura de directorios TypeScript
   - Configurar TypeScript, ESLint, Prettier
   - Instalar dependencias: React Native/React, Redux, fast-check para pruebas

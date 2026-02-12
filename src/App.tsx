@@ -14,6 +14,9 @@ import {
   PosturalChangeScreen,
   BedElevationScreen,
   PressureUlcerScreen,
+  PolypharmacyScreen,
+  SIGREMapScreen,
+  EthicalCareScreen,
 } from './screens';
 
 const HomePage: React.FC = () => (
@@ -49,6 +52,22 @@ const HomePage: React.FC = () => (
           <h2 className="text-xl font-semibold">Integridad de la Piel</h2>
           <p className="text-sm opacity-90">Cambios posturales y monitoreo de úlceras</p>
         </Link>
+        
+        <Link
+          to="/polypharmacy"
+          className="block p-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+        >
+          <h2 className="text-xl font-semibold">Gestión de Polifarmacia</h2>
+          <p className="text-sm opacity-90">Hoja de medicamentos, alertas y puntos SIGRE</p>
+        </Link>
+        
+        <Link
+          to="/ethical-care"
+          className="block p-4 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors"
+        >
+          <h2 className="text-xl font-semibold">Cuidado Ético</h2>
+          <p className="text-sm opacity-90">Evaluación de restricciones y alternativas</p>
+        </Link>
       </div>
     </div>
   </div>
@@ -72,6 +91,9 @@ export const App: React.FC = () => {
           <Route path="/skin-integrity/postural-change" element={<PosturalChangeScreen />} />
           <Route path="/skin-integrity/bed-elevation" element={<BedElevationScreen />} />
           <Route path="/skin-integrity/pressure-ulcer" element={<PressureUlcerScreen />} />
+          <Route path="/polypharmacy" element={<PolypharmacyScreen />} />
+          <Route path="/polypharmacy/sigre-map" element={<SIGREMapScreen />} />
+          <Route path="/ethical-care" element={<EthicalCareScreen />} />
         </Routes>
       </Router>
     </ThemeProvider>

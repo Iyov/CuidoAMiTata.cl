@@ -487,8 +487,9 @@ export interface Strategy {
 export interface CareContext {
   patientId: string;
   situation: string;
-  currentRestraints: Restraint[];
-  riskFactors: RiskFactor[];
+  currentRestraints?: Restraint[];
+  riskFactors?: RiskFactor[];
+  timestamp?: Date;
 }
 
 /**

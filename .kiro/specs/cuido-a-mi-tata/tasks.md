@@ -418,15 +418,15 @@ El enfoque prioriza:
     - Pantalla de análisis de patrones
     - _Requisitos: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 27. Implementar pantallas de polifarmacia y cuidado ético
-  - [ ] 27.1 Crear UI para módulo de polifarmacia
+- [x] 27. Implementar pantallas de polifarmacia y cuidado ético
+  - [x] 27.1 Crear UI para módulo de polifarmacia
     - Pantalla de hoja dinámica de medicamentos
     - Botón de exportación PDF
     - Alertas de stock bajo y caducidad
     - Mapa de puntos SIGRE
     - _Requisitos: 6.1, 6.2, 6.3, 6.4, 6.5_
   
-  - [ ] 27.2 Crear UI para módulo de cuidado ético
+  - [x] 27.2 Crear UI para módulo de cuidado ético
     - Modal de bloqueo para restricciones químicas
     - Panel de estrategias alternativas
     - Formulario de justificación obligatoria

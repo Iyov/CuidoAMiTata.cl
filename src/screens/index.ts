@@ -17,3 +17,6 @@ export { IncontinenceScreen } from './IncontinenceScreen';
 export { BathroomVisitScreen } from './BathroomVisitScreen';
 export { IncontinenceEpisodeScreen } from './IncontinenceEpisodeScreen';
 export { IncontinencePatternsScreen } from './IncontinencePatternsScreen';
+export { PolypharmacyScreen } from './PolypharmacyScreen';
+export { SIGREMapScreen } from './SIGREMapScreen';
+export { EthicalCareScreen } from './EthicalCareScreen';

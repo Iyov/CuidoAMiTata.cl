@@ -145,15 +145,15 @@ El enfoque prioriza:
     - Implementar carga de fotografías con timestamp
     - _Requisitos: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
   
-  - [ ]* 9.2 Escribir prueba de propiedad para cambios posturales diurnos
+  - [ ] 9.2 Escribir prueba de propiedad para cambios posturales diurnos
     - **Propiedad 7: Programación de cambios posturales diurnos**
     - **Valida: Requisitos 3.1**
   
-  - [ ]* 9.3 Escribir prueba de propiedad para cambios posturales nocturnos
+  - [ ] 9.3 Escribir prueba de propiedad para cambios posturales nocturnos
     - **Propiedad 8: Programación de cambios posturales nocturnos**
     - **Valida: Requisitos 3.2**
   
-  - [ ]* 9.4 Escribir pruebas unitarias para programación
+  - [ ] 9.4 Escribir pruebas unitarias para programación
     - Verificar 8 notificaciones diurnas (06:00-22:00)
     - Verificar 3 notificaciones nocturnas (22:00-06:00)
     - Verificar horarios exactos

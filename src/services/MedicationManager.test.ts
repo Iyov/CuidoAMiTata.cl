@@ -845,13 +845,18 @@ describe('MedicationManager', () => {
               dosage: fc.string({ minLength: 2, maxLength: 20 }).filter(s => s.trim().length >= 2),
               purpose: fc.string({ minLength: 5, maxLength: 100 }).filter(s => s.trim().length >= 5),
               scheduledTime: fc.date({ min: new Date('2024-01-01'), max: new Date('2024-12-31') }),
-              // Generar justificación opcional (undefined, vacía, solo espacios, o válida)
+              // Generar justificación opcional (undefined, vacía, solo espacios, o válida con contenido significativo)
               justification: fc.oneof(
                 fc.constant(undefined),
                 fc.constant(''),
                 fc.constant('   '),
                 fc.constant('\t\n'),
-                fc.string({ minLength: 10, maxLength: 200 })
+                fc.constant('!!!'),
+                // Justificación válida: al menos 3 caracteres con contenido alfanumérico
+                fc.string({ minLength: 10, maxLength: 200 }).filter(s => {
+                  const trimmed = s.trim();
+                  return trimmed.length >= 3 && /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ]/.test(trimmed);
+                })
               ),
             }),
             async (data) => {
@@ -886,10 +891,12 @@ describe('MedicationManager', () => {
                 omitTime
               );
 
-              // Determinar si la justificación es válida
+              // Determinar si la justificación es válida según las reglas de ValidationService
+              // Requiere: no undefined, no vacío después de trim, al menos 3 caracteres, y contenido alfanumérico
               const isJustificationValid =
                 data.justification !== undefined &&
-                data.justification.trim().length > 0;
+                data.justification.trim().length >= 3 &&
+                /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ]/.test(data.justification.trim());
 
               // Propiedad 4: Sin justificación válida → debe fallar con error específico
               // Con justificación válida → debe tener éxito
@@ -1009,14 +1016,17 @@ describe('MedicationManager', () => {
               dosage: fc.string({ minLength: 2, maxLength: 20 }).filter(s => s.trim().length >= 2),
               purpose: fc.string({ minLength: 5, maxLength: 100 }).filter(s => s.trim().length >= 5),
               scheduledTime: fc.date({ min: new Date('2024-01-01'), max: new Date('2024-12-31') }),
-              // Generar diferentes tipos de justificaciones válidas
+              // Generar diferentes tipos de justificaciones válidas (al menos 3 caracteres con contenido alfanumérico)
               justification: fc.oneof(
                 fc.constant('Paciente rechazó la medicación'),
                 fc.constant('Paciente dormido'),
                 fc.constant('Náuseas'),
                 fc.constant('Indicación médica'),
                 fc.constant('Efectos secundarios'),
-                fc.string({ minLength: 1, maxLength: 500 }).filter(s => s.trim().length > 0)
+                fc.string({ minLength: 10, maxLength: 500 }).filter(s => {
+                  const trimmed = s.trim();
+                  return trimmed.length >= 3 && /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ]/.test(trimmed);
+                })
               ),
             }),
             async (data) => {

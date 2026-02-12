@@ -382,6 +382,76 @@ export class NotificationService {
   }
 
   /**
+   * Prioriza alertas según su nivel de urgencia
+   * CRITICAL > HIGH > MEDIUM > LOW
+   * 
+   * @param alerts - Array de notificaciones a priorizar
+   * @returns Array de notificaciones ordenadas por prioridad
+   */
+  prioritizeAlerts(alerts: Notification[]): Notification[] {
+    // Definir orden de prioridad
+    const priorityOrder: Record<Priority, number> = {
+      [Priority.CRITICAL]: 4,
+      [Priority.HIGH]: 3,
+      [Priority.MEDIUM]: 2,
+      [Priority.LOW]: 1,
+    };
+
+    // Ordenar por prioridad (mayor a menor) y luego por tiempo programado (más antiguo primero)
+    return [...alerts].sort((a, b) => {
+      const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
+      
+      // Si tienen la misma prioridad, ordenar por tiempo programado
+      if (priorityDiff === 0) {
+        return new Date(a.scheduledTime).getTime() - new Date(b.scheduledTime).getTime();
+      }
+      
+      return priorityDiff;
+    });
+  }
+
+  /**
+   * Obtiene alertas filtradas por nivel de prioridad
+   * 
+   * @param minPriority - Prioridad mínima a incluir (opcional)
+   * @returns Array de notificaciones filtradas y ordenadas por prioridad
+   */
+  async getAlertsByPriority(minPriority?: Priority): Promise<Notification[]> {
+    try {
+      // Obtener todas las notificaciones pendientes o enviadas
+      const allNotifications = await IndexedDBUtils.getAll<Notification>(
+        IndexedDBUtils.STORES.NOTIFICATIONS
+      );
+
+      // Filtrar solo alertas pendientes o enviadas (no atendidas ni descartadas)
+      let alerts = allNotifications.filter(
+        (n) =>
+          n.status === NotificationStatus.SCHEDULED ||
+          n.status === NotificationStatus.SENT
+      );
+
+      // Aplicar filtro de prioridad mínima si se especifica
+      if (minPriority) {
+        const priorityOrder: Record<Priority, number> = {
+          [Priority.CRITICAL]: 4,
+          [Priority.HIGH]: 3,
+          [Priority.MEDIUM]: 2,
+          [Priority.LOW]: 1,
+        };
+
+        const minPriorityValue = priorityOrder[minPriority];
+        alerts = alerts.filter((n) => priorityOrder[n.priority] >= minPriorityValue);
+      }
+
+      // Priorizar y devolver
+      return this.prioritizeAlerts(alerts);
+    } catch (error) {
+      console.error('Error al obtener alertas por prioridad:', error);
+      return [];
+    }
+  }
+
+  /**
    * Obtiene las preferencias de notificación del usuario
    * 
    * @returns Preferencias de notificación

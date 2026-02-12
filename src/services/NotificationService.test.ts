@@ -856,6 +856,369 @@ describe('NotificationService', () => {
         );
       });
     });
+
+    describe('Propiedad 30: Priorización de alertas múltiples', () => {
+      it('debe ordenar alertas por prioridad (CRITICAL > HIGH > MEDIUM > LOW)', async () => {
+        // Feature: cuido-a-mi-tata, Property 30: Priorización de alertas múltiples
+        // Valida: Requisitos 11.3
+        
+        await fc.assert(
+          fc.asyncProperty(
+            // Generar array de notificaciones con diferentes prioridades
+            fc.array(
+              fc.record({
+                id: fc.uuid(),
+                patientId: fc.uuid(),
+                type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+                priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+                message: fc.string({ minLength: 10, maxLength: 100 }),
+                scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+                isDualAlert: fc.boolean(),
+              }),
+              { minLength: 2, maxLength: 20 }
+            ),
+            async (notificationsData) => {
+              // Crear notificaciones
+              const notifications: Notification[] = notificationsData.map(data => ({
+                ...data,
+                type: data.type as any,
+                status: NotificationStatus.SCHEDULED,
+                reminderSent: false,
+                createdAt: new Date(),
+              }));
+
+              // Priorizar alertas
+              const prioritized = service.prioritizeAlerts(notifications);
+
+              // Verificar que el array tiene el mismo tamaño
+              expect(prioritized.length).toBe(notifications.length);
+
+              // Definir orden de prioridad
+              const priorityOrder: Record<Priority, number> = {
+                [Priority.CRITICAL]: 4,
+                [Priority.HIGH]: 3,
+                [Priority.MEDIUM]: 2,
+                [Priority.LOW]: 1,
+              };
+
+              // Verificar que están ordenadas correctamente
+              for (let i = 1; i < prioritized.length; i++) {
+                const prevPriority = priorityOrder[prioritized[i - 1].priority];
+                const currPriority = priorityOrder[prioritized[i].priority];
+                
+                // La prioridad anterior debe ser mayor o igual a la actual
+                expect(prevPriority).toBeGreaterThanOrEqual(currPriority);
+              }
+
+              // Verificar que todas las notificaciones CRITICAL están antes que HIGH
+              const criticalIndices = prioritized
+                .map((n, i) => (n.priority === Priority.CRITICAL ? i : -1))
+                .filter(i => i !== -1);
+              const highIndices = prioritized
+                .map((n, i) => (n.priority === Priority.HIGH ? i : -1))
+                .filter(i => i !== -1);
+
+              if (criticalIndices.length > 0 && highIndices.length > 0) {
+                const maxCriticalIndex = Math.max(...criticalIndices);
+                const minHighIndex = Math.min(...highIndices);
+                expect(maxCriticalIndex).toBeLessThan(minHighIndex);
+              }
+
+              // Verificar que todas las notificaciones HIGH están antes que MEDIUM
+              const mediumIndices = prioritized
+                .map((n, i) => (n.priority === Priority.MEDIUM ? i : -1))
+                .filter(i => i !== -1);
+
+              if (highIndices.length > 0 && mediumIndices.length > 0) {
+                const maxHighIndex = Math.max(...highIndices);
+                const minMediumIndex = Math.min(...mediumIndices);
+                expect(maxHighIndex).toBeLessThan(minMediumIndex);
+              }
+
+              // Verificar que todas las notificaciones MEDIUM están antes que LOW
+              const lowIndices = prioritized
+                .map((n, i) => (n.priority === Priority.LOW ? i : -1))
+                .filter(i => i !== -1);
+
+              if (mediumIndices.length > 0 && lowIndices.length > 0) {
+                const maxMediumIndex = Math.max(...mediumIndices);
+                const minLowIndex = Math.min(...lowIndices);
+                expect(maxMediumIndex).toBeLessThan(minLowIndex);
+              }
+            }
+          ),
+          { numRuns: 100 }
+        );
+      });
+
+      it('debe ordenar por tiempo programado cuando las prioridades son iguales', async () => {
+        // Verifica que notificaciones con la misma prioridad se ordenan por tiempo programado
+        
+        await fc.assert(
+          fc.asyncProperty(
+            fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+            fc.array(
+              fc.record({
+                id: fc.uuid(),
+                patientId: fc.uuid(),
+                type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+                message: fc.string({ minLength: 10, maxLength: 100 }),
+                scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+                isDualAlert: fc.boolean(),
+              }),
+              { minLength: 2, maxLength: 10 }
+            ),
+            async (priority, notificationsData) => {
+              // Crear notificaciones con la misma prioridad
+              const notifications: Notification[] = notificationsData.map(data => ({
+                ...data,
+                type: data.type as any,
+                priority: priority, // Todas tienen la misma prioridad
+                status: NotificationStatus.SCHEDULED,
+                reminderSent: false,
+                createdAt: new Date(),
+              }));
+
+              // Priorizar alertas
+              const prioritized = service.prioritizeAlerts(notifications);
+
+              // Verificar que están ordenadas por tiempo programado (más antiguo primero)
+              for (let i = 1; i < prioritized.length; i++) {
+                const prevTime = new Date(prioritized[i - 1].scheduledTime).getTime();
+                const currTime = new Date(prioritized[i].scheduledTime).getTime();
+                
+                // El tiempo anterior debe ser menor o igual al actual
+                expect(prevTime).toBeLessThanOrEqual(currTime);
+              }
+            }
+          ),
+          { numRuns: 100 }
+        );
+      });
+
+      it('debe mantener todas las notificaciones después de priorizar', async () => {
+        // Verifica que no se pierden notificaciones durante la priorización
+        
+        await fc.assert(
+          fc.asyncProperty(
+            fc.array(
+              fc.record({
+                id: fc.uuid(),
+                patientId: fc.uuid(),
+                type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+                priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+                message: fc.string({ minLength: 10, maxLength: 100 }),
+                scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+                isDualAlert: fc.boolean(),
+              }),
+              { minLength: 1, maxLength: 50 }
+            ),
+            async (notificationsData) => {
+              const notifications: Notification[] = notificationsData.map(data => ({
+                ...data,
+                type: data.type as any,
+                status: NotificationStatus.SCHEDULED,
+                reminderSent: false,
+                createdAt: new Date(),
+              }));
+
+              const prioritized = service.prioritizeAlerts(notifications);
+
+              // Verificar que el tamaño es el mismo
+              expect(prioritized.length).toBe(notifications.length);
+
+              // Verificar que todas las notificaciones originales están presentes
+              const originalIds = new Set(notifications.map(n => n.id));
+              const prioritizedIds = new Set(prioritized.map(n => n.id));
+
+              expect(prioritizedIds.size).toBe(originalIds.size);
+              originalIds.forEach(id => {
+                expect(prioritizedIds.has(id)).toBe(true);
+              });
+            }
+          ),
+          { numRuns: 100 }
+        );
+      });
+
+      it('debe funcionar con array vacío', async () => {
+        // Verifica que priorizar un array vacío devuelve un array vacío
+        
+        const prioritized = service.prioritizeAlerts([]);
+        expect(prioritized).toEqual([]);
+        expect(prioritized.length).toBe(0);
+      });
+
+      it('debe funcionar con una sola notificación', async () => {
+        // Verifica que priorizar una sola notificación la devuelve sin cambios
+        
+        await fc.assert(
+          fc.asyncProperty(
+            fc.record({
+              id: fc.uuid(),
+              patientId: fc.uuid(),
+              type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+              priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+              message: fc.string({ minLength: 10, maxLength: 100 }),
+              scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+              isDualAlert: fc.boolean(),
+            }),
+            async (notificationData) => {
+              const notification: Notification = {
+                ...notificationData,
+                type: notificationData.type as any,
+                status: NotificationStatus.SCHEDULED,
+                reminderSent: false,
+                createdAt: new Date(),
+              };
+
+              const prioritized = service.prioritizeAlerts([notification]);
+
+              expect(prioritized.length).toBe(1);
+              expect(prioritized[0].id).toBe(notification.id);
+              expect(prioritized[0].priority).toBe(notification.priority);
+            }
+          ),
+          { numRuns: 100 }
+        );
+      });
+
+      it('debe filtrar alertas por prioridad mínima en getAlertsByPriority', async () => {
+        // Verifica que getAlertsByPriority filtra correctamente por prioridad mínima
+        
+        await fc.assert(
+          fc.asyncProperty(
+            fc.array(
+              fc.record({
+                id: fc.uuid(),
+                patientId: fc.uuid(),
+                type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+                priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+                message: fc.string({ minLength: 10, maxLength: 100 }),
+                scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+                isDualAlert: fc.boolean(),
+              }),
+              { minLength: 5, maxLength: 20 }
+            ),
+            fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+            async (notificationsData, minPriority) => {
+              // Limpiar notificaciones existentes
+              await IndexedDBUtils.clear(IndexedDBUtils.STORES.NOTIFICATIONS);
+
+              // Crear y guardar notificaciones
+              const notifications: Notification[] = notificationsData.map(data => ({
+                ...data,
+                type: data.type as any,
+                status: NotificationStatus.SCHEDULED, // Solo SCHEDULED o SENT se incluyen
+                reminderSent: false,
+                createdAt: new Date(),
+              }));
+
+              for (const notification of notifications) {
+                await IndexedDBUtils.put(IndexedDBUtils.STORES.NOTIFICATIONS, notification);
+              }
+
+              // Obtener alertas filtradas
+              const filtered = await service.getAlertsByPriority(minPriority);
+
+              // Definir orden de prioridad
+              const priorityOrder: Record<Priority, number> = {
+                [Priority.CRITICAL]: 4,
+                [Priority.HIGH]: 3,
+                [Priority.MEDIUM]: 2,
+                [Priority.LOW]: 1,
+              };
+
+              const minPriorityValue = priorityOrder[minPriority];
+
+              // Verificar que todas las alertas filtradas tienen prioridad >= minPriority
+              filtered.forEach(alert => {
+                expect(priorityOrder[alert.priority]).toBeGreaterThanOrEqual(minPriorityValue);
+              });
+
+              // Verificar que están ordenadas por prioridad
+              for (let i = 1; i < filtered.length; i++) {
+                const prevPriority = priorityOrder[filtered[i - 1].priority];
+                const currPriority = priorityOrder[filtered[i].priority];
+                expect(prevPriority).toBeGreaterThanOrEqual(currPriority);
+              }
+
+              // Limpiar
+              await IndexedDBUtils.clear(IndexedDBUtils.STORES.NOTIFICATIONS);
+            }
+          ),
+          { numRuns: 20 }
+        );
+      });
+
+      it('debe excluir notificaciones atendidas o descartadas en getAlertsByPriority', async () => {
+        // Verifica que solo se incluyen notificaciones SCHEDULED o SENT
+        
+        await fc.assert(
+          fc.asyncProperty(
+            fc.array(
+              fc.record({
+                id: fc.uuid(),
+                patientId: fc.uuid(),
+                type: fc.constantFrom('MEDICATION', 'POSTURAL_CHANGE', 'HYDRATION', 'BATHROOM', 'RISK_ALERT'),
+                priority: fc.constantFrom(Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.CRITICAL),
+                message: fc.string({ minLength: 10, maxLength: 100 }),
+                scheduledTime: fc.date({ min: new Date(), max: new Date(Date.now() + 86400000) }),
+                isDualAlert: fc.boolean(),
+                status: fc.constantFrom(
+                  NotificationStatus.SCHEDULED,
+                  NotificationStatus.SENT,
+                  NotificationStatus.ACKNOWLEDGED,
+                  NotificationStatus.DISMISSED
+                ),
+              }),
+              { minLength: 5, maxLength: 20 }
+            ),
+            async (notificationsData) => {
+              // Limpiar notificaciones existentes
+              await IndexedDBUtils.clear(IndexedDBUtils.STORES.NOTIFICATIONS);
+
+              // Crear y guardar notificaciones
+              const notifications: Notification[] = notificationsData.map(data => ({
+                ...data,
+                type: data.type as any,
+                reminderSent: false,
+                createdAt: new Date(),
+              }));
+
+              for (const notification of notifications) {
+                await IndexedDBUtils.put(IndexedDBUtils.STORES.NOTIFICATIONS, notification);
+              }
+
+              // Obtener alertas
+              const alerts = await service.getAlertsByPriority();
+
+              // Verificar que solo incluye SCHEDULED o SENT
+              alerts.forEach(alert => {
+                expect(
+                  alert.status === NotificationStatus.SCHEDULED ||
+                  alert.status === NotificationStatus.SENT
+                ).toBe(true);
+              });
+
+              // Verificar que no incluye ACKNOWLEDGED o DISMISSED
+              const acknowledgedOrDismissed = notifications.filter(
+                n => n.status === NotificationStatus.ACKNOWLEDGED || n.status === NotificationStatus.DISMISSED
+              );
+              const alertIds = new Set(alerts.map(a => a.id));
+              
+              acknowledgedOrDismissed.forEach(n => {
+                expect(alertIds.has(n.id)).toBe(false);
+              });
+
+              // Limpiar
+              await IndexedDBUtils.clear(IndexedDBUtils.STORES.NOTIFICATIONS);
+            }
+          ),
+          { numRuns: 20 }
+        );
+      });
+    });
   });
 
   describe('Unit Tests', () => {

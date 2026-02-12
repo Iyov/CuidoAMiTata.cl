@@ -343,18 +343,18 @@ El enfoque prioriza:
     - **Propiedad 25: Filtrado de registros**
     - **Valida: Requisitos 9.5**
 
-- [ ] 20. Implementar sistema de priorización de alertas
-  - [ ] 20.1 Crear lógica de priorización y gestión de alertas
+- [x] 20. Implementar sistema de priorización de alertas
+  - [x] 20.1 Crear lógica de priorización y gestión de alertas
     - Implementar prioritizeAlerts (CRITICAL > HIGH > MEDIUM > LOW)
     - Implementar getAlertsByPriority
     - Integrar con NotificationService
     - _Requisitos: 11.3_
   
-  - [ ] 20.2 Escribir prueba de propiedad para priorización
+  - [x] 20.2 Escribir prueba de propiedad para priorización
     - **Propiedad 30: Priorización de alertas múltiples**
     - **Valida: Requisitos 11.3**
 
-- [ ] 21. Checkpoint - Verificar servicios avanzados
+- [x] 21. Checkpoint - Verificar servicios avanzados
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 

@@ -8,3 +8,4 @@ export * from './NotificationService';
 export * from './MedicationManager';
 export * from './FallPreventionManager';
 export * from './SkinIntegrityManager';
+export * from './NutritionManager';

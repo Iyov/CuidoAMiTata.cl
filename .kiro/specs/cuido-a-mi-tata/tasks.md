@@ -159,12 +159,12 @@ El enfoque prioriza:
     - Verificar horarios exactos
     - _Requisitos: 3.1, 3.2_
 
-- [ ] 10. Checkpoint - Verificar módulos de cuidado core
+- [x] 10. Checkpoint - Verificar módulos de cuidado core
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 
-- [ ] 11. Implementar Nutrition Manager
-  - [ ] 11.1 Crear NutritionManager con hidratación y dieta SEGG
+- [x] 11. Implementar Nutrition Manager
+  - [x] 11.1 Crear NutritionManager con hidratación y dieta SEGG
     - Implementar scheduleHydrationReminders (6-8 vasos)
     - Implementar recordFluidIntake con actualización de contador
     - Implementar getDailyHydrationStatus
@@ -172,15 +172,15 @@ El enfoque prioriza:
     - Implementar recordMealIntake con timestamp
     - _Requisitos: 4.1, 4.2, 4.3, 4.4, 4.5_
   
-  - [ ] 11.2 Escribir prueba de propiedad para estructura de plan de comidas
+  - [x] 11.2 Escribir prueba de propiedad para estructura de plan de comidas
     - **Propiedad 10: Estructura de plan de comidas SEGG**
     - **Valida: Requisitos 4.3**
   
-  - [ ] 11.3 Escribir prueba de propiedad para contador de hidratación
+  - [x] 11.3 Escribir prueba de propiedad para contador de hidratación
     - **Propiedad 11: Actualización de contador de hidratación**
     - **Valida: Requisitos 4.4**
   
-  - [ ] 11.4 Escribir pruebas unitarias para plan SEGG
+  - [x] 11.4 Escribir pruebas unitarias para plan SEGG
     - Verificar 5 comidas diarias
     - Verificar inclusión de alimentos SEGG
     - _Requisitos: 4.2, 4.3_
@@ -373,7 +373,7 @@ El enfoque prioriza:
     - **Propiedad 20: Contenido en español**
     - **Valida: Requisitos 8.3**
   
-  - [ ]* 22.4 Escribir pruebas unitarias para tema
+  - [ ] 22.4 Escribir pruebas unitarias para tema
     - Verificar modo oscuro por defecto
     - Verificar alternancia funciona
     - Verificar persistencia después de reload
@@ -451,7 +451,7 @@ El enfoque prioriza:
     - Indicador de estado de sincronización
     - _Requisitos: 9.2, 9.3, 9.5, 12.5, 13.5_
   
-  - [ ]* 29.2 Escribir prueba de propiedad para confirmación de exportación
+  - [ ] 29.2 Escribir prueba de propiedad para confirmación de exportación
     - **Propiedad 33: Confirmación para exportación de datos**
     - **Valida: Requisitos 12.5**
 
@@ -476,14 +476,14 @@ El enfoque prioriza:
     - Verificar flujos completos de cada módulo
     - _Requisitos: Todos_
   
-  - [ ]* 32.2 Escribir pruebas de integración para flujos principales
+  - [ ] 32.2 Escribir pruebas de integración para flujos principales
     - Flujo completo de medicación: programar → alertar → confirmar → registrar
     - Flujo de caída con factores de riesgo
     - Flujo offline-online completo
     - Flujo de múltiples pacientes
     - _Requisitos: 1.1, 1.3, 1.4, 2.3, 2.4, 13.1, 13.2, 13.3, 10.2_
   
-  - [ ]* 32.3 Verificar cobertura de pruebas
+  - [ ] 32.3 Verificar cobertura de pruebas
     - Ejecutar reporte de cobertura
     - Verificar mínimo 80% de cobertura
     - Verificar 100% en validaciones críticas

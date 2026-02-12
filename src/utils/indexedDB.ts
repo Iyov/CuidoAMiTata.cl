@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'CuidoAMiTataDB';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 // Nombres de object stores
 export const STORES = {
@@ -18,6 +18,8 @@ export const STORES = {
   RISK_ALERTS: 'riskAlerts',
   POSTURAL_CHANGES: 'posturalChanges',
   PRESSURE_ULCERS: 'pressureUlcers',
+  NUTRITION_EVENTS: 'nutritionEvents',
+  MEAL_PLANS: 'mealPlans',
 } as const;
 
 /**
@@ -113,6 +115,21 @@ export function initDB(): Promise<IDBDatabase> {
         pressureUlcerStore.createIndex('patientId', 'patientId', { unique: false });
         pressureUlcerStore.createIndex('grade', 'grade', { unique: false });
         pressureUlcerStore.createIndex('assessedAt', 'assessedAt', { unique: false });
+      }
+
+      // Store de eventos de nutrición
+      if (!db.objectStoreNames.contains(STORES.NUTRITION_EVENTS)) {
+        const nutritionEventStore = db.createObjectStore(STORES.NUTRITION_EVENTS, { keyPath: 'id' });
+        nutritionEventStore.createIndex('patientId', 'patientId', { unique: false });
+        nutritionEventStore.createIndex('type', 'type', { unique: false });
+        nutritionEventStore.createIndex('occurredAt', 'occurredAt', { unique: false });
+      }
+
+      // Store de planes de comidas
+      if (!db.objectStoreNames.contains(STORES.MEAL_PLANS)) {
+        const mealPlanStore = db.createObjectStore(STORES.MEAL_PLANS, { keyPath: 'id' });
+        mealPlanStore.createIndex('patientId', 'patientId', { unique: false });
+        mealPlanStore.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
   });

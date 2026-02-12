@@ -77,17 +77,18 @@ El enfoque prioriza:
     - **Valida: Requisitos 11.5**
     - **PBT Status**: ✅ PASSED
 
-- [ ] 5. Implementar modelos de datos base
-  - [ ] 5.1 Crear interfaces TypeScript para entidades principales
+- [x] 5. Implementar modelos de datos base
+  - [x] 5.1 Crear interfaces TypeScript para entidades principales
     - Definir Patient, Medication, MedicationEvent
     - Definir Notification, CareEvent
     - Definir User, UserPreferences
     - Implementar funciones de validación de modelos
     - _Requisitos: 9.1, 10.1_
   
-  - [ ]* 5.2 Escribir prueba de propiedad para registro temporal universal
+  - [x] 5.2 Escribir prueba de propiedad para registro temporal universal
     - **Propiedad 2: Registro temporal universal de eventos**
     - **Valida: Requisitos 1.2, 1.4, 2.2, 3.6, 4.5, 5.2, 5.3, 9.1**
+    - **PBT Status**: ✅ PASSED
 
 - [ ] 6. Checkpoint - Verificar servicios fundamentales
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.

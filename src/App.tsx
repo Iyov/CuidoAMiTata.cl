@@ -6,6 +6,10 @@ import {
   MedicationListScreen,
   MedicationFormScreen,
   MedicationConfirmScreen,
+  FallPreventionScreen,
+  FallPreventionChecklistScreen,
+  FallIncidentScreen,
+  FallRiskAlertsScreen,
 } from './screens';
 
 const HomePage: React.FC = () => (
@@ -25,6 +29,14 @@ const HomePage: React.FC = () => (
           <h2 className="text-xl font-semibold">Gestión de Medicamentos</h2>
           <p className="text-sm opacity-90">Administrar medicamentos y horarios</p>
         </Link>
+        
+        <Link
+          to="/fall-prevention"
+          className="block p-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors"
+        >
+          <h2 className="text-xl font-semibold">Prevención de Caídas</h2>
+          <p className="text-sm opacity-90">Evaluación de riesgos y registro de incidentes</p>
+        </Link>
       </div>
     </div>
   </div>
@@ -40,6 +52,10 @@ export const App: React.FC = () => {
           <Route path="/medications/add" element={<MedicationFormScreen />} />
           <Route path="/medications/:id/edit" element={<MedicationFormScreen />} />
           <Route path="/medications/:id/confirm" element={<MedicationConfirmScreen />} />
+          <Route path="/fall-prevention" element={<FallPreventionScreen />} />
+          <Route path="/fall-prevention/checklist" element={<FallPreventionChecklistScreen />} />
+          <Route path="/fall-prevention/incident" element={<FallIncidentScreen />} />
+          <Route path="/fall-prevention/alerts" element={<FallRiskAlertsScreen />} />
         </Routes>
       </Router>
     </ThemeProvider>

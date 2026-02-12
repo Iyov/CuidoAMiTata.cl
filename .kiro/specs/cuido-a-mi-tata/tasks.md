@@ -390,8 +390,8 @@ El enfoque prioriza:
     - Alertas duales visuales y auditivas
     - _Requisitos: 1.1, 1.3, 1.4, 1.5_
 
-- [ ] 24. Implementar pantallas de prevención de caídas
-  - [ ] 24.1 Crear UI para módulo de prevención de caídas
+- [x] 24. Implementar pantallas de prevención de caídas
+  - [x] 24.1 Crear UI para módulo de prevención de caídas
     - Pantalla de lista de verificación diaria (iluminación, suelos, calzado)
     - Pantalla de registro de incidente con campo obligatorio "tiempo en el suelo"
     - Panel de alertas de riesgo (sedantes, cognitivo, visión)

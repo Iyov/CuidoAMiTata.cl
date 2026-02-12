@@ -12,6 +12,7 @@ export const STORES = {
   CARE_EVENTS: 'careEvents',
   NOTIFICATIONS: 'notifications',
   SYNC_QUEUE: 'syncQueue',
+  ENCRYPTED_DATA: 'encrypted_data',
 } as const;
 
 /**
@@ -64,6 +65,12 @@ export function initDB(): Promise<IDBDatabase> {
           autoIncrement: true,
         });
         syncStore.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+
+      // Store de datos cifrados
+      if (!db.objectStoreNames.contains(STORES.ENCRYPTED_DATA)) {
+        const encryptedStore = db.createObjectStore(STORES.ENCRYPTED_DATA, { keyPath: 'id' });
+        encryptedStore.createIndex('timestamp', 'timestamp', { unique: false });
       }
     };
   });

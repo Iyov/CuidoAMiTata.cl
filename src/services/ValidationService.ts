@@ -158,6 +158,60 @@ export class ValidationService {
       isValid: true,
     };
   }
+
+  /**
+   * Valida que una justificación tenga contenido significativo
+   * Requiere al menos 3 caracteres alfanuméricos o de puntuación significativa
+   *
+   * @param justification - Texto de justificación a validar
+   * @param fieldName - Nombre del campo para el mensaje de error
+   * @returns ValidationResult con resultado y mensaje de error si aplica
+   */
+  validateJustification(justification: unknown, fieldName: string): ValidationResult {
+    // Primero validar que no esté vacío
+    const requiredValidation = this.validateRequiredField(justification, fieldName);
+    if (!requiredValidation.isValid) {
+      return requiredValidation;
+    }
+
+    // Validar que sea un string
+    if (typeof justification !== 'string') {
+      return {
+        isValid: false,
+        errorCode: ErrorCode.VALIDATION_INVALID_FORMAT,
+        message: `El campo "${fieldName}" debe ser texto`,
+      };
+    }
+
+    // Validar longitud mínima después de trim
+    const trimmed = justification.trim();
+    const MIN_JUSTIFICATION_LENGTH = 3;
+
+    if (trimmed.length < MIN_JUSTIFICATION_LENGTH) {
+      return {
+        isValid: false,
+        errorCode: ErrorCode.BUSINESS_JUSTIFICATION_REQUIRED,
+        message: `El campo "${fieldName}" debe contener al menos ${MIN_JUSTIFICATION_LENGTH} caracteres`,
+      };
+    }
+
+    // Validar que contenga al menos algunos caracteres alfanuméricos o de puntuación significativa
+    // Esto evita justificaciones como "!!!" o "   !"
+    const hasSignificantContent = /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ,.\-:;]/.test(trimmed);
+
+    if (!hasSignificantContent) {
+      return {
+        isValid: false,
+        errorCode: ErrorCode.BUSINESS_JUSTIFICATION_REQUIRED,
+        message: `El campo "${fieldName}" debe contener texto significativo`,
+      };
+    }
+
+    return {
+      isValid: true,
+    };
+  }
+
 }
 
 // Instancia singleton del servicio

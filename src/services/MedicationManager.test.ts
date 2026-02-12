@@ -908,7 +908,7 @@ describe('MedicationManager', () => {
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
               const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
-              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.CARE_EVENTS, eventId);
+              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
 
@@ -984,7 +984,7 @@ describe('MedicationManager', () => {
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
               const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
-              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.CARE_EVENTS, eventId);
+              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
 
@@ -1055,7 +1055,7 @@ describe('MedicationManager', () => {
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
               const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
-              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.CARE_EVENTS, eventId);
+              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
 
@@ -1133,7 +1133,7 @@ describe('MedicationManager', () => {
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
               const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
-              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.CARE_EVENTS, eventId);
+              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
 
@@ -1184,7 +1184,7 @@ describe('MedicationManager', () => {
               // Capturar estado antes de intentar omitir
               const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
               const eventBefore = await IndexedDBUtils.getById<MedicationEvent>(
-                IndexedDBUtils.STORES.CARE_EVENTS,
+                IndexedDBUtils.STORES.MEDICATION_EVENTS,
                 eventId
               );
 
@@ -1197,7 +1197,7 @@ describe('MedicationManager', () => {
 
               // Verificar que el estado NO cambió
               const eventAfter = await IndexedDBUtils.getById<MedicationEvent>(
-                IndexedDBUtils.STORES.CARE_EVENTS,
+                IndexedDBUtils.STORES.MEDICATION_EVENTS,
                 eventId
               );
 
@@ -1208,7 +1208,7 @@ describe('MedicationManager', () => {
 
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
-              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.CARE_EVENTS, eventId);
+              await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
 
@@ -1270,7 +1270,7 @@ describe('MedicationManager', () => {
         // Paso 3: Verificar que se creó el evento
         const eventId = `event-med-flow-1-${scheduledTime.getTime()}`;
         const eventBefore = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(eventBefore).toBeDefined();
@@ -1285,7 +1285,7 @@ describe('MedicationManager', () => {
 
         // Paso 5: Verificar que el evento fue registrado correctamente
         const eventAfter = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(eventAfter?.status).toBe(MedicationEventStatus.CONFIRMED);
@@ -1337,11 +1337,11 @@ describe('MedicationManager', () => {
 
         // Verificar que se crearon 2 eventos
         const event1Before = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-flow-2-${scheduledTime1.getTime()}`
         );
         const event2Before = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-flow-2-${scheduledTime2.getTime()}`
         );
         expect(event1Before).toBeDefined();
@@ -1357,11 +1357,11 @@ describe('MedicationManager', () => {
 
         // Verificar que ambos eventos fueron confirmados
         const event1After = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-flow-2-${scheduledTime1.getTime()}`
         );
         const event2After = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-flow-2-${scheduledTime2.getTime()}`
         );
         expect(event1After?.status).toBe(MedicationEventStatus.CONFIRMED);
@@ -1405,7 +1405,7 @@ describe('MedicationManager', () => {
         // Verificar marca temporal en evento inicial
         const eventId = `event-med-flow-3-${scheduledTime.getTime()}`;
         const eventBefore = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(eventBefore?.createdAt).toBeDefined();
@@ -1416,7 +1416,7 @@ describe('MedicationManager', () => {
 
         // Verificar marca temporal de confirmación
         const eventAfter = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(eventAfter?.actualTime).toBeDefined();
@@ -1464,7 +1464,7 @@ describe('MedicationManager', () => {
         // Verificar que el evento sigue pendiente (no se modificó)
         const eventId = `event-med-omit-1-${scheduledTime.getTime()}`;
         const event = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(event?.status).toBe(MedicationEventStatus.PENDING);
@@ -1509,7 +1509,7 @@ describe('MedicationManager', () => {
         // Verificar que el evento sigue pendiente
         const eventId = `event-med-omit-2-${scheduledTime.getTime()}`;
         const event = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(event?.status).toBe(MedicationEventStatus.PENDING);
@@ -1589,7 +1589,7 @@ describe('MedicationManager', () => {
         // Verificar que el evento fue actualizado correctamente
         const eventId = `event-med-omit-valid-1-${scheduledTime.getTime()}`;
         const event = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(event?.status).toBe(MedicationEventStatus.OMITTED);
@@ -1643,7 +1643,7 @@ describe('MedicationManager', () => {
           // Verificar que la justificación fue guardada
           const eventId = `event-${medId}-${scheduledTime.getTime()}`;
           const event = await IndexedDBUtils.getById<MedicationEvent>(
-            IndexedDBUtils.STORES.CARE_EVENTS,
+            IndexedDBUtils.STORES.MEDICATION_EVENTS,
             eventId
           );
           expect(event?.justification).toBe(justifications[i]);
@@ -1683,7 +1683,7 @@ describe('MedicationManager', () => {
         // Verificar marca temporal
         const eventId = `event-med-omit-valid-7-${scheduledTime.getTime()}`;
         const event = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           eventId
         );
         expect(event?.actualTime).toBeDefined();
@@ -1737,11 +1737,11 @@ describe('MedicationManager', () => {
 
         // Verificar que ambas dosis fueron omitidas con sus justificaciones
         const event1 = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-omit-valid-8-${scheduledTime1.getTime()}`
         );
         const event2 = await IndexedDBUtils.getById<MedicationEvent>(
-          IndexedDBUtils.STORES.CARE_EVENTS,
+          IndexedDBUtils.STORES.MEDICATION_EVENTS,
           `event-med-omit-valid-8-${scheduledTime2.getTime()}`
         );
 
@@ -1753,3 +1753,4 @@ describe('MedicationManager', () => {
     });
   });
 });
+

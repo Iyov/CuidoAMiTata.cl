@@ -221,7 +221,7 @@ export class MedicationManager {
     try {
       // Validar justificación obligatoria (Requisito 1.5)
       const validationService = getValidationService();
-      const justificationValidation = validationService.validateRequiredField(
+      const justificationValidation = validationService.validateJustification(
         justification,
         'justificación'
       );
@@ -229,7 +229,7 @@ export class MedicationManager {
       if (!justificationValidation.isValid) {
         return Err({
           code: ErrorCode.BUSINESS_JUSTIFICATION_REQUIRED,
-          message: 'Debe proporcionar una justificación para omitir esta dosis',
+          message: justificationValidation.message || 'Debe proporcionar una justificación para omitir esta dosis',
         });
       }
 

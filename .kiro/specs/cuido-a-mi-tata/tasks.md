@@ -229,33 +229,33 @@ El enfoque prioriza:
     - Verificar formato PDF válido
     - _Requisitos: 6.2_
 
-- [ ] 14. Implementar Ethical Care Module
-  - [ ] 14.1 Crear EthicalCareModule con validación de restricciones
+- [x] 14. Implementar Ethical Care Module
+  - [x] 14.1 Crear EthicalCareModule con validación de restricciones
     - Implementar validateRestraint con bloqueo de restricciones químicas
     - Implementar classifyRestraint (químicas, mecánicas, ambientales)
     - Implementar getAlternativeStrategies (distracción, comunicación, ambiente)
     - Implementar requireJustification para todas las restricciones
     - _Requisitos: 7.1, 7.2, 7.3, 7.4, 7.5_
   
-  - [ ] 14.2 Escribir prueba de propiedad para bloqueo de restricciones químicas
+  - [x] 14.2 Escribir prueba de propiedad para bloqueo de restricciones químicas
     - **Propiedad 17: Bloqueo de restricciones químicas**
     - **Valida: Requisitos 7.1**
   
-  - [ ] 14.3 Escribir prueba de propiedad para clasificación automática
+  - [x] 14.3 Escribir prueba de propiedad para clasificación automática
     - **Propiedad 18: Clasificación automática de restricciones mecánicas**
     - **Valida: Requisitos 7.2**
   
-  - [ ] 14.4 Escribir prueba de propiedad para panel de alternativas
+  - [x] 14.4 Escribir prueba de propiedad para panel de alternativas
     - **Propiedad 19: Panel de estrategias alternativas**
     - **Valida: Requisitos 7.3**
   
-  - [ ] 14.5 Escribir pruebas unitarias para bloqueo de restricciones
+  - [x] 14.5 Escribir pruebas unitarias para bloqueo de restricciones
     - Sedante para manejo conductual → bloqueado
     - Sedante para indicación médica → permitido
     - Verificar mensaje de advertencia
     - _Requisitos: 7.1_
 
-- [ ] 15. Checkpoint - Verificar módulos de cuidado completos
+- [x] 15. Checkpoint - Verificar módulos de cuidado completos
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 

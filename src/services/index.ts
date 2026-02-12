@@ -11,3 +11,4 @@ export * from './SkinIntegrityManager';
 export * from './NutritionManager';
 export * from './IncontinenceManager';
 export * from './PolypharmacyManager';
+export * from './EthicalCareModule';

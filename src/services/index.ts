@@ -9,3 +9,4 @@ export * from './MedicationManager';
 export * from './FallPreventionManager';
 export * from './SkinIntegrityManager';
 export * from './NutritionManager';
+export * from './IncontinenceManager';

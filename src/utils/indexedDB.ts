@@ -3,12 +3,13 @@
  */
 
 const DB_NAME = 'CuidoAMiTataDB';
-const DB_VERSION = 4;
+const DB_VERSION = 6;
 
 // Nombres de object stores
 export const STORES = {
   PATIENTS: 'patients',
   MEDICATIONS: 'medications',
+  MEDICATION_EVENTS: 'medicationEvents',
   CARE_EVENTS: 'careEvents',
   NOTIFICATIONS: 'notifications',
   SYNC_QUEUE: 'syncQueue',
@@ -20,6 +21,7 @@ export const STORES = {
   PRESSURE_ULCERS: 'pressureUlcers',
   NUTRITION_EVENTS: 'nutritionEvents',
   MEAL_PLANS: 'mealPlans',
+  INCONTINENCE_EVENTS: 'incontinenceEvents',
 } as const;
 
 /**
@@ -46,6 +48,15 @@ export function initDB(): Promise<IDBDatabase> {
         const medicationStore = db.createObjectStore(STORES.MEDICATIONS, { keyPath: 'id' });
         medicationStore.createIndex('patientId', 'patientId', { unique: false });
         medicationStore.createIndex('isActive', 'isActive', { unique: false });
+      }
+
+      // Store de eventos de medicación
+      if (!db.objectStoreNames.contains(STORES.MEDICATION_EVENTS)) {
+        const medicationEventStore = db.createObjectStore(STORES.MEDICATION_EVENTS, { keyPath: 'id' });
+        medicationEventStore.createIndex('medicationId', 'medicationId', { unique: false });
+        medicationEventStore.createIndex('patientId', 'patientId', { unique: false });
+        medicationEventStore.createIndex('status', 'status', { unique: false });
+        medicationEventStore.createIndex('scheduledTime', 'scheduledTime', { unique: false });
       }
 
       // Store de eventos de cuidado
@@ -130,6 +141,14 @@ export function initDB(): Promise<IDBDatabase> {
         const mealPlanStore = db.createObjectStore(STORES.MEAL_PLANS, { keyPath: 'id' });
         mealPlanStore.createIndex('patientId', 'patientId', { unique: false });
         mealPlanStore.createIndex('createdAt', 'createdAt', { unique: false });
+      }
+
+      // Store de eventos de incontinencia
+      if (!db.objectStoreNames.contains(STORES.INCONTINENCE_EVENTS)) {
+        const incontinenceEventStore = db.createObjectStore(STORES.INCONTINENCE_EVENTS, { keyPath: 'id' });
+        incontinenceEventStore.createIndex('patientId', 'patientId', { unique: false });
+        incontinenceEventStore.createIndex('type', 'type', { unique: false });
+        incontinenceEventStore.createIndex('occurredAt', 'occurredAt', { unique: false });
       }
     };
   });

@@ -185,21 +185,23 @@ El enfoque prioriza:
     - Verificar inclusión de alimentos SEGG
     - _Requisitos: 4.2, 4.3_
 
-- [ ] 12. Implementar Incontinence Manager
-  - [ ] 12.1 Crear IncontinenceManager con programación de baño
+- [x] 12. Implementar Incontinence Manager
+  - [x] 12.1 Crear IncontinenceManager con programación de baño
     - Implementar scheduleBathroomReminders (cada 2-3 horas)
     - Implementar recordBathroomVisit con timestamp
     - Implementar recordIncontinenceEpisode con timestamp
     - Implementar analyzePatterns para análisis de tendencias
     - _Requisitos: 5.1, 5.2, 5.3, 5.4_
   
-  - [ ] 12.2 Escribir prueba de propiedad para programación de recordatorios
+  - [x] 12.2 Escribir prueba de propiedad para programación de recordatorios
     - **Propiedad 12: Programación de recordatorios de baño**
     - **Valida: Requisitos 5.1**
+    - **PBT Status**: ✅ PASSED
   
-  - [ ] 12.3 Escribir prueba de propiedad para persistencia de historial
+  - [x] 12.3 Escribir prueba de propiedad para persistencia de historial
     - **Propiedad 13: Persistencia de historial de episodios**
     - **Valida: Requisitos 5.4**
+    - **PBT Status**: ✅ PASSED
 
 - [ ] 13. Implementar Polypharmacy Manager
   - [ ] 13.1 Crear PolypharmacyManager con gestión de medicamentos

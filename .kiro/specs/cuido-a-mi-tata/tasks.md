@@ -358,8 +358,8 @@ El enfoque prioriza:
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 
-- [ ] 22. Implementar componentes de UI base
-  - [ ] 22.1 Crear componentes React base con tema oscuro/claro
+- [x] 22. Implementar componentes de UI base
+  - [x] 22.1 Crear componentes React base con tema oscuro/claro
     - Crear ThemeProvider con modo oscuro por defecto
     - Crear ThemeToggle para alternancia claro/oscuro
     - Implementar persistencia de preferencia de tema
@@ -367,15 +367,15 @@ El enfoque prioriza:
     - Configurar navegación entre pantallas
     - _Requisitos: 8.1, 8.2, 8.3, 8.5_
   
-  - [ ] 22.2 Escribir prueba de propiedad para persistencia de tema
+  - [x] 22.2 Escribir prueba de propiedad para persistencia de tema
     - **Propiedad 21: Persistencia de preferencia de tema**
     - **Valida: Requisitos 8.5**
   
-  - [ ] 22.3 Escribir prueba de propiedad para contenido en español
+  - [x] 22.3 Escribir prueba de propiedad para contenido en español
     - **Propiedad 20: Contenido en español**
     - **Valida: Requisitos 8.3**
   
-  - [ ] 22.4 Escribir pruebas unitarias para tema
+  - [x] 22.4 Escribir pruebas unitarias para tema
     - Verificar modo oscuro por defecto
     - Verificar alternancia funciona
     - Verificar persistencia después de reload

@@ -273,8 +273,8 @@ El enfoque prioriza:
     - Verificar que actividad resetea el temporizador
     - _Requisitos: 12.4_
 
-- [ ] 17. Implementar Data Sync Service
-  - [ ] 17.1 Crear DataSyncService con sincronización offline
+- [x] 17. Implementar Data Sync Service
+  - [x] 17.1 Crear DataSyncService con sincronización offline
     - Implementar syncPendingEvents
     - Implementar resolveConflicts (priorizar timestamp más reciente)
     - Implementar getConnectionStatus
@@ -282,19 +282,19 @@ El enfoque prioriza:
     - Implementar queueEventForSync
     - _Requisitos: 13.1, 13.2, 13.3, 13.4, 13.5_
   
-  - [ ] 17.2 Escribir prueba de propiedad para almacenamiento local offline
+  - [x] 17.2 Escribir prueba de propiedad para almacenamiento local offline
     - **Propiedad 34: Almacenamiento local de eventos offline**
     - **Valida: Requisitos 13.2**
   
-  - [ ] 17.3 Escribir prueba de propiedad para sincronización automática
+  - [x] 17.3 Escribir prueba de propiedad para sincronización automática
     - **Propiedad 35: Sincronización automática al reconectar**
     - **Valida: Requisitos 13.3**
   
-  - [ ] 17.4 Escribir prueba de propiedad para resolución de conflictos
+  - [x] 17.4 Escribir prueba de propiedad para resolución de conflictos
     - **Propiedad 36: Resolución de conflictos por timestamp**
     - **Valida: Requisitos 13.4**
   
-  - [ ] 17.5 Escribir pruebas de integración para flujo offline-online
+  - [x] 17.5 Escribir pruebas de integración para flujo offline-online
     - Desconectar → registrar eventos → reconectar → verificar sincronización
     - _Requisitos: 13.1, 13.2, 13.3_
 

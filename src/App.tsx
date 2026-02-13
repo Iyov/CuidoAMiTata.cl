@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { getIntegrationService } from './services';
 import {
   MedicationListScreen,
   MedicationFormScreen,
@@ -74,6 +75,57 @@ const HomePage: React.FC = () => (
 );
 
 export const App: React.FC = () => {
+  const [integrationReady, setIntegrationReady] = useState(false);
+  const [integrationError, setIntegrationError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Initialize integration service on app startup
+    const initializeIntegration = async () => {
+      try {
+        const integrationService = await getIntegrationService();
+        const verificationResult = await integrationService.verifyIntegration();
+        
+        if (verificationResult.isError()) {
+          setIntegrationError(verificationResult.error.message);
+        } else {
+          setIntegrationReady(true);
+        }
+      } catch (error) {
+        setIntegrationError(
+          error instanceof Error ? error.message : 'Error al inicializar la aplicación'
+        );
+      }
+    };
+
+    initializeIntegration();
+  }, []);
+
+  if (integrationError) {
+    return (
+      <ThemeProvider>
+        <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl font-bold text-red-600 mb-4">Error de Inicialización</h1>
+            <p className="text-lg">{integrationError}</p>
+          </div>
+        </div>
+      </ThemeProvider>
+    );
+  }
+
+  if (!integrationReady) {
+    return (
+      <ThemeProvider>
+        <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl font-bold mb-4">Cargando...</h1>
+            <p className="text-lg">Inicializando servicios...</p>
+          </div>
+        </div>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider>
       <Router>

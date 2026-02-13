@@ -16,3 +16,4 @@ export * from './PolypharmacyManager';
 export * from './EthicalCareModule';
 export * from './PatientManager';
 export * from './HistoryService';
+export * from './IntegrationService';

@@ -471,22 +471,22 @@ El enfoque prioriza:
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 
-- [ ] 32. Integración final y pruebas end-to-end
-  - [ ] 32.1 Conectar todos los módulos
+- [x] 32. Integración final y pruebas end-to-end
+  - [x] 32.1 Conectar todos los módulos
     - Integrar todos los managers con UI
     - Conectar NotificationService con todos los módulos
     - Conectar DataSyncService con todos los eventos
     - Verificar flujos completos de cada módulo
     - _Requisitos: Todos_
   
-  - [ ] 32.2 Escribir pruebas de integración para flujos principales
+  - [x] 32.2 Escribir pruebas de integración para flujos principales
     - Flujo completo de medicación: programar → alertar → confirmar → registrar
     - Flujo de caída con factores de riesgo
     - Flujo offline-online completo
     - Flujo de múltiples pacientes
     - _Requisitos: 1.1, 1.3, 1.4, 2.3, 2.4, 13.1, 13.2, 13.3, 10.2_
   
-  - [ ] 32.3 Verificar cobertura de pruebas
+  - [x] 32.3 Verificar cobertura de pruebas
     - Ejecutar reporte de cobertura
     - Verificar mínimo 80% de cobertura
     - Verificar 100% en validaciones críticas

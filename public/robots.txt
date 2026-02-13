@@ -1,0 +1,21 @@
+# robots.txt para CuidoAMiTata.cl
+
+User-agent: *
+Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
+# Bloquear archivos innecesarios
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /tailwind.config.js
+
+# Sitemap
+Sitemap: https://cuidoamitata.cl/sitemap.xml
+
+# Crawl-delay (opcional, para ser amable con los bots)
+Crawl-delay: 1

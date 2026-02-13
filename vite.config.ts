@@ -2,7 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig({
+  // Base path para GitHub Pages
+  // Como usas dominio custom (cuidoamitata.cl), usa '/'
+  base: '/',
+  
   plugins: [react()],
   resolve: {
     alias: {
@@ -49,13 +54,18 @@ export default defineConfig({
     },
     // Optimizar tamaño de chunks
     chunkSizeWarningLimit: 1000,
+    // Copiar archivos estáticos necesarios para GitHub Pages
+    copyPublicDir: true,
   },
+  // Directorio público para archivos estáticos
+  publicDir: 'public',
   // Optimizaciones de desarrollo
   server: {
     hmr: {
       overlay: true,
     },
   },
+  // @ts-expect-error - Vitest config
   test: {
     globals: true,
     environment: 'jsdom',

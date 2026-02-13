@@ -30,3 +30,26 @@ coverage/
 # Archivos temporales
 *.tmp
 *.log
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Sentry
+.sentryclirc
+
+# Build artifacts
+*.tgz

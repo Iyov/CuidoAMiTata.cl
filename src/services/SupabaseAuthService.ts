@@ -142,17 +142,37 @@ export class SupabaseAuthService {
 
   private async saveUserInfo(userId: string, email: string): Promise<void> {
     try {
-      // Obtener perfil del usuario desde la tabla profiles
-      const { data: profile } = await supabase
+      // Guardar información básica primero
+      LocalStorageUtils.setItem('user_id', userId);
+      LocalStorageUtils.setItem('user_email', email);
+      
+      // Intentar obtener perfil del usuario desde la tabla profiles
+      const { data: profile, error } = await supabase
         .from('profiles')
         .select('name, role')
         .eq('id', userId)
         .single();
 
-      LocalStorageUtils.setItem('user_id', userId);
-      LocalStorageUtils.setItem('user_email', email);
-      
-      if (profile) {
+      if (error) {
+        console.warn('No se encontró perfil para el usuario, usando valores por defecto:', error);
+        // Intentar crear el perfil automáticamente
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            email: email,
+            name: email.split('@')[0],
+            role: 'cuidador'
+          });
+        
+        if (insertError) {
+          console.error('Error al crear perfil automáticamente:', insertError);
+        }
+        
+        // Usar valores por defecto
+        LocalStorageUtils.setItem('user_name', email.split('@')[0]);
+        LocalStorageUtils.setItem('user_role', 'cuidador');
+      } else if (profile) {
         LocalStorageUtils.setItem('user_name', profile.name);
         LocalStorageUtils.setItem('user_role', profile.role);
       } else {

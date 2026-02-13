@@ -53,12 +53,19 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
 
     try {
       setLoading(true);
+      setError(null);
+      console.log('🔐 Intentando iniciar sesión con:', credentials.email);
+      
       const authService = await getAuthService();
+      console.log('✅ AuthService obtenido');
       
       if (isLogin) {
+        console.log('📝 Llamando a login...');
         const result = await authService.login(credentials);
+        console.log('📊 Resultado del login:', result);
         
         if (result.ok) {
+          console.log('✅ Login exitoso!');
           // Login exitoso
           if (onLoginSuccess) {
             onLoginSuccess();
@@ -66,15 +73,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             window.location.hash = '#/';
           }
         } else {
-          setError(result.error.message);
+          console.error('❌ Error en login:', result.error);
+          setError(`${result.error.message} (Código: ${result.error.code})`);
         }
       } else {
         // Registro (simulado por ahora)
         setError('El registro no está disponible en esta versión');
       }
     } catch (err) {
-      setError('Error al procesar la solicitud');
-      console.error(err);
+      console.error('💥 Error crítico:', err);
+      setError(`Error al procesar la solicitud: ${err instanceof Error ? err.message : 'Error desconocido'}`);
     } finally {
       setLoading(false);
     }
@@ -184,7 +192,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         </Card>
 
         {/* Información de seguridad */}
-        <div class="mt-6 p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+        <div className="mt-6 p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
           <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">
             🔒 Tu seguridad es nuestra prioridad
           </h3>

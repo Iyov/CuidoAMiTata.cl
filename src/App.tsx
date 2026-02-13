@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { AuthScreen } from './screens/AuthScreen';
@@ -154,18 +154,21 @@ export const App: React.FC = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
-    console.log('App component mounted');
+    console.log('🚀 App component mounted');
     
     // Check if user is already authenticated
     const checkAuth = async () => {
       try {
+        console.log('🔍 Checking authentication...');
         const authService = await getAuthService();
         const isValid = await authService.isAuthenticated();
+        console.log('✅ Authentication check result:', isValid);
         setIsAuthenticated(isValid);
       } catch (error) {
-        console.error('Error checking authentication:', error);
+        console.error('❌ Error checking authentication:', error);
         setIsAuthenticated(false);
       } finally {
+        console.log('✅ Auth check complete, setting isCheckingAuth to false');
         setIsCheckingAuth(false);
       }
     };
@@ -175,11 +178,11 @@ export const App: React.FC = () => {
     // Initialize integration service in background
     const initializeApp = async () => {
       try {
-        console.log('Initializing integration service...');
+        console.log('🔧 Initializing integration service...');
         await getIntegrationService();
-        console.log('Integration service initialized successfully');
+        console.log('✅ Integration service initialized successfully');
       } catch (error) {
-        console.error('Error al inicializar la aplicación:', error);
+        console.error('❌ Error al inicializar la aplicación:', error);
       }
     };
 
@@ -187,10 +190,13 @@ export const App: React.FC = () => {
   }, []);
 
   const handleLoginSuccess = () => {
+    console.log('🎉 Login success callback triggered');
     setIsAuthenticated(true);
+    setIsCheckingAuth(false);
   };
 
   const handleLogout = async () => {
+    console.log('👋 Logout initiated');
     try {
       const authService = await getAuthService();
       await authService.logout();
@@ -198,16 +204,17 @@ export const App: React.FC = () => {
       // Redirigir a la landing page
       window.location.href = '/index.html';
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error('❌ Error during logout:', error);
       // Aún así redirigir a la landing page
       window.location.href = '/index.html';
     }
   };
 
-  console.log('App rendering - isAuthenticated:', isAuthenticated, 'isCheckingAuth:', isCheckingAuth);
+  console.log('🎨 App rendering - isAuthenticated:', isAuthenticated, 'isCheckingAuth:', isCheckingAuth);
 
   // Show loading while checking authentication
   if (isCheckingAuth) {
+    console.log('⏳ Showing loading screen');
     return (
       <ThemeProvider>
         <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center">
@@ -222,6 +229,7 @@ export const App: React.FC = () => {
 
   // Show login screen if not authenticated
   if (!isAuthenticated) {
+    console.log('🔐 Showing login screen');
     return (
       <ThemeProvider>
         <AuthScreen onLoginSuccess={handleLoginSuccess} />
@@ -229,6 +237,7 @@ export const App: React.FC = () => {
     );
   }
 
+  console.log('✅ Showing main app');
   return (
     <ThemeProvider>
       <Router basename={window.location.pathname.includes('app.html') ? '/app.html' : '/'}>

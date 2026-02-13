@@ -71,33 +71,134 @@ CuidoAMiTata es una aplicación móvil y web moderna diseñada para cuidadores q
 - **Prettier** - Formato de código
 - **Font Awesome 6.5** - Iconografía
 
-## 📦 Instalación
+## 📦 Instalación y Configuración
 
 ### Prerrequisitos
 
 - Node.js 18.x o superior
 - npm 9.x o superior
+- Cuenta de Supabase (gratuita) - [Crear cuenta](https://supabase.com)
 
-### Pasos de Instalación
+### Configuración Rápida (5 minutos)
 
-1. **Clonar el repositorio**
+#### 1. Clonar el repositorio
 ```bash
 git clone https://github.com/Iyov/CuidoAMiTata.cl.git
 cd CuidoAMiTata.cl
 ```
 
-2. **Instalar dependencias**
+#### 2. Instalar dependencias
 ```bash
 npm install
 ```
 
-3. **Iniciar servidor de desarrollo**
+#### 3. Configurar Supabase
+
+**a) Crear proyecto en Supabase:**
+1. Ve a [https://supabase.com](https://supabase.com) y crea una cuenta
+2. Haz clic en "New Project"
+3. Completa:
+   - Name: `CuidoAMiTata`
+   - Database Password: (genera una segura)
+   - Region: `South America` (o la más cercana)
+4. Espera 2-3 minutos mientras se crea
+
+**b) Obtener credenciales:**
+1. En tu proyecto, ve a **Settings** ⚙️ > **API**
+2. Copia:
+   - **Project URL**: `https://xxxxx.supabase.co`
+   - **anon public key**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+**c) Crear archivo de configuración:**
+```bash
+# Copia el ejemplo
+cp .env.local.example .env.local
+
+# Edita .env.local y pega tus credenciales
+```
+
+Tu `.env.local` debe verse así:
+```bash
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+VITE_SUPABASE_ANON_KEY=tu_anon_key_aqui
+```
+
+**d) Crear tablas en Supabase:**
+1. En Supabase, ve a **SQL Editor**
+2. Crea una nueva query
+3. Copia y pega el siguiente SQL:
+
+```sql
+-- Crear tabla de perfiles
+CREATE TABLE profiles (
+  id UUID REFERENCES auth.users(id) PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('admin', 'cuidador', 'familiar')),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Habilitar Row Level Security
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Políticas de seguridad
+CREATE POLICY "Users can view own profile"
+  ON profiles FOR SELECT
+  USING (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile"
+  ON profiles FOR UPDATE
+  USING (auth.uid() = id);
+
+-- Función para crear perfil automáticamente
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, name, role)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
+    COALESCE(NEW.raw_user_meta_data->>'role', 'cuidador')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger para crear perfil automáticamente
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+```
+
+4. Haz clic en **Run** para ejecutar
+
+**e) Crear usuarios de prueba:**
+1. En Supabase, ve a **Authentication** > **Users**
+2. Haz clic en **Add user** > **Create new user**
+3. Completa:
+   - Email: `admin@cuidoamitata.cl`
+   - Password: `admin123`
+   - Auto Confirm User: ✅ Activado
+4. Haz clic en **Create user**
+5. Repite para crear más usuarios si deseas
+
+#### 4. Iniciar la aplicación
 ```bash
 npm run dev
 ```
 
-4. **Abrir en navegador**
-- Navega a `http://localhost:5173`
+#### 5. Abrir en navegador
+- Landing page: `http://localhost:5173`
+- Aplicación: `http://localhost:5173/app.html`
+- Inicia sesión con: `admin@cuidoamitata.cl` / `admin123`
+
+### 📖 Documentación Detallada
+
+Para instrucciones completas, troubleshooting y mejores prácticas, lee:
+- [SUPABASE_SETUP.md](SUPABASE_SETUP.md) - Guía completa de Supabase
+- [SETUP.md](SETUP.md) - Configuración del proyecto
 
 ## 🛠️ Scripts Disponibles
 

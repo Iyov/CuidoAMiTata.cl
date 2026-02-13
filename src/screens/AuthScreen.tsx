@@ -184,22 +184,22 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         </Card>
 
         {/* Información de seguridad */}
-        <div className="mt-6 p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+        <div class="mt-6 p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
           <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">
             🔒 Tu seguridad es nuestra prioridad
           </h3>
           <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+            <li>• Autenticación con Supabase</li>
             <li>• Cifrado AES-256 para datos sensibles</li>
-            <li>• Autenticación JWT segura</li>
+            <li>• Tokens JWT seguros</li>
             <li>• Cierre automático por inactividad (15 min)</li>
-            <li>• Cumplimiento con regulaciones de privacidad</li>
           </ul>
         </div>
 
-        {/* Demo credentials */}
-        <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-          <p className="text-xs text-yellow-800 dark:text-yellow-200 text-center">
-            <strong>Demo:</strong> Usa cualquier email y contraseña de 6+ caracteres
+        {/* Información para nuevos usuarios */}
+        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <p className="text-xs text-blue-800 dark:text-blue-200 text-center">
+            ¿No tienes cuenta? Contacta al administrador para crear tu usuario
           </p>
         </div>
       </div>

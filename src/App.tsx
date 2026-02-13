@@ -1,8 +1,10 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { AuthScreen } from './screens/AuthScreen';
 import { getIntegrationService } from './services';
+import { getAuthService } from './services/AuthService';
 
 // Lazy loading de pantallas para optimizar carga inicial
 const MedicationListScreen = lazy(() =>
@@ -58,14 +60,31 @@ const LoadingFallback: React.FC = () => (
   </div>
 );
 
-const HomePage: React.FC = () => (
-  <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
-    <div className="max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">CuidoAMiTata</h1>
-        <ThemeToggle />
-      </div>
-      <p className="text-lg mb-6">Aplicación de gestión de cuidados geriátricos</p>
+const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+  const userName = localStorage.getItem('user_name') || 'Usuario';
+  const userRole = localStorage.getItem('user_role') || 'cuidador';
+  
+  return (
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">CuidoAMiTata</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+              Bienvenido, {userName} ({userRole})
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              onClick={onLogout}
+              className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
+        </div>
+        <p className="text-lg mb-6">Aplicación de gestión de cuidados geriátricos</p>
       
       <nav aria-label="Navegación principal">
         <ul className="space-y-4" role="list">
@@ -127,66 +146,95 @@ const HomePage: React.FC = () => (
       </nav>
     </div>
   </div>
-);
+  );
+};
 
 export const App: React.FC = () => {
-  const [integrationReady, setIntegrationReady] = useState(false);
-  const [integrationError, setIntegrationError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
-    // Initialize integration service on app startup
-    const initializeIntegration = async () => {
+    console.log('App component mounted');
+    
+    // Check if user is already authenticated
+    const checkAuth = async () => {
       try {
-        const integrationService = await getIntegrationService();
-        const verificationResult = await integrationService.verifyIntegration();
-        
-        if (verificationResult.isError()) {
-          setIntegrationError(verificationResult.error.message);
-        } else {
-          setIntegrationReady(true);
-        }
+        const authService = await getAuthService();
+        const isValid = await authService.isAuthenticated();
+        setIsAuthenticated(isValid);
       } catch (error) {
-        setIntegrationError(
-          error instanceof Error ? error.message : 'Error al inicializar la aplicación'
-        );
+        console.error('Error checking authentication:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setIsCheckingAuth(false);
       }
     };
 
-    initializeIntegration();
+    checkAuth();
+
+    // Initialize integration service in background
+    const initializeApp = async () => {
+      try {
+        console.log('Initializing integration service...');
+        await getIntegrationService();
+        console.log('Integration service initialized successfully');
+      } catch (error) {
+        console.error('Error al inicializar la aplicación:', error);
+      }
+    };
+
+    initializeApp();
   }, []);
 
-  if (integrationError) {
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const authService = await getAuthService();
+      await authService.logout();
+      setIsAuthenticated(false);
+      // Redirigir a la landing page
+      window.location.href = '/index.html';
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Aún así redirigir a la landing page
+      window.location.href = '/index.html';
+    }
+  };
+
+  console.log('App rendering - isAuthenticated:', isAuthenticated, 'isCheckingAuth:', isCheckingAuth);
+
+  // Show loading while checking authentication
+  if (isCheckingAuth) {
     return (
       <ThemeProvider>
-        <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold text-red-600 mb-4">Error de Inicialización</h1>
-            <p className="text-lg">{integrationError}</p>
+        <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto mb-4"></div>
+            <p className="text-lg">Cargando...</p>
           </div>
         </div>
       </ThemeProvider>
     );
   }
 
-  if (!integrationReady) {
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
     return (
       <ThemeProvider>
-        <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-4">Cargando...</h1>
-            <p className="text-lg">Inicializando servicios...</p>
-          </div>
-        </div>
+        <AuthScreen onLoginSuccess={handleLoginSuccess} />
       </ThemeProvider>
     );
   }
 
   return (
     <ThemeProvider>
-      <Router>
+      <Router basename={window.location.pathname.includes('app.html') ? '/app.html' : '/'}>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage onLogout={handleLogout} />} />
             <Route path="/medications" element={<MedicationListScreen />} />
             <Route path="/medications/add" element={<MedicationFormScreen />} />
             <Route path="/medications/:id/edit" element={<MedicationFormScreen />} />

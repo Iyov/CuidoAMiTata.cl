@@ -458,8 +458,8 @@ El enfoque prioriza:
     - **Valida: Requisitos 12.5**
     - **PBT Status**: ✅ PASSED
 
-- [ ] 30. Implementar manejo de errores en UI
-  - [ ] 30.1 Crear componentes de manejo de errores
+- [x] 30. Implementar manejo de errores en UI
+  - [x] 30.1 Crear componentes de manejo de errores
     - Componente ErrorBoundary
     - Componente ErrorMessage con mensajes en español
     - Toast/Snackbar para notificaciones de error
@@ -467,7 +467,7 @@ El enfoque prioriza:
     - Implementar todos los mensajes de error del diseño
     - _Requisitos: 8.3_
 
-- [ ] 31. Checkpoint - Verificar interfaz de usuario completa
+- [x] 31. Checkpoint - Verificar interfaz de usuario completa
   - Asegurar que todas las pruebas pasen, preguntar al usuario si surgen dudas.
 
 

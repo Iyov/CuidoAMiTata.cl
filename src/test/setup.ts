@@ -5,6 +5,9 @@
 // Mock de IndexedDB para entorno de pruebas
 import 'fake-indexeddb/auto';
 
+// Importar matchers de jest-dom para testing-library
+import '@testing-library/jest-dom/vitest';
+
 // Mock de LocalStorage si es necesario
 const localStorageMock = {
   getItem: (key: string) => {

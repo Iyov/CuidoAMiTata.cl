@@ -11,3 +11,14 @@ export { Alert } from './Alert';
 export type { AlertProps, AlertType } from './Alert';
 
 export { ThemeToggle } from './ThemeToggle';
+
+export { ErrorBoundary } from './ErrorBoundary';
+
+export { ErrorMessage } from './ErrorMessage';
+export type { ErrorMessageProps, ErrorCode } from './ErrorMessage';
+
+export { Toast, ToastContainer } from './Toast';
+export type { ToastProps, ToastType, ToastContainerProps } from './Toast';
+
+export { ConfirmationModal } from './ConfirmationModal';
+export type { ConfirmationModalProps } from './ConfirmationModal';

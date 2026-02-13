@@ -195,9 +195,9 @@ export class ValidationService {
       };
     }
 
-    // Validar que contenga al menos algunos caracteres alfanuméricos o de puntuación significativa
+    // Validar que contenga al menos un carácter alfanumérico
     // Esto evita justificaciones como "!!!" o "   !"
-    const hasSignificantContent = /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ,.\-:;]/.test(trimmed);
+    const hasSignificantContent = /[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ]/.test(trimmed);
 
     if (!hasSignificantContent) {
       return {

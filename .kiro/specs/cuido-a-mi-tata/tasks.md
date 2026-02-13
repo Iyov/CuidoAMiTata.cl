@@ -432,14 +432,14 @@ El enfoque prioriza:
     - Formulario de justificación obligatoria
     - _Requisitos: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [ ] 28. Implementar pantallas de gestión de pacientes y configuración
-  - [ ] 28.1 Crear UI para gestión de múltiples pacientes
+- [x] 28. Implementar pantallas de gestión de pacientes y configuración
+  - [x] 28.1 Crear UI para gestión de múltiples pacientes
     - Pantalla de lista de pacientes con indicadores de alertas
     - Selector rápido de paciente
     - Pantalla de agregar/editar perfil de paciente
     - _Requisitos: 10.1, 10.2, 10.3, 10.4, 10.5_
   
-  - [ ] 28.2 Crear UI para configuración y preferencias
+  - [x] 28.2 Crear UI para configuración y preferencias
     - Pantalla de configuración de notificaciones
     - Pantalla de preferencias de usuario
     - Pantalla de autenticación y seguridad

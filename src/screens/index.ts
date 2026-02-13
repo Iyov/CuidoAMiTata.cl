@@ -20,3 +20,8 @@ export { IncontinencePatternsScreen } from './IncontinencePatternsScreen';
 export { PolypharmacyScreen } from './PolypharmacyScreen';
 export { SIGREMapScreen } from './SIGREMapScreen';
 export { EthicalCareScreen } from './EthicalCareScreen';
+export { PatientListScreen } from './PatientListScreen';
+export { PatientFormScreen } from './PatientFormScreen';
+export { NotificationSettingsScreen } from './NotificationSettingsScreen';
+export { UserPreferencesScreen } from './UserPreferencesScreen';
+export { AuthScreen } from './AuthScreen';

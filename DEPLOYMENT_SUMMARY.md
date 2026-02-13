@@ -197,6 +197,16 @@ Para más detalles, consulta:
 
 ## 🔧 Últimas Correcciones
 
+### GitHub Actions Deprecadas - Actualización a v4 (13 Feb 2026)
+- **Problema**: El workflow fallaba con error "deprecated version of actions/upload-artifact: v3"
+- **Solución**: Actualizadas todas las GitHub Actions a sus versiones más recientes:
+  - `actions/checkout@v3` → `actions/checkout@v4`
+  - `actions/setup-node@v3` → `actions/setup-node@v4`
+  - `actions/upload-artifact@v3` → `actions/upload-artifact@v4`
+  - `actions/download-artifact@v3` → `actions/download-artifact@v4`
+  - `codecov/codecov-action@v3` → `codecov/codecov-action@v4`
+- **Resultado**: El workflow ahora usa las versiones actuales y soportadas de todas las actions
+
 ### Format Check No-Bloqueante (13 Feb 2026)
 - **Problema**: El workflow de CI/CD fallaba en "Format check" porque 83 archivos no estaban formateados con Prettier
 - **Solución**: Agregado `continue-on-error: true` al paso "Format check" en `.github/workflows/ci-cd.yml`

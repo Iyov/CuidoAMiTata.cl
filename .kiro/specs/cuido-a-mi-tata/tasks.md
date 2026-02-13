@@ -522,7 +522,7 @@ El enfoque prioriza:
     - Configurar CI/CD si aplica
     - _Requisitos: Todos_
 
-- [ ] 35. Checkpoint final - Verificación completa del sistema
+- [x] 35. Checkpoint final - Verificación completa del sistema
   - Asegurar que todas las pruebas pasen, verificar que todos los requisitos estén implementados, preguntar al usuario si surgen dudas.
 
 ## Notas

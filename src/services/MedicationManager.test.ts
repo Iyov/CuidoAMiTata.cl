@@ -914,7 +914,7 @@ describe('MedicationManager', () => {
 
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
-              const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
+              const eventId = `medevent-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
@@ -990,7 +990,7 @@ describe('MedicationManager', () => {
 
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
-              const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
+              const eventId = `medevent-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
@@ -1064,7 +1064,7 @@ describe('MedicationManager', () => {
 
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
-              const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
+              const eventId = `medevent-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
@@ -1142,7 +1142,7 @@ describe('MedicationManager', () => {
 
               // Limpiar
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATIONS, data.medicationId);
-              const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
+              const eventId = `medevent-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.MEDICATION_EVENTS, eventId);
               const notificationId = `med-${data.medicationId}-${data.scheduledTime.getTime()}`;
               await IndexedDBUtils.deleteById(IndexedDBUtils.STORES.NOTIFICATIONS, notificationId);
@@ -1192,7 +1192,7 @@ describe('MedicationManager', () => {
               await manager.scheduleMedication(medication, schedule);
 
               // Capturar estado antes de intentar omitir
-              const eventId = `event-${data.medicationId}-${data.scheduledTime.getTime()}`;
+              const eventId = `medevent-${data.medicationId}-${data.scheduledTime.getTime()}`;
               const eventBefore = await IndexedDBUtils.getById<MedicationEvent>(
                 IndexedDBUtils.STORES.MEDICATION_EVENTS,
                 eventId
@@ -1651,7 +1651,7 @@ describe('MedicationManager', () => {
           expect(result.ok).toBe(true);
 
           // Verificar que la justificación fue guardada
-          const eventId = `event-${medId}-${scheduledTime.getTime()}`;
+          const eventId = `medevent-${medId}-${scheduledTime.getTime()}`;
           const event = await IndexedDBUtils.getById<MedicationEvent>(
             IndexedDBUtils.STORES.MEDICATION_EVENTS,
             eventId

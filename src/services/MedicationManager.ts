@@ -60,6 +60,20 @@ export class MedicationManager {
       const notificationService = await getNotificationService();
       
       for (const time of schedule.times) {
+        // Crear evento de medicación pendiente PRIMERO
+        // Esto asegura que el evento existe antes de que la notificación pueda ser emitida
+        const medicationEvent: MedicationEvent = {
+          id: `medevent-${medication.id}-${time.getTime()}`,
+          medicationId: medication.id,
+          patientId: medication.patientId,
+          scheduledTime: time,
+          status: MedicationEventStatus.PENDING,
+          withinAdherenceWindow: false,
+          createdAt: new Date(),
+        };
+
+        await IndexedDBUtils.put(IndexedDBUtils.STORES.MEDICATION_EVENTS, medicationEvent);
+
         // Crear notificación para este horario
         const notification: Notification = {
           id: `med-${medication.id}-${time.getTime()}`,
@@ -74,24 +88,11 @@ export class MedicationManager {
           createdAt: new Date(),
         };
 
-        // Programar la notificación
+        // Programar la notificación DESPUÉS de crear el evento
         const result = await notificationService.scheduleNotification(notification);
         if (!result.ok) {
           console.error(`Error al programar notificación para ${medication.name}:`, result.error);
         }
-
-        // Crear evento de medicación pendiente
-        const medicationEvent: MedicationEvent = {
-          id: `event-${medication.id}-${time.getTime()}`,
-          medicationId: medication.id,
-          patientId: medication.patientId,
-          scheduledTime: time,
-          status: MedicationEventStatus.PENDING,
-          withinAdherenceWindow: false,
-          createdAt: new Date(),
-        };
-
-        await IndexedDBUtils.put(IndexedDBUtils.STORES.MEDICATION_EVENTS, medicationEvent);
       }
 
       return Ok(undefined);

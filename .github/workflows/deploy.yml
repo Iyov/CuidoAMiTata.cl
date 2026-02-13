@@ -37,6 +37,10 @@ jobs:
       - name: Build Tailwind CSS
         run: npm run build:css
 
+      - name: Run Tests (Optional)
+        run: npm test || echo "Tests failed but continuing with deployment"
+        continue-on-error: true
+
       - name: Build Vite
         env:
           GITHUB_PAGES: 'true'

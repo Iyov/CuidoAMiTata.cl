@@ -477,37 +477,59 @@ export const HYDRATION_TARGET_GLASSES = 8;
 
 ## 🌐 Despliegue
 
-### Build de Producción
+### GitHub Pages (Recomendado)
+
+El proyecto está configurado para despliegue automático en GitHub Pages.
+
+#### Configuración Rápida
+
+1. **Configurar Secrets en GitHub**:
+   - Ve a Settings > Secrets and variables > Actions
+   - Agrega `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`
+
+2. **Configurar GitHub Pages**:
+   - Ve a Settings > Pages
+   - Source: GitHub Actions
+
+3. **Push a main**:
+   ```bash
+   git push origin main
+   ```
+
+El sitio se desplegará automáticamente en 2-3 minutos.
+
+Ver [DEPLOY_GITHUB_PAGES.md](DEPLOY_GITHUB_PAGES.md) para instrucciones completas.
+
+### Build de Producción Local
 
 ```bash
-# 1. Compilar TypeScript y crear build
+# 1. Compilar CSS y TypeScript
+npm run build:css
 npm run build
 
-# 2. Compilar CSS
-npm run build:css
-
-# 3. Preview local
+# 2. Preview local
 npm run preview
+
+# 3. Verificar configuración
+npm run verify
 ```
 
-### Servicios de Hosting
+### Otros Servicios de Hosting
 
-El proyecto puede desplegarse en:
+El proyecto también puede desplegarse en:
 
-- **Vercel** (recomendado para React)
-- **Netlify**
-- **GitHub Pages**
-- **Firebase Hosting**
-- **AWS S3 + CloudFront**
+- **Vercel** - Configuración automática con `vercel.json`
+- **Netlify** - Build command: `npm run build && npm run build:css`
+- **Firebase Hosting** - Output directory: `dist`
+- **AWS S3 + CloudFront** - Static website hosting
 
-### Variables de Entorno
+### Variables de Entorno de Producción
 
-Crear archivo `.env.production`:
+Configurar en tu servicio de hosting:
 
 ```env
-VITE_API_URL=https://api.cuidoamitata.cl
-VITE_ENABLE_ANALYTICS=true
-VITE_SENTRY_DSN=your-sentry-dsn
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+VITE_SUPABASE_ANON_KEY=tu_anon_key
 ```
 
 ## 📊 Rendimiento

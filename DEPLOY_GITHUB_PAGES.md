@@ -1,274 +1,262 @@
-# Despliegue en GitHub Pages - CuidoAMiTata
+# Despliegue en GitHub Pages
 
-Esta guía te ayudará a desplegar tu aplicación en GitHub Pages con dominio personalizado `cuidoamitata.cl`.
+Guía completa para desplegar CuidoAMiTata.cl en GitHub Pages con dominio personalizado.
 
-## 📋 Requisitos previos
+## 📋 Requisitos Previos
 
-- ✅ Repositorio en GitHub
-- ✅ Proyecto de Supabase configurado
-- ✅ Dominio `cuidoamitata.cl` (opcional, pero recomendado)
+- Repositorio en GitHub
+- Proyecto de Supabase configurado
+- Dominio personalizado (opcional): cuidoamitata.cl
 
-## 🚀 Paso 1: Configurar GitHub Secrets
+## 🚀 Configuración Inicial
 
-Las credenciales de Supabase deben estar en GitHub Secrets para que el build funcione.
+### 1. Configurar GitHub Secrets
 
-1. **Ve a tu repositorio en GitHub:**
-   - `https://github.com/TU_USUARIO/CuidoAMiTata.cl`
+Las credenciales de Supabase deben estar en GitHub Secrets para el build de producción.
 
-2. **Ve a Settings > Secrets and variables > Actions**
+1. Ve a tu repositorio en GitHub
+2. Navega a **Settings > Secrets and variables > Actions**
+3. Haz clic en **New repository secret**
+4. Agrega los siguientes secrets:
 
-3. **Haz clic en "New repository secret"**
+   - **VITE_SUPABASE_URL**: Tu URL de Supabase
+   - **VITE_SUPABASE_ANON_KEY**: Tu clave anónima de Supabase
 
-4. **Agrega estos dos secrets:**
+### 2. Configurar GitHub Pages
 
-   **Secret 1:**
-   - Name: `VITE_SUPABASE_URL`
-   - Value: `https://tu-proyecto.supabase.co` (tu URL de Supabase)
+1. Ve a **Settings > Pages**
+2. En "Build and deployment":
+   - **Source**: GitHub Actions
+3. Guarda los cambios
 
-   **Secret 2:**
-   - Name: `VITE_SUPABASE_ANON_KEY`
-   - Value: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` (tu anon key completa)
+### 3. Configurar Dominio Personalizado (Opcional)
 
-## 🔧 Paso 2: Configurar GitHub Pages
+Si tienes un dominio personalizado:
 
-1. **Ve a Settings > Pages**
+1. En **Settings > Pages > Custom domain**:
+   - Ingresa: `cuidoamitata.cl`
+   - Haz clic en "Save"
+2. Activa **Enforce HTTPS** (espera unos minutos si no está disponible)
 
-2. **En "Build and deployment":**
-   - Source: `GitHub Actions`
+### 4. Configurar DNS
 
-3. **Guarda los cambios**
+En tu proveedor de dominio, agrega estos registros DNS:
 
-## 📝 Paso 3: Verificar vite.config.ts
+```
+Tipo    Nombre    Valor
+A       @         185.199.108.153
+A       @         185.199.109.153
+A       @         185.199.110.153
+A       @         185.199.111.153
+CNAME   www       tu-usuario.github.io
+```
 
-El archivo ya está configurado correctamente con:
+Espera 10-30 minutos para que los DNS se propaguen.
+
+## 📁 Estructura del Proyecto
+
+### Archivos de Configuración
+
+```
+.github/workflows/deploy.yml    # Workflow de GitHub Actions
+public/
+├── .nojekyll                   # Desactiva Jekyll
+├── CNAME                       # Dominio personalizado
+├── robots.txt                  # SEO
+└── sitemap.xml                 # SEO
+vite.config.ts                  # Configuración de Vite
+verify-build.js                 # Script de verificación
+```
+
+### Configuración de Vite
+
+El archivo `vite.config.ts` está configurado con:
 
 ```typescript
-base: '/',  // Para dominio custom (cuidoamitata.cl)
-publicDir: 'public',  // Copia archivos estáticos
-copyPublicDir: true,  // Asegura que se copien todos los archivos
+base: '/',              // Para dominio personalizado
+publicDir: 'public',    // Directorio de archivos estáticos
+copyPublicDir: true,    // Copia archivos a dist/
 ```
 
-## 🌐 Paso 4: Configurar dominio personalizado
+## 🔄 Proceso de Despliegue
 
-### En tu proveedor de dominio (ej: GoDaddy, Namecheap):
+### Despliegue Automático
 
-1. **Agrega estos registros DNS:**
-
-   **Para apex domain (cuidoamitata.cl):**
-   ```
-   Tipo: A
-   Host: @
-   Valor: 185.199.108.153
-   
-   Tipo: A
-   Host: @
-   Valor: 185.199.109.153
-   
-   Tipo: A
-   Host: @
-   Valor: 185.199.110.153
-   
-   Tipo: A
-   Host: @
-   Valor: 185.199.111.153
-   ```
-
-   **Para www (www.cuidoamitata.cl):**
-   ```
-   Tipo: CNAME
-   Host: www
-   Valor: iyov.github.io
-   ```
-
-2. **Espera 5-10 minutos** para que los DNS se propaguen
-
-### En GitHub:
-
-1. **Ve a Settings > Pages**
-
-2. **En "Custom domain":**
-   - Escribe: `cuidoamitata.cl`
-   - Haz clic en "Save"
-
-3. **Activa "Enforce HTTPS"** (espera unos minutos si no está disponible)
-
-## 📁 Archivos de configuración importantes
-
-### public/CNAME
-```
-cuidoamitata.cl
-```
-
-### public/.nojekyll
-Archivo vacío que desactiva Jekyll en GitHub Pages (ya creado).
-
-### public/robots.txt y public/sitemap.xml
-Ya están copiados al directorio public/ para SEO.
-
-## 🚀 Paso 5: Desplegar
-
-### Opción A: Push automático
-
-Simplemente haz push a la rama `main`:
+El sitio se despliega automáticamente cuando haces push a la rama `main`:
 
 ```bash
 git add .
-git commit -m "Deploy to GitHub Pages"
+git commit -m "Tu mensaje de commit"
 git push origin main
 ```
 
-El workflow se ejecutará automáticamente.
+El workflow de GitHub Actions:
+1. Instala dependencias
+2. Compila Tailwind CSS
+3. Ejecuta tests (opcional, no bloquea deployment)
+4. Compila el proyecto con Vite
+5. Verifica archivos críticos (CNAME, .nojekyll)
+6. Despliega a GitHub Pages
 
-### Opción B: Despliegue manual
+### Despliegue Manual
 
-1. Ve a tu repositorio en GitHub
-2. Haz clic en "Actions"
-3. Selecciona "Deploy to GitHub Pages"
-4. Haz clic en "Run workflow"
+También puedes ejecutar el workflow manualmente:
 
-## 📊 Paso 6: Verificar el despliegue
+1. Ve a **Actions** en GitHub
+2. Selecciona "Deploy to GitHub Pages"
+3. Haz clic en **Run workflow**
 
-1. **Ve a Actions en GitHub:**
-   - Verás el workflow ejecutándose
-   - Espera a que termine (2-3 minutos)
+## � Verificación
 
-2. **Verifica que todo esté verde ✅**
+### Verificar Configuración Local
 
-3. **Abre tu sitio:**
-   - `https://cuidoamitata.cl`
+Antes de hacer push, verifica que todo esté correcto:
 
-## 🔍 Verificar que funciona
+```bash
+# Verificar configuración
+npm run verify
 
-1. **Landing page:**
-   - `https://cuidoamitata.cl` → Debería mostrar la landing page
+# Build local
+npm run build
 
-2. **Aplicación React:**
-   - `https://cuidoamitata.cl/app.html` → Debería mostrar el login
+# Preview local
+npm run preview
+```
 
-3. **Iniciar sesión:**
-   - Usa tus credenciales de Supabase
-   - Deberías poder entrar al dashboard
+### Verificar Deployment
 
-## 🐛 Troubleshooting
+Después del despliegue:
 
-### Error: "Failed to load resource: 404"
+1. Ve a **Actions** en GitHub
+2. Verifica que el workflow se completó exitosamente (✅)
+3. Visita tu sitio:
+   - Con dominio personalizado: https://cuidoamitata.cl
+   - Sin dominio: https://tu-usuario.github.io/tu-repo
 
-**Causa:** El base path está mal configurado.
+## 🐛 Solución de Problemas
 
-**Solución:**
-- Ya está configurado correctamente con `base: '/'` para dominio custom
+### Build Falla
 
-### Error: "Invalid API key"
+**Síntoma**: El workflow falla en el paso "Build Vite"
 
-**Causa:** Los secrets de GitHub no están configurados.
+**Solución**:
+```bash
+# Ejecutar build localmente para ver errores
+npm run build
 
-**Solución:**
-1. Ve a Settings > Secrets and variables > Actions
-2. Verifica que `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` existan
-3. Verifica que los valores sean correctos
+# Verificar errores de TypeScript
+npm run type-check
+```
 
-### Error: "Page not found"
+### Dominio Personalizado No Funciona
 
-**Causa:** GitHub Pages no está configurado correctamente.
+**Síntoma**: El sitio no carga en tu dominio
 
-**Solución:**
-1. Ve a Settings > Pages
-2. Source debe ser "GitHub Actions"
-3. Re-ejecuta el workflow
-
-### El dominio custom no funciona
-
-**Causa:** DNS no está configurado o no se ha propagado.
-
-**Solución:**
+**Solución**:
 1. Verifica los registros DNS en tu proveedor
 2. Espera 10-30 minutos para propagación
 3. Verifica con: `nslookup cuidoamitata.cl`
+4. Asegúrate que `public/CNAME` contenga solo tu dominio
 
-### CNAME no se encuentra en dist/
+### Assets No Cargan (404)
 
-**Causa:** El archivo no se copió durante el build.
+**Síntoma**: CSS, JS o imágenes no cargan
 
-**Solución:**
-- El workflow ahora incluye verificación automática
-- Si falta, se copia automáticamente desde la raíz
+**Solución**:
+- Para dominio personalizado: `base: '/'` en `vite.config.ts`
+- Para GitHub Pages sin dominio: `base: '/nombre-repo/'`
 
-### Los estilos no se cargan
+### Tests Fallan
 
-**Causa:** Tailwind CSS no se compiló.
+**Síntoma**: El workflow muestra tests fallando
 
-**Solución:**
-- El workflow ya incluye `npm run build:css`
-- Verifica que el workflow se ejecutó correctamente
+**Nota**: Los tests son opcionales y no bloquean el deployment. El sitio se desplegará correctamente incluso si algunos tests fallan.
 
-## 📁 Estructura de archivos desplegados
+## 📊 Monitoreo
 
+### Ver Logs del Deployment
+
+1. Ve a **Actions** en GitHub
+2. Haz clic en el workflow más reciente
+3. Revisa los logs de cada paso
+
+### Verificar Archivos Desplegados
+
+El directorio `dist/` contiene:
 ```
 dist/
 ├── index.html          # Landing page
 ├── app.html           # Aplicación React
-├── assets/            # JS y CSS compilados
-├── img/               # Imágenes
-├── css/               # Estilos
+├── assets/            # JS, CSS, fonts, images
 ├── CNAME              # Configuración de dominio
 ├── .nojekyll          # Para GitHub Pages
 ├── robots.txt         # SEO
 └── sitemap.xml        # SEO
 ```
 
-## 🔄 Actualizar el sitio
-
-Cada vez que hagas push a `main`, el sitio se actualizará automáticamente:
-
-```bash
-# Hacer cambios en el código
-git add .
-git commit -m "Actualización de la app"
-git push origin main
-
-# Espera 2-3 minutos y el sitio estará actualizado
-```
-
-## 🔧 Mejoras implementadas
-
-✅ **Verificación automática de archivos críticos**
-- El workflow verifica que CNAME y .nojekyll existan en dist/
-- Si faltan, los copia automáticamente
-
-✅ **Archivos estáticos en public/**
-- CNAME, .nojekyll, robots.txt y sitemap.xml están en public/
-- Vite los copia automáticamente a dist/ durante el build
-
-✅ **Configuración optimizada de Vite**
-- `publicDir: 'public'` configurado
-- `copyPublicDir: true` habilitado
-
 ## 🔒 Seguridad
 
-- ✅ Las credenciales de Supabase están en GitHub Secrets (no en el código)
-- ✅ El `.env.local` está en `.gitignore` (no se sube a GitHub)
-- ✅ HTTPS está habilitado automáticamente
-- ✅ Los console.log se eliminan en producción
+- ✅ Credenciales en GitHub Secrets (no en el código)
+- ✅ `.env.local` en `.gitignore`
+- ✅ HTTPS habilitado automáticamente
+- ✅ `console.log` eliminados en producción
 
-## 📚 Recursos adicionales
+## � Comandos Útiles
 
-- [GitHub Pages Docs](https://docs.github.com/en/pages)
-- [GitHub Actions Docs](https://docs.github.com/en/actions)
+```bash
+# Verificar configuración
+npm run verify
+
+# Build de producción
+npm run build
+
+# Preview local del build
+npm run preview
+
+# Ejecutar tests
+npm test
+
+# Compilar Tailwind CSS
+npm run build:css
+
+# Verificar tipos de TypeScript
+npm run type-check
+```
+
+## 🔄 Actualizar el Sitio
+
+Para actualizar el sitio desplegado:
+
+```bash
+# 1. Hacer cambios en el código
+# 2. Commit y push
+git add .
+git commit -m "Descripción de cambios"
+git push origin main
+
+# 3. El sitio se actualizará automáticamente en 2-3 minutos
+```
+
+## ✅ Checklist de Deployment
+
+Antes de desplegar por primera vez:
+
+- [ ] GitHub Secrets configurados (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
+- [ ] GitHub Pages configurado (Source: GitHub Actions)
+- [ ] Dominio personalizado configurado (si aplica)
+- [ ] DNS configurado (si aplica)
+- [ ] `npm run verify` pasa sin errores
+- [ ] `npm run build` completa exitosamente
+- [ ] Archivos en `public/` verificados (CNAME, .nojekyll, robots.txt, sitemap.xml)
+
+## � Recursos Adicionales
+
+- [GitHub Pages Documentation](https://docs.github.com/en/pages)
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Vite Deployment Guide](https://vitejs.dev/guide/static-deploy.html)
-- [Supabase Docs](https://supabase.com/docs)
+- [Supabase Documentation](https://supabase.com/docs)
 
-## ✅ Checklist final
+---
 
-Antes de desplegar, verifica:
-
-- [x] GitHub Secrets configurados (`VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`)
-- [x] GitHub Pages configurado (Source: GitHub Actions)
-- [x] `base: '/'` en `vite.config.ts` para dominio custom
-- [ ] Dominio custom configurado en GitHub Pages
-- [x] `.nojekyll` existe en `public/`
-- [x] `CNAME` existe en `public/`
-- [x] Workflow `.github/workflows/deploy.yml` actualizado
-- [x] `robots.txt` y `sitemap.xml` en `public/`
-- [ ] Push a rama `main` hecho
-
-¡Listo! Tu aplicación debería estar en línea en `https://cuidoamitata.cl` 🎉
+**Última actualización**: 2026-02-13  
+**Estado**: ✅ Configurado y funcionando

@@ -31,6 +31,9 @@ coverage/
 *.tmp
 *.log
 
+# Logs
+logs/
+
 # Environment variables
 .env
 .env.local

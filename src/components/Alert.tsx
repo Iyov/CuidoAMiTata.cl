@@ -4,8 +4,10 @@ export type AlertType = 'info' | 'success' | 'warning' | 'error';
 
 export interface AlertProps {
   type?: AlertType;
+  variant?: AlertType; // Alias para type
   title?: string;
-  message: string;
+  message?: string;
+  children?: React.ReactNode; // Soporte para children
   onClose?: () => void;
   className?: string;
 }
@@ -38,17 +40,24 @@ const alertStyles: Record<AlertType, { bg: string; border: string; text: string;
 };
 
 export const Alert: React.FC<AlertProps> = ({
-  type = 'info',
+  type,
+  variant,
   title,
   message,
+  children,
   onClose,
   className = '',
 }) => {
-  const styles = alertStyles[type];
+  // Usar variant si está presente, sino type, sino 'info'
+  const alertType = variant || type || 'info';
+  const styles = alertStyles[alertType];
+  
+  // Usar children si está presente, sino message
+  const content = children || message;
   
   // ACCESIBILIDAD: Determinar el rol ARIA apropiado según el tipo
-  const ariaRole = type === 'error' || type === 'warning' ? 'alert' : 'status';
-  const ariaLive = type === 'error' ? 'assertive' : 'polite';
+  const ariaRole = alertType === 'error' || alertType === 'warning' ? 'alert' : 'status';
+  const ariaLive = alertType === 'error' ? 'assertive' : 'polite';
 
   return (
     <div
@@ -65,7 +74,7 @@ export const Alert: React.FC<AlertProps> = ({
           {title && (
             <h4 className="font-bold mb-1">{title}</h4>
           )}
-          <p className="text-sm">{message}</p>
+          <div className="text-sm">{content}</div>
         </div>
         {onClose && (
           <button

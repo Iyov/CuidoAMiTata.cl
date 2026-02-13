@@ -4,7 +4,7 @@
  */
 
 import { Result, Ok, Err } from '../types/result';
-import { ErrorCode, Priority, NotificationType, MealType, NutritionEventType } from '../types/enums';
+import { ErrorCode, Priority, NotificationType, MealType, NutritionEventType, NotificationStatus } from '../types/enums';
 import type { HydrationStatus, MealPlan, PlannedMeal, NutritionEvent } from '../types/models';
 import * as IndexedDBUtils from '../utils/indexedDB';
 import { getNotificationService } from './NotificationService';
@@ -66,7 +66,7 @@ export class NutritionManager {
           message: `Recordatorio de hidratación: Beber un vaso de agua (${i + 1}/${targetGlasses})`,
           scheduledTime: reminderTime,
           isDualAlert: false,
-          status: 'SCHEDULED' as const,
+          status: NotificationStatus.SCHEDULED,
           reminderSent: false,
           createdAt: now,
         };

@@ -11,7 +11,7 @@ import { Input } from '../components/Input';
 import { Alert } from '../components/Alert';
 import { getPatientManager } from '../services/PatientManager';
 import type { Patient, RiskFactor } from '../types/models';
-import { Severity } from '../types/enums';
+import { Severity, RiskFactorType } from '../types/enums';
 
 interface PatientFormScreenProps {
   patientId?: string; // Si se proporciona, es modo edición
@@ -68,7 +68,7 @@ export const PatientFormScreen: React.FC<PatientFormScreenProps> = ({ patientId 
 
   const handleAddRiskFactor = () => {
     const newRiskFactor: RiskFactor = {
-      type: 'MOBILITY_ISSUES',
+      type: RiskFactorType.MOBILITY_ISSUES,
       severity: Severity.MEDIUM,
       notes: '',
       assessedAt: new Date(),

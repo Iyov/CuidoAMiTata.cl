@@ -72,7 +72,7 @@ export function requestIdleCallback(callback: () => void, timeout = 1000): numbe
   }
 
   // Fallback para navegadores que no soportan requestIdleCallback
-  return window.setTimeout(callback, 1) as unknown as number;
+  return (window as Window).setTimeout(callback, 1) as unknown as number;
 }
 
 /**

@@ -4,7 +4,7 @@
  */
 
 import { Result, Ok, Err } from '../types/result';
-import { ErrorCode, ConnectionStatus, SyncStatus } from '../types/enums';
+import { ErrorCode, ConnectionStatus, SyncStatus, ConflictResolution } from '../types/enums';
 import type { CareEvent, SyncReport, SyncMetadata, Conflict } from '../types/models';
 import * as IndexedDBUtils from '../utils/indexedDB';
 
@@ -316,7 +316,7 @@ export class DataSyncService {
             eventId: event.id,
             localVersion: event,
             remoteVersion: remoteEvent,
-            resolution: 'PENDING',
+            resolution: ConflictResolution.PENDING,
           };
 
           return Err({
@@ -362,20 +362,20 @@ export class DataSyncService {
         const remoteTimestamp = new Date(conflict.remoteVersion.timestamp).getTime();
 
         let resolvedVersion: CareEvent;
-        let resolution: 'LOCAL_WINS' | 'REMOTE_WINS';
+        let resolution: ConflictResolution;
 
         if (localTimestamp > remoteTimestamp) {
           // Versión local es más reciente
           resolvedVersion = conflict.localVersion;
-          resolution = 'LOCAL_WINS';
+          resolution = ConflictResolution.LOCAL_WINS;
         } else if (remoteTimestamp > localTimestamp) {
           // Versión remota es más reciente
           resolvedVersion = conflict.remoteVersion;
-          resolution = 'REMOTE_WINS';
+          resolution = ConflictResolution.REMOTE_WINS;
         } else {
           // Timestamps idénticos - usar versión local por defecto
           resolvedVersion = conflict.localVersion;
-          resolution = 'LOCAL_WINS';
+          resolution = ConflictResolution.LOCAL_WINS;
         }
 
         // Actualizar conflicto con resolución

@@ -11,6 +11,7 @@ import { Input } from '../components/Input';
 import { Alert } from '../components/Alert';
 import { useTheme } from '../contexts/ThemeContext';
 import type { UserPreferences } from '../types/models';
+import { Theme } from '../types/enums';
 import * as LocalStorageUtils from '../utils/localStorage';
 
 const USER_PREFS_KEY = 'user-preferences';
@@ -18,7 +19,7 @@ const USER_PREFS_KEY = 'user-preferences';
 export const UserPreferencesScreen: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [preferences, setPreferences] = useState<UserPreferences>({
-    theme: 'dark',
+    theme: Theme.DARK,
     language: 'es',
     notificationSettings: {
       enableSound: true,
@@ -42,15 +43,17 @@ export const UserPreferencesScreen: React.FC = () => {
         setPreferences(saved);
       } else {
         // Usar tema actual si no hay preferencias guardadas
-        setPreferences((prev) => ({ ...prev, theme }));
+        const currentTheme = theme === 'dark' ? Theme.DARK : Theme.LIGHT;
+        setPreferences((prev) => ({ ...prev, theme: currentTheme }));
       }
     } catch (err) {
       console.error('Error al cargar preferencias:', err);
     }
   };
 
-  const handleThemeChange = (newTheme: 'dark' | 'light') => {
-    setTheme(newTheme);
+  const handleThemeChange = (newTheme: Theme) => {
+    const themeValue = newTheme === Theme.DARK ? 'dark' : 'light';
+    setTheme(themeValue);
     setPreferences((prev) => ({ ...prev, theme: newTheme }));
     setSuccess(false);
     setError(null);
@@ -116,9 +119,9 @@ export const UserPreferencesScreen: React.FC = () => {
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <button
-                  onClick={() => handleThemeChange('dark')}
+                  onClick={() => handleThemeChange(Theme.DARK)}
                   className={`p-4 border-2 rounded-lg transition-all ${
-                    preferences.theme === 'dark'
+                    preferences.theme === Theme.DARK
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}
@@ -137,9 +140,9 @@ export const UserPreferencesScreen: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => handleThemeChange('light')}
+                  onClick={() => handleThemeChange(Theme.LIGHT)}
                   className={`p-4 border-2 rounded-lg transition-all ${
-                    preferences.theme === 'light'
+                    preferences.theme === Theme.LIGHT
                       ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}

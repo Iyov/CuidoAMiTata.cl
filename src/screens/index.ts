@@ -25,3 +25,5 @@ export { PatientFormScreen } from './PatientFormScreen';
 export { NotificationSettingsScreen } from './NotificationSettingsScreen';
 export { UserPreferencesScreen } from './UserPreferencesScreen';
 export { AuthScreen } from './AuthScreen';
+export { HistoryScreen } from './HistoryScreen';
+export { HistoryExportScreen } from './HistoryExportScreen';

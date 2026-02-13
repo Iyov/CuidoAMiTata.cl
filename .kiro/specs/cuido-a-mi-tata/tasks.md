@@ -445,17 +445,18 @@ El enfoque prioriza:
     - Pantalla de autenticación y seguridad
     - _Requisitos: 11.4, 12.1_
 
-- [ ] 29. Implementar pantallas de historial y exportación
-  - [ ] 29.1 Crear UI para historial y auditoría
+- [x] 29. Implementar pantallas de historial y exportación
+  - [x] 29.1 Crear UI para historial y auditoría
     - Pantalla de historial con ordenamiento cronológico
     - Filtros por tipo de evento y rango de fechas
     - Pantalla de exportación con confirmación
     - Indicador de estado de sincronización
     - _Requisitos: 9.2, 9.3, 9.5, 12.5, 13.5_
   
-  - [ ] 29.2 Escribir prueba de propiedad para confirmación de exportación
+  - [x] 29.2 Escribir prueba de propiedad para confirmación de exportación
     - **Propiedad 33: Confirmación para exportación de datos**
     - **Valida: Requisitos 12.5**
+    - **PBT Status**: ✅ PASSED
 
 - [ ] 30. Implementar manejo de errores en UI
   - [ ] 30.1 Crear componentes de manejo de errores

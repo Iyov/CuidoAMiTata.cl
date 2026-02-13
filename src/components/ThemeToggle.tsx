@@ -7,9 +7,11 @@ export const ThemeToggle: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+      className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
       aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+      aria-pressed={theme === 'dark'}
       title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+      type="button"
     >
       {theme === 'dark' ? (
         <svg
@@ -17,6 +19,7 @@ export const ThemeToggle: React.FC = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -31,6 +34,7 @@ export const ThemeToggle: React.FC = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -40,6 +44,9 @@ export const ThemeToggle: React.FC = () => {
           />
         </svg>
       )}
+      <span className="sr-only">
+        {theme === 'dark' ? 'Modo oscuro activo' : 'Modo claro activo'}
+      </span>
     </button>
   );
 };

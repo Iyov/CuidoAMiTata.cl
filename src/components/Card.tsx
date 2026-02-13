@@ -6,6 +6,7 @@ export interface CardProps {
   className?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 const paddingClasses = {
@@ -21,6 +22,7 @@ export const Card: React.FC<CardProps> = ({
   className = '',
   padding = 'md',
   onClick,
+  ariaLabel,
 }) => {
   const baseClasses = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 transition-shadow';
   const hoverClass = onClick ? 'cursor-pointer hover:shadow-lg' : '';
@@ -32,6 +34,7 @@ export const Card: React.FC<CardProps> = ({
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
+      aria-label={ariaLabel || title}
       onKeyDown={onClick ? (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();

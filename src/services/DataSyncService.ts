@@ -194,60 +194,78 @@ export class DataSyncService {
       let failedCount = 0;
       let conflictCount = 0;
 
-      // Sincronizar cada evento
-      for (const item of queueItems) {
-        try {
-          // Simular llamada al backend
-          // En producción, esto sería una llamada HTTP real
-          const syncResult = await this.syncEventToBackend(item.event);
+      // OPTIMIZACIÓN: Procesar eventos en lotes de 10 para mejor rendimiento
+      const BATCH_SIZE = 10;
+      for (let i = 0; i < queueItems.length; i += BATCH_SIZE) {
+        const batch = queueItems.slice(i, i + BATCH_SIZE);
+        
+        // Procesar lote en paralelo
+        const results = await Promise.allSettled(
+          batch.map(async (item) => {
+            try {
+              // Simular llamada al backend
+              const syncResult = await this.syncEventToBackend(item.event);
 
-          if (syncResult.ok) {
-            // Evento sincronizado exitosamente
-            item.event.syncStatus = SyncStatus.SYNCED;
-            await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
+              if (syncResult.ok) {
+                // Evento sincronizado exitosamente
+                item.event.syncStatus = SyncStatus.SYNCED;
+                await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
 
-            // Eliminar de la cola
-            await IndexedDBUtils.deleteById(
-              IndexedDBUtils.STORES.SYNC_QUEUE,
-              item.id!.toString()
-            );
+                // Eliminar de la cola
+                await IndexedDBUtils.deleteById(
+                  IndexedDBUtils.STORES.SYNC_QUEUE,
+                  item.id!.toString()
+                );
 
-            syncedCount++;
-          } else if (syncResult.error.code === ErrorCode.SYNC_CONFLICT) {
-            // Conflicto detectado - resolver
-            const conflict = syncResult.error.details as Conflict;
-            const resolveResult = await this.resolveConflicts([conflict]);
+                return { status: 'synced' as const };
+              } else if (syncResult.error.code === ErrorCode.SYNC_CONFLICT) {
+                // Conflicto detectado - resolver
+                const conflict = syncResult.error.details as Conflict;
+                const resolveResult = await this.resolveConflicts([conflict]);
 
-            if (resolveResult.ok) {
-              // Conflicto resuelto
-              item.event.syncStatus = SyncStatus.SYNCED;
-              await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
-              await IndexedDBUtils.deleteById(
-                IndexedDBUtils.STORES.SYNC_QUEUE,
-                item.id!.toString()
-              );
-              conflictCount++;
-            } else {
-              failedCount++;
+                if (resolveResult.ok) {
+                  // Conflicto resuelto
+                  item.event.syncStatus = SyncStatus.SYNCED;
+                  await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
+                  await IndexedDBUtils.deleteById(
+                    IndexedDBUtils.STORES.SYNC_QUEUE,
+                    item.id!.toString()
+                  );
+                  return { status: 'conflict' as const };
+                } else {
+                  return { status: 'failed' as const };
+                }
+              } else {
+                // Error en sincronización
+                item.retryCount++;
+
+                // Si ha fallado muchas veces, marcar como conflicto
+                if (item.retryCount >= 3) {
+                  item.event.syncStatus = SyncStatus.CONFLICT;
+                  await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
+                }
+
+                // Actualizar item en la cola
+                await IndexedDBUtils.put(IndexedDBUtils.STORES.SYNC_QUEUE, item);
+                return { status: 'failed' as const };
+              }
+            } catch (error) {
+              console.error(`Error sincronizando evento ${item.eventId}:`, error);
+              return { status: 'failed' as const };
             }
+          })
+        );
+
+        // Contar resultados del lote
+        results.forEach((result) => {
+          if (result.status === 'fulfilled') {
+            if (result.value.status === 'synced') syncedCount++;
+            else if (result.value.status === 'conflict') conflictCount++;
+            else failedCount++;
           } else {
-            // Error en sincronización
             failedCount++;
-            item.retryCount++;
-
-            // Si ha fallado muchas veces, marcar como conflicto
-            if (item.retryCount >= 3) {
-              item.event.syncStatus = SyncStatus.CONFLICT;
-              await IndexedDBUtils.put(IndexedDBUtils.STORES.CARE_EVENTS, item.event);
-            }
-
-            // Actualizar item en la cola
-            await IndexedDBUtils.put(IndexedDBUtils.STORES.SYNC_QUEUE, item);
           }
-        } catch (error) {
-          console.error(`Error sincronizando evento ${item.eventId}:`, error);
-          failedCount++;
-        }
+        });
       }
 
       // Actualizar metadatos de sincronización

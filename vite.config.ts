@@ -14,6 +14,44 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
     },
   },
+  build: {
+    // Optimizaciones de rendimiento
+    target: 'es2015',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Eliminar console.log en producción
+        drop_debugger: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        // Code splitting para optimizar carga inicial
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
+          'services': [
+            './src/services/StorageService.ts',
+            './src/services/ValidationService.ts',
+            './src/services/NotificationService.ts',
+          ],
+          'managers': [
+            './src/services/MedicationManager.ts',
+            './src/services/FallPreventionManager.ts',
+            './src/services/SkinIntegrityManager.ts',
+          ],
+        },
+      },
+    },
+    // Optimizar tamaño de chunks
+    chunkSizeWarningLimit: 1000,
+  },
+  // Optimizaciones de desarrollo
+  server: {
+    hmr: {
+      overlay: true,
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

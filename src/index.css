@@ -37,3 +37,22 @@ html {
 .animate-scale-in {
   animation: scale-in 0.2s ease-out;
 }
+
+/* ACCESIBILIDAD: Clase para elementos solo visibles para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ACCESIBILIDAD: Mejora del enfoque visible para navegación por teclado */
+*:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}

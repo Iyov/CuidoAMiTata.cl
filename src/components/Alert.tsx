@@ -45,11 +45,17 @@ export const Alert: React.FC<AlertProps> = ({
   className = '',
 }) => {
   const styles = alertStyles[type];
+  
+  // ACCESIBILIDAD: Determinar el rol ARIA apropiado según el tipo
+  const ariaRole = type === 'error' || type === 'warning' ? 'alert' : 'status';
+  const ariaLive = type === 'error' ? 'assertive' : 'polite';
 
   return (
     <div
       className={`${styles.bg} ${styles.border} ${styles.text} border rounded-lg p-4 ${className}`}
-      role="alert"
+      role={ariaRole}
+      aria-live={ariaLive}
+      aria-atomic="true"
     >
       <div className="flex items-start">
         <span className="text-2xl mr-3" aria-hidden="true">
@@ -64,8 +70,9 @@ export const Alert: React.FC<AlertProps> = ({
         {onClose && (
           <button
             onClick={onClose}
-            className="ml-3 text-xl hover:opacity-70 transition-opacity"
+            className="ml-3 text-xl hover:opacity-70 transition-opacity min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Cerrar alerta"
+            type="button"
           >
             ×
           </button>

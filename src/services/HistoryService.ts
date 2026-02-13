@@ -148,18 +148,31 @@ export class HistoryService {
       let content: string;
 
       if (format === 'JSON') {
-        // Exportar como JSON con timestamps preservados
-        content = JSON.stringify(
-          events.map((event) => ({
-            ...event,
-            timestamp: event.timestamp.toISOString(),
-            createdAt: event.createdAt.toISOString(),
-          })),
-          null,
-          2
-        );
+        // OPTIMIZACIÓN: Usar streaming para grandes conjuntos de datos
+        // Para conjuntos pequeños, usar stringify directo
+        if (events.length < 1000) {
+          content = JSON.stringify(
+            events.map((event) => ({
+              ...event,
+              timestamp: event.timestamp.toISOString(),
+              createdAt: event.createdAt.toISOString(),
+            })),
+            null,
+            2
+          );
+        } else {
+          // Para conjuntos grandes, construir JSON manualmente para mejor rendimiento
+          const jsonEvents = events.map((event) =>
+            JSON.stringify({
+              ...event,
+              timestamp: event.timestamp.toISOString(),
+              createdAt: event.createdAt.toISOString(),
+            })
+          );
+          content = '[\n  ' + jsonEvents.join(',\n  ') + '\n]';
+        }
       } else {
-        // Exportar como CSV con timestamps preservados
+        // OPTIMIZACIÓN: Usar array join para CSV en lugar de concatenación
         const headers = [
           'ID',
           'Paciente ID',

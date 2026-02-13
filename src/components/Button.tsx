@@ -31,15 +31,24 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   className = '',
   disabled = false,
   children,
+  type = 'button',
   ...props
 }, ref) => {
-  const baseClasses = 'font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  // ACCESIBILIDAD: Asegurar tamaño táctil mínimo de 44x44px
+  const baseClasses = 'font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] min-w-[44px]';
   const widthClass = fullWidth ? 'w-full' : '';
   
   const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`;
 
   return (
-    <button ref={ref} className={classes} disabled={disabled} {...props}>
+    <button 
+      ref={ref} 
+      className={classes} 
+      disabled={disabled} 
+      type={type}
+      aria-disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );

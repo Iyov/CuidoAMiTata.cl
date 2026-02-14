@@ -1,0 +1,12 @@
+---
+description: Todo el contenido visible al usuario en español de Chile. Sin España como contexto principal.
+globs: src/**/*.tsx,src/**/*.ts,index.html,public/index.html
+---
+# Idioma e identidad: español de Chile
+
+- **Idioma**: Todo lo que ve el usuario (UI, mensajes, errores, placeholders, botones, títulos) en **español**.
+- **Variante**: **Chile**. Términos y tono adecuados para Chile. No usar referencias a España o SEGG como marco principal en textos de la app o landing.
+- **Landing (`index.html`)**: Meta tags, títulos, descripciones y copy orientados a Chile y "Cuido a mi Tata". Enlace claro a la app (ej. `/app.html`).
+- **Mensajes de error**: En español, claros y accionables (ej. "Supabase no está configurado. Añade VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets...").
+- **Aria-labels y accesibilidad**: En español (ej. `aria-label="Ir a gestión de medicamentos"`).
+- **Constantes**: Las de `src/constants.ts` y mensajes de validación ya en español; mantener y extender en español chileno.

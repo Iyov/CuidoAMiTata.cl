@@ -1,0 +1,13 @@
+---
+description: Supabase como único backend; despliegue en GitHub Pages. No añadir otros backends ni romper el build.
+globs: src/config/**/*,src/services/**/*,.github/**/*,vite.config.ts,app.html
+---
+# Supabase y despliegue
+
+- **Backend único**: Solo **Supabase** (Auth + PostgreSQL). No Firebase, no API propia, no otros backends.
+- **Variables de entorno**: Solo `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. Usar en `src/config/supabase.ts`. En producción se inyectan vía GitHub Secrets en el workflow.
+- **Auth**: Flujo en `AuthService.ts` y `SupabaseAuthService.ts`. No lanzar error si faltan env (usar placeholder para que la app cargue; mostrar mensaje en login).
+- **Datos**: Persistir en tablas Supabase con RLS. IndexedDB/local como caché u offline está bien; Supabase es fuente de verdad.
+- **Build**: Entrada SPA es `app.html` (no `index.html`). `index.html` es landing y se copia a `public/` en prebuild. Ver `vite.config.ts` → `rollupOptions.input.app`.
+- **GitHub Pages**: Workflow en `.github/workflows/deploy.yml`. Debe copiar `app.html` a `404.html` para que las rutas del SPA funcionen al refrescar. Basename en Router según pathname (ej. `/app.html`).
+- **Secrets**: Documentar en `docs/despliegue-github-pages.md`. No commitear `.env.local` ni claves.

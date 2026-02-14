@@ -1,0 +1,15 @@
+---
+description: Convenciones TypeScript y React del proyecto Cuido a mi Tata.
+globs: src/**/*.ts,src/**/*.tsx
+---
+# TypeScript y React
+
+- **TypeScript estricto**: Usar tipos explícitos en props e interfaces. No `any` salvo casos justificados.
+- **Componentes**: Funcionales con hooks. PascalCase para componentes (ej. `AuthScreen.tsx`).
+- **Imports**: Usar aliases `@/` para src (ej. `import { Button } from '@/components/Button'`). Ver `tsconfig.json` y `vite.config.ts`.
+- **Exportaciones**: Named exports para componentes y servicios (ej. `export const AuthScreen`).
+- **Rutas**: Definir en `src/App.tsx` con React Router. Basename dinámico para GitHub Pages (`/app.html` o según pathname).
+- **Pantallas nuevas**: Crear en `src/screens/NombrePantalla.tsx`, exportar en `src/screens/index.ts` si aplica, y añadir ruta en `App.tsx`.
+- **Servicios**: En `src/services/`. Usar tipo `Result<T, E>` de `src/types/result.ts` para operaciones que pueden fallar.
+- **Estilos**: Tailwind. Clases en español cuando sea legible (ej. `dark:bg-slate-900`). Modo oscuro por defecto.
+- **Accesibilidad**: Botones y enlaces con `min-h-[44px]`/`min-w-[44px]`, `aria-label` en español cuando aporte.

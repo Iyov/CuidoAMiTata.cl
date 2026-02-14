@@ -1,0 +1,13 @@
+---
+description: Pruebas con Vitest; no romper tests ni lint. Cobertura y calidad de código.
+globs: src/**/*.ts,src/**/*.tsx
+---
+# Pruebas y calidad
+
+- **Framework**: Vitest. Config en `vite.config.ts` (test) y `src/test/setup.ts`.
+- **Ejecutar**: `npm test` (run), `npm run test:watch` (watch), `npm run test:coverage` (cobertura).
+- **Antes de dar por cerrado un cambio**: Ejecutar `npm test` y `npm run type-check`. Si hay fallos, corregirlos.
+- **Nuevas funcionalidades**: Añadir o actualizar tests cuando aplique (servicios, managers, componentes críticos).
+- **Lint**: `npm run lint` / `npm run lint:fix`. No dejar errores de ESLint sin justificar.
+- **Formato**: Prettier (`npm run format`). El proyecto usa comillas simples, punto y coma, 2 espacios.
+- **Property-based (PBT)**: Hay tests con fast-check en el proyecto; no eliminar sin motivo. Los tests pueden ser opcionales en el workflow de deploy (`continue-on-error: true`) pero deben pasar en local cuando se modifica código relacionado.

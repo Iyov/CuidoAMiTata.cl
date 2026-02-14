@@ -1,0 +1,11 @@
+---
+description: Proyecto Cuido a mi Tata (Chile). Siempre leer AGENT_SPEC.md y docs/NotebookLM.md antes de implementar.
+globs: **/*
+alwaysApply: true
+---
+# Cuido a mi Tata – Contexto del proyecto
+
+- **Proyecto**: CuidoAMiTata.cl – app web para cuidado de adultos mayores en **Chile**.
+- **Identidad**: "Cuido a mi Tata" (forma chilena de referirse a los abuelos). Español de Chile. No usar España/SEGG como marco principal.
+- **Antes de cualquier cambio**: Lee `.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md` y `docs/NotebookLM.md` para alcance, archivos y tareas.
+- **Stack**: React (TypeScript), Vite, Tailwind, Supabase (Auth + DB), GitHub Pages.

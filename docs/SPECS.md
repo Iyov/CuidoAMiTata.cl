@@ -4,19 +4,27 @@ Este documento es el **índice de especificaciones** para diseñadores, desarrol
 
 ## Para agentes de programación (IA)
 
-Si eres un agente de Cursor, Kiro, VS Code Copilot o similar:
+### Agente Cursor (configuración completa)
 
-1. **Spec principal (instrucciones y tareas)**:  
-   [.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md](../.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md)  
-   → Léelo primero. Incluye mapa de archivos, tareas ordenadas y criterios de aceptación.
+- **Brief del agente (raíz)**: [AGENTS.md](../AGENTS.md)  
+  → Objetivo del proyecto, pasos al iniciar una tarea, restricciones, mapa de archivos y checklist. **Empieza aquí si eres el agente de Cursor.**
 
-2. **Resumen en raíz**:  
-   [AGENTS.md](../AGENTS.md)  
-   → Enlace rápido y reglas mínimas.
+- **Reglas de Cursor** (se aplican automáticamente en el proyecto):  
+  [.cursor/rules/](../.cursor/rules/)  
+  - `000-project-brief.mdc` – Contexto Cuido a mi Tata (Chile), stack.  
+  - `001-cuidoamitata-spec.mdc` – Spec principal (AGENT_SPEC + NotebookLM).  
+  - `002-typescript-react.mdc` – Convenciones TypeScript y React.  
+  - `003-supabase-and-deploy.mdc` – Supabase único backend; GitHub Pages.  
+  - `004-spanish-chile-ux.mdc` – Todo el texto visible en español de Chile.  
+  - `005-testing-and-quality.mdc` – Vitest, type-check, lint.
 
-3. **Contexto de producto (Chile y funcionalidades)**:  
-   [docs/NotebookLM.md](NotebookLM.md)  
-   → Identidad Chile, cuatro servicios, Supabase, registro y despliegue.
+- **Spec de implementación (tareas y criterios)**:  
+  [.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md](../.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md)  
+  → Mapa de archivos, tareas ordenadas y criterios de aceptación.
+
+- **Contexto de producto (Chile y funcionalidades)**:  
+  [docs/NotebookLM.md](NotebookLM.md)  
+  → Identidad Chile, cuatro servicios, Supabase, registro y despliegue.
 
 ## Para humanos
 

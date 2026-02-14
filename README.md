@@ -61,147 +61,33 @@ npm run dev
 
 ## Estructura del proyecto
 
-Estructura de directorios y archivos principales para orientarse en el código:
-
 ```
 CuidoAMiTata.cl/
-├── app.html                  # Entrada de la app React (SPA)
-├── index.html                # Landing page (raíz, se copia a public/)
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-├── tailwind.config.js
+├── app.html              # Entrada SPA React
+├── index.html            # Landing (se copia a public/ en build)
+├── package.json, vite.config.ts, tsconfig.json, tailwind.config.js
 │
 ├── src/
-│   ├── main.tsx               # Punto de entrada (monta React + ErrorBoundary)
-│   ├── App.tsx                # Componente raíz, rutas, auth
-│   ├── index.css              # Estilos globales / Tailwind
-│   ├── constants.ts           # Constantes de la aplicación
-│   ├── vite-env.d.ts          # Tipos de entorno Vite
-│   │
-│   ├── config/
-│   │   └── supabase.ts        # Cliente y configuración Supabase
-│   │
-│   ├── components/            # Componentes reutilizables
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Input.tsx
-│   │   ├── Toast.tsx
-│   │   ├── ThemeToggle.tsx
-│   │   ├── ErrorBoundary.tsx
-│   │   ├── ErrorMessage.tsx
-│   │   ├── ConfirmationModal.tsx
-│   │   ├── FeedbackAlert.tsx
-│   │   └── index.ts
-│   │
-│   ├── contexts/
-│   │   └── ThemeContext.tsx   # Tema claro/oscuro
-│   │
-│   ├── hooks/
-│   │   ├── useToast.ts
-│   │   └── index.ts
-│   │
-│   ├── screens/               # Pantallas de la aplicación
-│   │   ├── AuthScreen.tsx
-│   │   ├── MedicationListScreen.tsx
-│   │   ├── MedicationFormScreen.tsx
-│   │   ├── MedicationConfirmScreen.tsx
-│   │   ├── FallPreventionScreen.tsx
-│   │   ├── FallPreventionChecklistScreen.tsx
-│   │   ├── FallIncidentScreen.tsx
-│   │   ├── FallRiskAlertsScreen.tsx
-│   │   ├── SkinIntegrityScreen.tsx
-│   │   ├── PosturalChangeScreen.tsx
-│   │   ├── BedElevationScreen.tsx
-│   │   ├── PressureUlcerScreen.tsx
-│   │   ├── NutritionScreen.tsx
-│   │   ├── MealPlanScreen.tsx
-│   │   ├── MealIntakeScreen.tsx
-│   │   ├── HydrationTrackingScreen.tsx
-│   │   ├── IncontinenceScreen.tsx
-│   │   ├── IncontinenceEpisodeScreen.tsx
-│   │   ├── IncontinencePatternsScreen.tsx
-│   │   ├── BathroomVisitScreen.tsx
-│   │   ├── PolypharmacyScreen.tsx
-│   │   ├── SIGREMapScreen.tsx
-│   │   ├── EthicalCareScreen.tsx
-│   │   ├── PatientListScreen.tsx
-│   │   ├── PatientFormScreen.tsx
-│   │   ├── HistoryScreen.tsx
-│   │   ├── HistoryExportScreen.tsx
-│   │   ├── NotificationSettingsScreen.tsx
-│   │   ├── UserPreferencesScreen.tsx
-│   │   └── index.ts
-│   │
-│   ├── services/              # Lógica de negocio y servicios
-│   │   ├── AuthService.ts
-│   │   ├── SupabaseAuthService.ts
-│   │   ├── StorageService.ts
-│   │   ├── ValidationService.ts
-│   │   ├── NotificationService.ts
-│   │   ├── DataSyncService.ts
-│   │   ├── HistoryService.ts
-│   │   ├── IntegrationService.ts
-│   │   ├── MedicationManager.ts
-│   │   ├── FallPreventionManager.ts
-│   │   ├── SkinIntegrityManager.ts
-│   │   ├── NutritionManager.ts
-│   │   ├── IncontinenceManager.ts
-│   │   ├── PolypharmacyManager.ts
-│   │   ├── EthicalCareModule.ts
-│   │   ├── PatientManager.ts
-│   │   └── index.ts
-│   │
-│   ├── types/                 # Tipos e interfaces TypeScript
-│   │   ├── enums.ts
-│   │   ├── models.ts
-│   │   ├── result.ts
-│   │   ├── validation.ts
-│   │   └── index.ts
-│   │
-│   ├── utils/
-│   │   ├── indexedDB.ts       # Wrapper IndexedDB
-│   │   ├── localStorage.ts
-│   │   ├── accessibility.ts
-│   │   ├── performance.ts
-│   │   └── index.ts
-│   │
-│   └── test/
-│       └── setup.ts           # Configuración Vitest
+│   ├── main.tsx, App.tsx, index.css, constants.ts
+│   ├── config/           # Supabase
+│   ├── components/       # Button, Card, Input, Toast, ErrorBoundary, etc.
+│   ├── contexts/        # ThemeContext (tema claro/oscuro)
+│   ├── hooks/           # useToast, etc.
+│   ├── screens/         # Pantallas (Auth, Medicamentos, Caídas, Piel, Nutrición, …)
+│   ├── services/        # Auth, Storage, Validation, Notification, Sync + Managers
+│   ├── types/           # enums, models, result, validation
+│   ├── utils/           # indexedDB, localStorage, accessibility, performance
+│   └── test/            # Setup Vitest
 │
-├── public/                    # Archivos estáticos (copiados a dist/)
-│   ├── index.html             # Landing (copia desde raíz en prebuild)
-│   ├── manifest.json
-│   ├── CNAME, .nojekyll, robots.txt, sitemap.xml
-│   ├── css/
-│   ├── js/
-│   ├── img/
-│   └── webfonts/
+├── public/              # Estáticos (index.html, manifest, css, js, img, webfonts)
+├── docs/                # Documentación en español (índice en docs/README.md)
+├── css/                 # Tailwind (input.css → output.css)
+├── .github/workflows/   # deploy.yml (GitHub Pages)
 │
-├── docs/                      # Documentación (español)
-│   ├── README.md              # Índice de documentación
-│   ├── guia-usuario.md
-│   ├── configuracion-supabase.md
-│   ├── configuracion-proyecto.md
-│   ├── despliegue-github-pages.md
-│   ├── despliegue.md
-│   ├── lista-verificacion-produccion.md
-│   ├── arquitectura.md
-│   ├── api.md
-│   └── solucion-problemas-produccion.md
-│
-├── css/                       # Fuente Tailwind (input.css → output.css)
-├── .github/workflows/
-│   └── deploy.yml            # Despliegue GitHub Pages
-│
-├── README.md
-├── CONTRIBUTING.md
-└── LICENSE
+├── README.md, CONTRIBUTING.md, LICENSE
 ```
 
-- **Pantallas** (`src/screens/`): cada pantalla corresponde a una ruta de la app (medicamentos, caídas, piel, nutrición, etc.).
-- **Servicios** (`src/services/`): autenticación, almacenamiento, validación, notificaciones, sincronización y managers por dominio.
-- **Tipos** (`src/types/`): enumeraciones, modelos y tipo `Result` para errores.
+**Resumen**: `screens/` = pantallas por ruta; `services/` = lógica de negocio y managers; `types/` = modelos y enums.
 
 ## Scripts
 

@@ -1,0 +1,25 @@
+---
+description: Especificación principal del proyecto Cuido a mi Tata (Chile). Leer antes de implementar cambios.
+globs: **/*
+---
+
+# Cuido a mi Tata – Spec para agente
+
+Antes de implementar o modificar código en este proyecto:
+
+1. **Lee la especificación para agentes**: `.kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md`
+   - Contiene instrucciones, mapa de archivos y tareas ordenadas.
+   - Incluye criterios de aceptación y checklist.
+
+2. **Contexto de producto (Chile)**: `docs/NotebookLM.md`
+   - Identidad: Chile, "Cuido a mi Tata", español chileno.
+   - Cuatro servicios: Gestión de medicación, Bitácora diaria, Multi-familiar, Botón de pánico.
+   - Supabase para auth y datos; GitHub Pages para producción.
+
+3. **Reglas de implementación**:
+   - UI y mensajes en **español de Chile**.
+   - Backend único: **Supabase** (Auth + PostgreSQL). No añadir otros backends.
+   - Landing: `index.html` (raíz). SPA: `app.html` + `src/`. Rutas con basename para GitHub Pages.
+   - Despliegue: Secrets `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`; workflow en `.github/workflows/deploy.yml`.
+
+Al añadir pantallas o rutas, actualizar `src/App.tsx`. Al añadir tablas o políticas en Supabase, documentar en `docs/` o en el spec.

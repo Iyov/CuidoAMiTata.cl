@@ -80,11 +80,13 @@ CuidoAMiTata.cl/
 │   └── test/            # Setup Vitest
 │
 ├── public/              # Estáticos (index.html, manifest, css, js, img, webfonts)
-├── docs/                # Documentación en español (índice en docs/README.md)
+├── docs/                # Documentación (índice docs/README.md; specs docs/SPECS.md)
+├── .kiro/specs/         # Specs para agentes IA (AGENT_SPEC.md)
+├── .cursor/rules/       # Reglas Cursor (spec del proyecto)
 ├── css/                 # Tailwind (input.css → output.css)
 ├── .github/workflows/   # deploy.yml (GitHub Pages)
 │
-├── README.md, CONTRIBUTING.md, LICENSE
+├── README.md, CONTRIBUTING.md, AGENTS.md, LICENSE
 ```
 
 **Resumen**: `screens/` = pantallas por ruta; `services/` = lógica de negocio y managers; `types/` = modelos y enums.
@@ -108,6 +110,8 @@ Toda la documentación está en la carpeta **[docs/](docs/)**:
 | Documento | Contenido |
 |-----------|-----------|
 | [docs/README.md](docs/README.md) | Índice de la documentación |
+| [docs/SPECS.md](docs/SPECS.md) | **Especificaciones** (índice para agentes IA y humanos) |
+| [AGENTS.md](AGENTS.md) | Guía para agentes IA (Cursor, Kiro, etc.) |
 | [docs/guia-usuario.md](docs/guia-usuario.md) | Manual de uso |
 | [docs/configuracion-supabase.md](docs/configuracion-supabase.md) | Configurar Supabase |
 | [docs/configuracion-proyecto.md](docs/configuracion-proyecto.md) | Configuración del proyecto |

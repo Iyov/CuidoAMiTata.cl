@@ -81,7 +81,7 @@ jobs:
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' && false  # Deshabilitado - usar GitHub Pages en su lugar
     environment:
       name: staging
       url: https://staging.cuidoamitata.cl
@@ -108,7 +108,7 @@ jobs:
   deploy-production:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && false  # Deshabilitado - usar GitHub Pages en su lugar
     environment:
       name: production
       url: https://cuidoamitata.cl

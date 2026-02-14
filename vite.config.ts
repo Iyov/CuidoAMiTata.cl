@@ -47,6 +47,9 @@ export default defineConfig({
             './src/components/ErrorMessage.tsx',
             './src/components/ConfirmationModal.tsx',
           ],
+          'auth': [
+            './src/screens/AuthScreen.tsx',
+          ],
           'services': [
             './src/services/StorageService.ts',
             './src/services/ValidationService.ts',

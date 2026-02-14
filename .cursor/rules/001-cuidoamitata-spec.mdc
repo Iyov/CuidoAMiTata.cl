@@ -1,6 +1,7 @@
 ---
 description: Especificación principal del proyecto Cuido a mi Tata (Chile). Leer antes de implementar cambios.
 globs: **/*
+alwaysApply: true
 ---
 
 # Cuido a mi Tata – Spec para agente

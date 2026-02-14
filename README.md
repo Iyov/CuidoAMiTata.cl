@@ -82,7 +82,8 @@ CuidoAMiTata.cl/
 ├── public/              # Estáticos (index.html, manifest, css, js, img, webfonts)
 ├── docs/                # Documentación (índice docs/README.md; specs docs/SPECS.md)
 ├── .kiro/specs/         # Specs para agentes IA (AGENT_SPEC.md)
-├── .cursor/rules/       # Reglas Cursor (spec del proyecto)
+├── .cursor/rules/       # Reglas Cursor (6 reglas .mdc, aplicación automática)
+├── .cursorrules         # Reglas automáticas del proyecto (Cursor las carga siempre)
 ├── css/                 # Tailwind (input.css → output.css)
 ├── .github/workflows/   # deploy.yml (GitHub Pages)
 │

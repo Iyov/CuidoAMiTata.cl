@@ -4,12 +4,17 @@ Este documento es el **índice de especificaciones** para diseñadores, desarrol
 
 ## Para agentes de programación (IA)
 
-### Agente Cursor (configuración completa)
+### Agente Cursor (configuración completa, aplicación automática)
+
+- **Reglas automáticas (siempre cargadas)**:  
+  - [.cursorrules](../.cursorrules) (raíz): Cursor carga este archivo en cada conversación dentro del proyecto.  
+  - Reglas [.cursor/rules/000-project-brief.mdc](../.cursor/rules/000-project-brief.mdc) y [001-cuidoamitata-spec.mdc](../.cursor/rules/001-cuidoamitata-spec.mdc) con `alwaysApply: true`.  
+  No hace falta pedir al agente que "lea el spec"; el contexto se aplica automáticamente.
 
 - **Brief del agente (raíz)**: [AGENTS.md](../AGENTS.md)  
-  → Objetivo del proyecto, pasos al iniciar una tarea, restricciones, mapa de archivos y checklist. **Empieza aquí si eres el agente de Cursor.**
+  → Objetivo del proyecto, pasos al iniciar una tarea, restricciones, mapa de archivos y checklist.
 
-- **Reglas de Cursor** (se aplican automáticamente en el proyecto):  
+- **Reglas de Cursor** (por tipo de archivo):  
   [.cursor/rules/](../.cursor/rules/)  
   - `000-project-brief.mdc` – Contexto Cuido a mi Tata (Chile), stack.  
   - `001-cuidoamitata-spec.mdc` – Spec principal (AGENT_SPEC + NotebookLM).  

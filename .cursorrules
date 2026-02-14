@@ -1,0 +1,12 @@
+# Cuido a mi Tata (Chile) – Reglas automáticas del proyecto
+
+Proyecto: CuidoAMiTata.cl – app web para cuidado de adultos mayores en Chile. Identidad: "Cuido a mi Tata", español de Chile.
+
+Antes de implementar o modificar código:
+1. Lee AGENTS.md (raíz) para objetivo, pasos y checklist.
+2. Lee .kiro/specs/cuido-a-mi-tata/AGENT_SPEC.md para tareas, archivos y criterios de aceptación.
+3. Lee docs/NotebookLM.md para contexto Chile y cuatro servicios (medicación, bitácora, multi-familiar, botón de pánico).
+
+Reglas: Solo Supabase como backend. Todo texto visible en español de Chile. Landing en index.html, SPA en app.html y src/. Despliegue en GitHub Pages con Secrets VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY. Al añadir pantallas o rutas, actualizar src/App.tsx.
+
+Aplica también las reglas en .cursor/rules/*.mdc según el tipo de archivo que edites.

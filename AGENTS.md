@@ -2,6 +2,8 @@
 
 Este archivo es la **guía principal para el agente de Cursor** (y agentes similares) en el proyecto CuidoAMiTata.cl. Síguelo antes y durante cualquier implementación o modificación.
 
+**Aplicación automática**: En este proyecto, Cursor carga automáticamente el archivo **.cursorrules** (raíz) y las reglas con `alwaysApply: true` en `.cursor/rules/` (000 y 001). No hace falta indicar manualmente "lee el spec"; el agente recibe el contexto en cada conversación.
+
 ---
 
 ## Objetivo del proyecto

@@ -34,33 +34,8 @@ export default defineConfig({
         app: path.resolve(__dirname, 'app.html'),
       },
       output: {
-        // Code splitting para optimizar carga inicial
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
-          'components': [
-            './src/components/Alert.tsx',
-            './src/components/Button.tsx',
-            './src/components/Card.tsx',
-            './src/components/Input.tsx',
-            './src/components/Toast.tsx',
-            './src/components/ErrorMessage.tsx',
-            './src/components/ConfirmationModal.tsx',
-          ],
-          'auth': [
-            './src/screens/AuthScreen.tsx',
-          ],
-          'services': [
-            './src/services/StorageService.ts',
-            './src/services/ValidationService.ts',
-            './src/services/NotificationService.ts',
-          ],
-          'managers': [
-            './src/services/MedicationManager.ts',
-            './src/services/FallPreventionManager.ts',
-            './src/services/SkinIntegrityManager.ts',
-          ],
-        },
+        // Dejar que Vite maneje el code splitting automáticamente
+        manualChunks: undefined,
       },
     },
     // Optimizar tamaño de chunks

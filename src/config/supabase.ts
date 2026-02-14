@@ -17,22 +17,13 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-// Validar que las credenciales existan
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    '❌ ERROR: Supabase no está configurado.\n\n' +
-    'Para configurar Supabase:\n' +
-    '1. Crea un proyecto en https://supabase.com\n' +
-    '2. Crea un archivo .env.local en la raíz del proyecto\n' +
-    '3. Agrega las siguientes variables:\n' +
-    '   VITE_SUPABASE_URL=https://tu-proyecto.supabase.co\n' +
-    '   VITE_SUPABASE_ANON_KEY=tu_anon_key_aqui\n\n' +
-    'Lee SUPABASE_SETUP.md para instrucciones completas.'
-  );
-}
+// No lanzar error si faltan credenciales: evita pantalla en blanco en producción
+// (p. ej. GitHub Pages sin secrets). La auth fallará al intentar login y se mostrará mensaje.
+const url = supabaseUrl || 'https://placeholder.supabase.co';
+const key = supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.placeholder';
 
-// Crear cliente de Supabase
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Crear cliente de Supabase (con placeholders si no hay env para que la app cargue)
+export const supabase = createClient(url, key, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,

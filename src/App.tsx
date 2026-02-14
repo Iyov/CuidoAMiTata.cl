@@ -240,9 +240,14 @@ export const App: React.FC = () => {
   }
 
   console.log('✅ Showing main app');
+  // Basename para GitHub Pages: /app.html o /repo/app.html; en local / o /app.html
+  const pathname = window.location.pathname;
+  const appIdx = pathname.indexOf('app.html');
+  const basename = appIdx >= 0 ? pathname.slice(0, appIdx) + 'app.html' : '/';
+
   return (
     <ThemeProvider>
-      <Router basename={window.location.pathname.includes('app.html') ? '/app.html' : '/'}>
+      <Router basename={basename}>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<HomePage onLogout={handleLogout} />} />

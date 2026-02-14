@@ -52,9 +52,17 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
 
+      - name: SPA fallback para GitHub Pages (404 → app)
+        run: |
+          if [ -f dist/app.html ]; then
+            cp dist/app.html dist/404.html
+            echo "404.html creado para rutas del SPA (refresco en /app.html/...)"
+          fi
+        shell: bash
+
       - name: Verify CNAME in dist
         run: |
-          if [ ! -f dist/CNAME ]; then
+          if [ -f CNAME ] && [ ! -f dist/CNAME ]; then
             echo "CNAME not found in dist, copying..."
             cp CNAME dist/CNAME
           fi

@@ -2,9 +2,11 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
-import { AuthScreen } from './screens/AuthScreen';
 import { getIntegrationService } from './services';
 import { getAuthService } from './services/AuthService';
+
+// Import AuthScreen directly (not lazy loaded since it's needed immediately)
+import { AuthScreen } from './screens/AuthScreen';
 
 // Lazy loading de pantallas para optimizar carga inicial
 const MedicationListScreen = lazy(() =>

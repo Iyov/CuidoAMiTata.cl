@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Alert, Input } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
+import { Input } from '../components/Input';
 import { getNutritionManager } from '../services/NutritionManager';
 import { MealType } from '../types/enums';
 

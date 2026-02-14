@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Alert } from '../components';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
 import type { RiskChecklist, FallIncident, Patient } from '../types/models';
 import { RiskFactorType, Severity } from '../types/enums';
 import * as IndexedDBUtils from '../utils/indexedDB';

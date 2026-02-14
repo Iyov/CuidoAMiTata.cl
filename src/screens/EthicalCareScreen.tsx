@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Alert } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
 import { getEthicalCareModule } from '../services/EthicalCareModule';
 import type { Restraint, Strategy, CareContext } from '../types/models';
 import { RestraintType, RestraintStatus, ErrorCode } from '../types/enums';

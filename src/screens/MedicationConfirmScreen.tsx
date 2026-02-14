@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Card, Alert } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
 import { getMedicationManager } from '../services/MedicationManager';
 import type { Medication, MedicationEvent } from '../types/models';
 import { MedicationEventStatus } from '../types/enums';

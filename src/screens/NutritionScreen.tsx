@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Alert } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
 import { getNutritionManager } from '../services/NutritionManager';
 import type { HydrationStatus } from '../types/models';
 

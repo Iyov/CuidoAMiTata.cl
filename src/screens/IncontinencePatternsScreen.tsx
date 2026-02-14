@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Alert, Input } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
+import { Input } from '../components/Input';
 import { getIncontinenceManager } from '../services/IncontinenceManager';
 import type { PatternAnalysis, IncontinenceEvent } from '../types/models';
 import { IncontinenceEventType } from '../types/enums';

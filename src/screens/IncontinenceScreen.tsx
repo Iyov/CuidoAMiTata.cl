@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../components';
+import { Card } from '../components/Card';
 
 export const IncontinenceScreen: React.FC = () => {
   const navigate = useNavigate();

@@ -1,24 +1,5 @@
-export { Button } from './Button';
-export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
+// DEPRECATED: This barrel export file is no longer used to avoid code splitting issues.
+// Import components directly from their individual files instead.
+// Example: import { Button } from './components/Button';
 
-export { Input } from './Input';
-export type { InputProps } from './Input';
-
-export { Card } from './Card';
-export type { CardProps } from './Card';
-
-export { Alert } from './Alert';
-export type { AlertProps, AlertType } from './Alert';
-
-export { ThemeToggle } from './ThemeToggle';
-
-export { ErrorBoundary } from './ErrorBoundary';
-
-export { ErrorMessage } from './ErrorMessage';
-export type { ErrorMessageProps, ErrorCode } from './ErrorMessage';
-
-export { Toast, ToastContainer } from './Toast';
-export type { ToastProps, ToastType, ToastContainerProps } from './Toast';
-
-export { ConfirmationModal } from './ConfirmationModal';
-export type { ConfirmationModalProps } from './ConfirmationModal';
+// This file is kept for backwards compatibility but should not be used in new code.

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Alert } from '../components';
+import { Button } from '../components/Button';
+import { Card } from '../components/Card';
+import { Alert } from '../components/Alert';
 import { getSkinIntegrityManager } from '../services/SkinIntegrityManager';
 import type { PosturalChange } from '../types/models';
 import { Position } from '../types/enums';

@@ -10,6 +10,7 @@ import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Alert } from '../components/Alert';
 import { getAuthService } from '../services/AuthService';
+import { isSupabaseConfigured } from '../config/supabase';
 import type { Credentials } from '../types/models';
 
 interface AuthScreenProps {
@@ -74,7 +75,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           }
         } else {
           console.error('❌ Error en login:', result.error);
-          setError(`${result.error.message} (Código: ${result.error.code})`);
+          const msg = result.error.message;
+          const isConfigError =
+            msg.includes('Failed to fetch') ||
+            msg.includes('ERR_NAME_NOT_RESOLVED') ||
+            msg.includes('placeholder.supabase');
+          setError(
+            isConfigError
+              ? 'Supabase no está configurado en este despliegue. Añade VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
+              : `${result.error.message} (Código: ${result.error.code})`
+          );
         }
       } else {
         // Registro (simulado por ahora)
@@ -82,7 +92,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
       }
     } catch (err) {
       console.error('💥 Error crítico:', err);
-      setError(`Error al procesar la solicitud: ${err instanceof Error ? err.message : 'Error desconocido'}`);
+      const msg = err instanceof Error ? err.message : String(err);
+      const isConfigError =
+        msg.includes('Failed to fetch') || msg.includes('ERR_NAME_NOT_RESOLVED') || msg.includes('placeholder');
+      setError(
+        isConfigError
+          ? 'Supabase no está configurado en este despliegue. Añade VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
+          : `Error al procesar la solicitud: ${msg}`
+      );
     } finally {
       setLoading(false);
     }
@@ -117,6 +134,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">
             {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
           </h2>
+
+          {!isSupabaseConfigured() && (
+            <Alert variant="error" className="mb-4">
+              <strong>Supabase no está configurado.</strong> No se puede iniciar sesión hasta que el administrador
+              configure las variables de entorno. En GitHub Pages: repositorio → Settings → Secrets and variables →
+              Actions → añadir <code className="text-xs">VITE_SUPABASE_URL</code> y{' '}
+              <code className="text-xs">VITE_SUPABASE_ANON_KEY</code>, luego volver a desplegar (push a main).
+            </Alert>
+          )}
 
           {error && (
             <Alert variant="error" className="mb-4">
@@ -166,7 +192,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               type="submit"
               variant="primary"
               fullWidth
-              disabled={loading}
+              disabled={loading || !isSupabaseConfigured()}
               size="lg"
             >
               {loading

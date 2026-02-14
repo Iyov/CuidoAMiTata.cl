@@ -93,7 +93,7 @@ Para sugerir nuevas características:
 3. Una vez aprobado, se hará merge
 4. Tu contribución aparecerá en el changelog
 
-## Configuración de Desarrollo
+## Configuración de desarrollo
 
 ```bash
 # Clonar el repo
@@ -109,6 +109,8 @@ npm run watch:css
 # Compilar para producción
 npm run build:css
 ```
+
+Toda la documentación detallada (Supabase, despliegue, arquitectura, API) está en la carpeta **[docs/](docs/)**. Ver [docs/README.md](docs/README.md) para el índice.
 
 ## Preguntas
 

@@ -1080,10 +1080,12 @@ const events = await HistoryService.getHistory();
 
 Para más información, consulta:
 
-- [Guía de Usuario](USER_GUIDE.md)
-- [Arquitectura del Sistema](ARCHITECTURE.md)
-- [Especificaciones](.kiro/specs/cuido-a-mi-tata/)
+- [Guía de usuario](guia-usuario.md)
+- [Arquitectura del sistema](arquitectura.md)
+- [Índice de documentación](README.md)
 
 ---
 
 **Última actualización**: 2026-02-13
+
+[Volver al índice](README.md)

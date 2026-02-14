@@ -737,3 +737,5 @@ src/
 
 **Última actualización**: 2026-02-13
 **Versión**: 1.0.0
+
+[Volver al índice](README.md)

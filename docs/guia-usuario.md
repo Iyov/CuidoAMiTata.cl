@@ -703,3 +703,5 @@ R: Use Polifarmacia → Exportar PDF para medicamentos, o Historial → Exportar
 **Versión**: 1.0.0
 
 ¡Gracias por usar CuidoAMiTata! Estamos comprometidos con mejorar el cuidado de adultos mayores.
+
+[Volver al índice](README.md)

@@ -1,3 +1,6 @@
+// NOTE: AuthScreen is NOT exported here because it's imported directly in App.tsx
+// to avoid code splitting conflicts. It has its own manual chunk in vite.config.ts
+
 export { MedicationListScreen } from './MedicationListScreen';
 export { MedicationFormScreen } from './MedicationFormScreen';
 export { MedicationConfirmScreen } from './MedicationConfirmScreen';
@@ -24,6 +27,5 @@ export { PatientListScreen } from './PatientListScreen';
 export { PatientFormScreen } from './PatientFormScreen';
 export { NotificationSettingsScreen } from './NotificationSettingsScreen';
 export { UserPreferencesScreen } from './UserPreferencesScreen';
-export { AuthScreen } from './AuthScreen';
 export { HistoryScreen } from './HistoryScreen';
 export { HistoryExportScreen } from './HistoryExportScreen';

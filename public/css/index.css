@@ -1,0 +1,61 @@
+/* Scroll Smooth para navegación */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ocultar barra de scroll en Chrome/Safari si es necesario */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 10px;
+}
+
+/* Animaciones de hover para links */
+.nav-link {
+    position: relative;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #f97316;
+    transition: width 0.3s;
+}
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Diálogo estilo moderno */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+#blog-modal[open] {
+    animation: zoom 0.3s ease-out;
+}
+
+@keyframes zoom {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+/* Botón Back to Top */
+#backToTop {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#backToTop:hover {
+    transform: scale(1.1);
+}

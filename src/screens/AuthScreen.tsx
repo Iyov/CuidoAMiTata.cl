@@ -100,7 +100,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img
-              src="/CuidoAMiTata_Logo_500.png"
+              src="img/CuidoAMiTata_Logo_500.png"
               alt="CuidoAMiTata"
               className="h-24 w-24"
             />

@@ -38,6 +38,15 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
+          'components': [
+            './src/components/Alert.tsx',
+            './src/components/Button.tsx',
+            './src/components/Card.tsx',
+            './src/components/Input.tsx',
+            './src/components/Toast.tsx',
+            './src/components/ErrorMessage.tsx',
+            './src/components/ConfirmationModal.tsx',
+          ],
           'services': [
             './src/services/StorageService.ts',
             './src/services/ValidationService.ts',

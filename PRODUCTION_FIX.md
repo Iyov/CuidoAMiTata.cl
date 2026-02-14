@@ -7,6 +7,11 @@
 
 **Solución**: Se reorganizó la importación de `AuthScreen` para que sea directa (no lazy) ya que se necesita inmediatamente al cargar la app.
 
+### 1.1. Error: `Export 'Alert' is not defined in module`
+**Causa**: Vite estaba teniendo problemas con el code splitting de los componentes compartidos, causando que las exportaciones del barrel file `src/components/index.ts` no se resolvieran correctamente en producción.
+
+**Solución**: Se agregó un chunk manual para `components` en `vite.config.ts` que agrupa todos los componentes compartidos (Alert, Button, Card, Input, Toast, etc.) en un bundle separado, asegurando que las exportaciones se resuelvan correctamente.
+
 ### 2. Error: `img/CuidoAMiTata_Logo_500.png: 404` y `js/index.js: 404`
 **Causa**: Los recursos estáticos (css/, js/, img/, webfonts/) estaban solo en `public/` pero no en la raíz, causando problemas en desarrollo local.
 
@@ -68,7 +73,7 @@ proyecto/
 3. `manifest.json` - Actualizada ruta del logo a `img/`
 4. `src/screens/AuthScreen.tsx` - Actualizada ruta del logo a `img/`
 5. `index.html` - Actualizada ruta del logo a `img/` (Open Graph, Twitter Cards, favicon, img)
-6. `vite.config.ts` - Removido `index.html` del input (solo procesa `app.html`)
+6. `vite.config.ts` - Removido `index.html` del input (solo procesa `app.html`) y agregado chunk manual para `components` para resolver problemas de code splitting
 7. `package.json` - Agregado script `sync:landing` mejorado que copia TODOS los recursos editables (index.html, manifest.json, css/, js/, img/, webfonts/) de raíz a public/
 8. `.kiro/docs/LANDING_PAGE_WORKFLOW.md` - Documentación completa del flujo de trabajo
 

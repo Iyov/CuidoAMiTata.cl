@@ -99,6 +99,65 @@ export class SupabaseAuthService {
     }
   }
 
+  async register(credentials: Credentials): Promise<Result<AuthToken>> {
+    try {
+      if (!credentials.email || !credentials.password) {
+        return Err({
+          code: ErrorCode.VALIDATION_REQUIRED_FIELD,
+          message: 'El email y la contraseña son obligatorios',
+        });
+      }
+
+      if (credentials.password.length < 6) {
+        return Err({
+          code: ErrorCode.VALIDATION_INVALID_FORMAT,
+          message: 'La contraseña debe tener al menos 6 caracteres',
+        });
+      }
+
+      // Registrar con Supabase
+      const { data, error } = await supabase.auth.signUp({
+        email: credentials.email,
+        password: credentials.password,
+      });
+
+      if (error) {
+        return Err({
+          code: ErrorCode.AUTH_INVALID_CREDENTIALS,
+          message: error.message === 'User already registered' 
+            ? 'Este email ya está registrado'
+            : error.message,
+        });
+      }
+
+      if (!data.user) {
+        return Err({
+          code: ErrorCode.AUTH_INVALID_CREDENTIALS,
+          message: 'No se pudo crear el usuario',
+        });
+      }
+
+      // Retornar información del usuario creado
+      const authToken: AuthToken = {
+        accessToken: data.session?.access_token || '',
+        refreshToken: data.session?.refresh_token || '',
+        expiresAt: data.session?.expires_at 
+          ? new Date(data.session.expires_at * 1000)
+          : new Date(Date.now() + 3600000),
+        id: data.user.id,
+        email: data.user.email || credentials.email,
+      };
+
+      return Ok(authToken);
+    } catch (error) {
+      return Err({
+        code: ErrorCode.AUTH_INVALID_CREDENTIALS,
+        message: 'Error al crear la cuenta',
+        details: error,
+      });
+    }
+  }
+
   async logout(): Promise<Result<void>> {
     try {
       // Cerrar sesión en Supabase

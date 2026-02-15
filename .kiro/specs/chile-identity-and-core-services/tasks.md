@@ -277,12 +277,12 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
 - [ ] 17. Actualizar autenticación y perfiles
-  - [ ] 17.1 Actualizar ProfileService
+  - [x] 17.1 Actualizar ProfileService
     - Agregar métodos: updateFamilyAssociation, getUserRole
     - Integrar con tabla profiles de Supabase
     - _Requisitos: 10.2, 10.3_
   
-  - [ ] 17.2 Actualizar AuthScreen
+  - [x] 17.2 Actualizar AuthScreen
     - Actualizar textos a español chileno
     - Agregar soporte para registro con token de invitación (query param)
     - Crear perfil automáticamente al registrar
@@ -303,13 +303,13 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 10.1, 10.4_
 
 - [ ] 18. Actualizar navegación y rutas
-  - [ ] 18.1 Agregar rutas en App.tsx
+  - [x] 18.1 Agregar rutas en App.tsx
     - Agregar ruta /bitacora → BitacoraScreen
     - Agregar ruta /family → FamilyScreen
     - Verificar basename configurado correctamente
     - _Requisitos: 12.1, 12.3_
   
-  - [ ] 18.2 Actualizar HomePage con nuevos servicios
+  - [x] 18.2 Actualizar HomePage con nuevos servicios
     - Agregar enlace a Bitácora Diaria
     - Agregar enlace a Gestión Familiar
     - Actualizar textos a español chileno
@@ -324,17 +324,17 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 12.1, 12.2, 12.5_
 
 - [ ] 19. Integrar multi-familiar con módulos existentes
-  - [ ] 19.1 Actualizar MedicationManager
+  - [x] 19.1 Actualizar MedicationManager
     - Filtrar medicamentos por familia actual
     - Asociar nuevos medicamentos a familia
     - _Requisitos: 14.3_
   
-  - [ ] 19.2 Actualizar pantallas de medicación
+  - [x] 19.2 Actualizar pantallas de medicación
     - Actualizar textos a español chileno
     - Verificar filtrado por familia funciona
     - _Requisitos: 14.1, 14.2, 14.3_
   
-  - [ ] 19.3 Actualizar módulos de soporte
+  - [x] 19.3 Actualizar módulos de soporte
     - Actualizar textos a español chileno en: FallPreventionScreen, SkinIntegrityScreen, PolypharmacyScreen, EthicalCareScreen
     - Reemplazar referencias a España con Chile donde aplique
     - Filtrar datos por familia actual
@@ -345,51 +345,51 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - Módulos de soporte funcionan correctamente
     - _Requisitos: 14.3, 15.3_
 
-- [ ] 20. Checkpoint - Verificar integración completa
+- [x] 20. Checkpoint - Verificar integración completa
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
-- [ ] 21. Crear documentación SQL de Supabase
+- [x] 21. Crear documentación SQL de Supabase
   - Crear docs/supabase-schema.sql con todos los CREATE TABLE y políticas RLS
   - Crear docs/supabase-migrations.md con instrucciones de aplicación
   - Documentar configuración de Supabase Edge Functions para emails
   - _Requisitos: 11.4, 11.5_
 
 - [ ] 22. Actualizar workflow de despliegue
-  - [ ] 22.1 Verificar .github/workflows/deploy.yml
+  - [x] 22.1 Verificar .github/workflows/deploy.yml
     - Verificar que usa GitHub Secrets para VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY
     - Verificar que genera 404.html desde app.html
     - Verificar que sube artefacto a GitHub Pages
     - _Requisitos: 13.1, 13.2, 13.3, 13.4_
   
-  - [ ] 22.2 Actualizar documentación de despliegue
+  - [x] 22.2 Actualizar documentación de despliegue
     - Actualizar docs/despliegue-github-pages.md con nuevos requisitos
     - Documentar configuración de Secrets
     - Documentar verificación post-despliegue
     - _Requisitos: 13.1, 13.5_
 
 - [ ] 23. Verificación final y documentación
-  - [ ] 23.1 Ejecutar suite completa de tests
+  - [x] 23.1 Ejecutar suite completa de tests
     - npm run type-check
     - npm test
     - npm run test:coverage
     - Verificar cobertura > 80%
   
-  - [ ] 23.2 Verificar build de producción
+  - [x] 23.2 Verificar build de producción
     - npm run build
     - npm run preview
     - Verificar que no hay errores
     - Verificar que landing y app cargan correctamente
   
-  - [ ] 23.3 Actualizar README.md
+  - [x] 23.3 Actualizar README.md
     - Documentar nuevos servicios (bitácora, multi-familiar, pánico)
     - Documentar configuración de Supabase requerida
     - Documentar variables de entorno
   
-  - [ ] 23.4 Actualizar docs/SPECS.md
+  - [x] 23.4 Actualizar docs/SPECS.md
     - Agregar referencia a este spec
     - Documentar estado de implementación
 
-- [ ] 24. Checkpoint final - Preparar para despliegue
+- [x] 24. Checkpoint final - Preparar para despliegue
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
   - Verificar que la documentación está completa.
   - Confirmar que el usuario está listo para desplegar a producción.

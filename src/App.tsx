@@ -1,8 +1,9 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { FamilyProvider } from './contexts/FamilyContext';
+import { FamilyProvider, useFamily } from './contexts/FamilyContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { FamilySelector } from './components/FamilySelector';
 import { PanicButton } from './components/PanicButton';
 import { getIntegrationService } from './services';
 import { getAuthService } from './services/AuthService';
@@ -74,6 +75,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const userName = localStorage.getItem('user_name') || 'Usuario';
   const userRole = localStorage.getItem('user_role') || 'cuidador';
   const currentPatientId = localStorage.getItem('currentPatientId') || 'default-patient';
+  const location = useLocation();
+  
+  // Obtener contexto de familia
+  const { families, currentFamily, switchFamily, isLoading: familyLoading } = useFamily();
+  
+  // Helper para determinar si una ruta está activa
+  const isActive = (path: string) => location.pathname === path;
   
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
@@ -86,6 +94,12 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             </p>
           </div>
           <div className="flex items-center gap-4">
+            <FamilySelector 
+              families={families}
+              currentFamilyId={currentFamily?.id || null}
+              onFamilyChange={switchFamily}
+              isLoading={familyLoading}
+            />
             <ThemeToggle />
             <button
               onClick={onLogout}
@@ -102,8 +116,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/medications"
-              className="block p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/medications')
+                  ? 'bg-blue-600 ring-2 ring-blue-400'
+                  : 'bg-blue-500 hover:bg-blue-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2`}
               aria-label="Ir a gestión de medicamentos"
+              aria-current={isActive('/medications') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Medicamentos</h2>
               <p className="text-sm opacity-90">Gestión de medicamentos y horarios de tu tata</p>
@@ -113,8 +132,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/fall-prevention"
-              className="block p-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/fall-prevention')
+                  ? 'bg-amber-600 ring-2 ring-amber-400'
+                  : 'bg-amber-500 hover:bg-amber-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2`}
               aria-label="Ir a prevención de caídas"
+              aria-current={isActive('/fall-prevention') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Prevención de Caídas</h2>
               <p className="text-sm opacity-90">Evaluación de riesgos y registro de incidentes</p>
@@ -124,8 +148,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/skin-integrity"
-              className="block p-4 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/skin-integrity')
+                  ? 'bg-purple-600 ring-2 ring-purple-400'
+                  : 'bg-purple-500 hover:bg-purple-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2`}
               aria-label="Ir a cuidado de la piel"
+              aria-current={isActive('/skin-integrity') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Cuidado de la Piel</h2>
               <p className="text-sm opacity-90">Cambios posturales y prevención de úlceras</p>
@@ -135,8 +164,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/polypharmacy"
-              className="block p-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/polypharmacy')
+                  ? 'bg-green-600 ring-2 ring-green-400'
+                  : 'bg-green-500 hover:bg-green-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2`}
               aria-label="Ir a gestión de polifarmacia"
+              aria-current={isActive('/polypharmacy') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Polifarmacia</h2>
               <p className="text-sm opacity-90">Hoja de medicamentos, alertas y puntos SIGRE</p>
@@ -146,8 +180,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/ethical-care"
-              className="block p-4 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/ethical-care')
+                  ? 'bg-rose-600 ring-2 ring-rose-400'
+                  : 'bg-rose-500 hover:bg-rose-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2`}
               aria-label="Ir a cuidado ético"
+              aria-current={isActive('/ethical-care') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Cuidado Ético</h2>
               <p className="text-sm opacity-90">Evaluación de restricciones y alternativas</p>
@@ -157,8 +196,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/bitacora"
-              className="block p-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/bitacora')
+                  ? 'bg-teal-600 ring-2 ring-teal-400'
+                  : 'bg-teal-500 hover:bg-teal-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2`}
               aria-label="Ir a bitácora diaria"
+              aria-current={isActive('/bitacora') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Bitácora Diaria</h2>
               <p className="text-sm opacity-90">Registro de comidas, ánimo y actividades</p>
@@ -168,8 +212,13 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <li>
             <Link
               to="/family"
-              className="block p-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
+              className={`block p-4 ${
+                isActive('/family')
+                  ? 'bg-indigo-600 ring-2 ring-indigo-400'
+                  : 'bg-indigo-500 hover:bg-indigo-600'
+              } text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2`}
               aria-label="Ir a gestión familiar"
+              aria-current={isActive('/family') ? 'page' : undefined}
             >
               <h2 className="text-xl font-semibold">Gestión Familiar</h2>
               <p className="text-sm opacity-90">Administrar miembros y roles de la familia</p>

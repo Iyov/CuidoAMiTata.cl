@@ -339,6 +339,8 @@ export interface AuthToken {
   accessToken: string;
   refreshToken: string;
   expiresAt: Date;
+  id?: string;
+  email?: string;
 }
 
 /**

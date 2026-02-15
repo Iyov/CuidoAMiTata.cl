@@ -1,6 +1,14 @@
 /**
  * Medication Manager
  * Gestiona programación, notificaciones y registro de administración de medicamentos
+ * 
+ * TODO: Implementar filtrado por familia cuando se migre a Supabase
+ * Actualmente usa IndexedDB local. Para soporte multi-familiar completo,
+ * se necesita:
+ * 1. Migrar almacenamiento de medicamentos a Supabase
+ * 2. Agregar campo familyId a tabla medications
+ * 3. Implementar políticas RLS para aislamiento por familia
+ * 4. Filtrar consultas por currentFamilyId del FamilyContext
  */
 
 import { Result, Ok, Err } from '../types/result';

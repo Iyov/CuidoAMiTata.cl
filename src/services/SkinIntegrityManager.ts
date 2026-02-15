@@ -1,6 +1,10 @@
 /**
  * Skin Integrity Manager
  * Gestiona cambios posturales y monitoreo de úlceras por presión
+ * 
+ * TODO: Implementar filtrado por familia cuando se migre a Supabase
+ * Actualmente usa IndexedDB local. Para soporte multi-familiar completo,
+ * se necesita migrar a Supabase con políticas RLS.
  */
 
 import { Result, Ok, Err } from '../types/result';

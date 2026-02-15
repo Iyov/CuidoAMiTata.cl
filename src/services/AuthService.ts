@@ -13,6 +13,7 @@ import type { AuthToken, Credentials, SessionStatus } from '../types/models';
 export interface IAuthService {
   initialize(): Promise<Result<void>>;
   login(credentials: Credentials): Promise<Result<AuthToken>>;
+  register(credentials: Credentials): Promise<Result<AuthToken>>;
   logout(): Promise<Result<void>>;
   isAuthenticated(): Promise<boolean>;
   checkSession(): SessionStatus;

@@ -23,3 +23,4 @@ export * from './FamilyService';
 export * from './FamilyManager';
 export * from './EmailService';
 export * from './PanicManager';
+export * from './ProfileService';

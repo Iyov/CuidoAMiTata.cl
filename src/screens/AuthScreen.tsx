@@ -1,15 +1,18 @@
 /**
  * Auth Screen
  * Pantalla de autenticación y seguridad
- * Requisito: 12.1
+ * Requisito: 10.1, 10.2, 10.3
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Alert } from '../components/Alert';
 import { getAuthService } from '../services/AuthService';
+import { getProfileService } from '../services/ProfileService';
+import { getFamilyService } from '../services/FamilyService';
 import { isSupabaseConfigured } from '../config/supabase';
 import type { Credentials } from '../types/models';
 
@@ -18,13 +21,46 @@ interface AuthScreenProps {
 }
 
 export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [searchParams] = useSearchParams();
+  const invitationToken = searchParams.get('invitation');
+  
+  const [isLogin, setIsLogin] = useState(!invitationToken); // Si hay token, mostrar registro
   const [credentials, setCredentials] = useState<Credentials>({
     email: '',
     password: '',
   });
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [invitationInfo, setInvitationInfo] = useState<{ email: string; familyName: string } | null>(null);
+
+  // Cargar información de invitación si hay token
+  useEffect(() => {
+    const loadInvitation = async () => {
+      if (!invitationToken) return;
+
+      try {
+        const familyService = getFamilyService();
+        const result = await familyService.getInvitationByToken(invitationToken);
+        
+        if (result.ok) {
+          const invitation = result.value;
+          setInvitationInfo({
+            email: invitation.email,
+            familyName: 'la familia', // TODO: cargar nombre real de familia
+          });
+          setCredentials(prev => ({ ...prev, email: invitation.email }));
+        } else {
+          setError('Token de invitación inválido o expirado');
+        }
+      } catch (err) {
+        console.error('Error al cargar invitación:', err);
+        setError('Error al cargar invitación');
+      }
+    };
+
+    loadInvitation();
+  }, [invitationToken]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,10 +88,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
       return;
     }
 
+    if (!isLogin && !name.trim()) {
+      setError('Por favor, ingresa tu nombre');
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
-      console.log('🔐 Intentando iniciar sesión con:', credentials.email);
+      console.log('🔐 Intentando autenticación con:', credentials.email);
       
       const authService = await getAuthService();
       console.log('✅ AuthService obtenido');
@@ -67,7 +108,6 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         
         if (result.ok) {
           console.log('✅ Login exitoso!');
-          // Login exitoso
           if (onLoginSuccess) {
             onLoginSuccess();
           } else {
@@ -82,13 +122,73 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             msg.includes('placeholder.supabase');
           setError(
             isConfigError
-              ? 'Supabase no está configurado en este despliegue. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
-              : `${result.error.message} (Código: ${result.error.code})`
+              ? 'Supabase no está configurado. Contacta al administrador.'
+              : `Error al iniciar sesión: ${result.error.message}`
           );
         }
       } else {
-        // Registro (simulado por ahora)
-        setError('El registro no está disponible en esta versión');
+        // Registro
+        console.log('📝 Registrando nuevo usuario...');
+        const registerResult = await authService.register(credentials);
+        
+        if (registerResult.ok) {
+          console.log('✅ Registro exitoso, creando perfil...');
+          const user = registerResult.value;
+          
+          // Verificar que tenemos el ID del usuario
+          if (!user.id || !user.email) {
+            setError('Error al obtener información del usuario. Intenta iniciar sesión.');
+            return;
+          }
+          
+          // Crear perfil automáticamente
+          const profileService = getProfileService();
+          const profileResult = await profileService.createProfile({
+            id: user.id,
+            email: user.email,
+            name: name.trim(),
+          });
+          
+          if (!profileResult.ok) {
+            console.error('❌ Error al crear perfil:', profileResult.error);
+            setError('Usuario creado pero error al crear perfil. Contacta al administrador.');
+            return;
+          }
+          
+          console.log('✅ Perfil creado');
+          
+          // Si hay token de invitación, aceptar la invitación
+          if (invitationToken) {
+            console.log('📧 Aceptando invitación...');
+            const familyService = getFamilyService();
+            const acceptResult = await familyService.acceptInvitation(invitationToken, user.id);
+            
+            if (!acceptResult.ok) {
+              console.error('❌ Error al aceptar invitación:', acceptResult.error);
+              setError('Usuario creado pero error al unirse a la familia. Contacta al administrador.');
+              return;
+            }
+            
+            console.log('✅ Invitación aceptada');
+          }
+          
+          // Login automático después del registro
+          const loginResult = await authService.login(credentials);
+          if (loginResult.ok) {
+            console.log('✅ Login automático exitoso');
+            if (onLoginSuccess) {
+              onLoginSuccess();
+            } else {
+              window.location.hash = '#/';
+            }
+          } else {
+            setError('Cuenta creada exitosamente. Por favor, inicia sesión.');
+            setIsLogin(true);
+          }
+        } else {
+          console.error('❌ Error en registro:', registerResult.error);
+          setError(`Error al crear cuenta: ${registerResult.error.message}`);
+        }
       }
     } catch (err) {
       console.error('💥 Error crítico:', err);
@@ -97,7 +197,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         msg.includes('Failed to fetch') || msg.includes('ERR_NAME_NOT_RESOLVED') || msg.includes('placeholder');
       setError(
         isConfigError
-          ? 'Supabase no está configurado en este despliegue. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
+          ? 'Supabase no está configurado. Contacta al administrador.'
           : `Error al procesar la solicitud: ${msg}`
       );
     } finally {
@@ -132,15 +232,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
 
         <Card>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">
-            {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+            {isLogin ? 'Iniciar Sesión' : invitationToken ? 'Aceptar Invitación' : 'Crear Cuenta'}
           </h2>
+
+          {invitationInfo && (
+            <Alert variant="info" className="mb-4">
+              Has sido invitado a unirte a {invitationInfo.familyName}. Crea tu cuenta para aceptar la invitación.
+            </Alert>
+          )}
 
           {!isSupabaseConfigured() && (
             <Alert variant="error" className="mb-4">
-              <strong>Supabase no está configurado.</strong> No se puede iniciar sesión hasta que el administrador
-              configure las variables de entorno. En GitHub Pages: repositorio → Settings → Secrets and variables →
-              Actions → agregar <code className="text-xs">VITE_SUPABASE_URL</code> y{' '}
-              <code className="text-xs">VITE_SUPABASE_ANON_KEY</code>, luego volver a desplegar (push a main).
+              <strong>Supabase no está configurado.</strong> Contacta al administrador del sistema.
             </Alert>
           )}
 
@@ -151,6 +254,20 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {!isLogin && (
+              <Input
+                label="Nombre completo"
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Tu nombre"
+                fullWidth
+                required
+                autoComplete="name"
+              />
+            )}
+
             <Input
               label="Correo electrónico"
               type="email"
@@ -161,6 +278,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               fullWidth
               required
               autoComplete="email"
+              disabled={!!invitationToken} // Deshabilitar si viene de invitación
             />
 
             <Input
@@ -204,16 +322,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
-              {' '}
-              <button
-                onClick={handleToggleMode}
-                className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium"
-              >
-                {isLogin ? 'Crear cuenta' : 'Iniciar sesión'}
-              </button>
-            </p>
+            {!invitationToken && (
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
+                {' '}
+                <button
+                  onClick={handleToggleMode}
+                  className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium"
+                >
+                  {isLogin ? 'Crear cuenta' : 'Iniciar sesión'}
+                </button>
+              </p>
+            )}
           </div>
         </Card>
 
@@ -231,11 +351,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         </div>
 
         {/* Información para nuevos usuarios */}
-        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-          <p className="text-xs text-blue-800 dark:text-blue-200 text-center">
-            ¿No tienes cuenta? Contacta al administrador para crear tu usuario
-          </p>
-        </div>
+        {!invitationToken && (
+          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <p className="text-xs text-blue-800 dark:text-blue-200 text-center">
+              ¿Necesitas una cuenta? Solicita una invitación al administrador de tu familia
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

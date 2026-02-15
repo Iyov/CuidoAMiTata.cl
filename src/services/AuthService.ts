@@ -3,7 +3,7 @@
  * Servicio de autenticación usando Supabase
  */
 
-import { getSupabaseAuthService, resetSupabaseAuthService } from './SupabaseAuthService';
+import { getSupabaseAuthService, resetSupabaseAuthService, SupabaseAuthService } from './SupabaseAuthService';
 import type { Result } from '../types/result';
 import type { AuthToken, Credentials, SessionStatus } from '../types/models';
 
@@ -17,8 +17,15 @@ export interface IAuthService {
   logout(): Promise<Result<void>>;
   isAuthenticated(): Promise<boolean>;
   checkSession(): SessionStatus;
+  refreshToken?(refreshToken: string): Promise<Result<AuthToken>>;
+  enforceAutoLogout?(minutes: number): Result<void>;
   cleanup(): void;
 }
+
+/**
+ * Exportar la clase concreta para compatibilidad con tests antiguos que hacen `new AuthService()`
+ */
+export const AuthService = SupabaseAuthService;
 
 /**
  * Obtiene el servicio de autenticación con Supabase

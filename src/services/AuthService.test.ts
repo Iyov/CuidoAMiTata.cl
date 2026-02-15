@@ -18,7 +18,60 @@ describe('AuthService', () => {
     
     // Limpiar timers
     vi.clearAllTimers();
-    
+
+    // Mockear respuestas de Supabase auth para tests unitarios
+    const { supabase } = await import('../config/supabase');
+    vi.spyOn(supabase.auth, 'signInWithPassword').mockImplementation(async ({ email, password }: any) => {
+      // Validaciones simples replicando la lógica del servicio
+      if (!email || !password) {
+        return { data: null, error: { message: 'Missing credentials' } } as any;
+      }
+      if (password.length < 6) {
+        return { data: null, error: { message: 'Invalid login credentials' } } as any;
+      }
+
+      // Responder con sesión simulada
+      return {
+        data: {
+          session: {
+            access_token: `fake.${Buffer.from(email + password).toString('base64')}.token`,
+            refresh_token: 'refresh_token_sim',
+            expires_at: Math.floor(Date.now() / 1000) + 3600,
+          },
+          user: { id: '00000000-0000-1000-8000-000000000000', email },
+        },
+        error: null,
+      } as any;
+    });
+
+    vi.spyOn(supabase.auth, 'setSession').mockImplementation(async ({ refresh_token }: any) => {
+      return {
+        data: {
+          session: {
+            access_token: `refreshed.${refresh_token}`,
+            refresh_token,
+            expires_at: Math.floor(Date.now() / 1000) + 3600,
+            user: { id: '00000000-0000-1000-8000-000000000000', email: 'test@example.com' },
+          },
+        },
+        error: null,
+      } as any;
+    });
+
+    vi.spyOn(supabase.auth, 'signOut').mockResolvedValue({ error: null } as any);
+    vi.spyOn(supabase.auth, 'getSession').mockResolvedValue({ data: { session: null } } as any);
+
+    // Evitar llamadas a la base de datos (profiles) durante las pruebas
+    // pero preservar el guardado mínimo en localStorage que usan los tests
+    const { SupabaseAuthService } = await import('./SupabaseAuthService');
+    vi.spyOn(SupabaseAuthService.prototype, 'saveUserInfo').mockImplementation(async (userId: string, email: string) => {
+      const LocalStorage = await import('../utils/localStorage');
+      LocalStorage.setItem('user_id', userId);
+      LocalStorage.setItem('user_email', email);
+      LocalStorage.setItem('user_name', email.split('@')[0]);
+      LocalStorage.setItem('user_role', 'cuidador');
+    });
+
     service = await getAuthService();
   });
 

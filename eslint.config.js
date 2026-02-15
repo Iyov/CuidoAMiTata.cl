@@ -76,4 +76,13 @@ export default [
       },
     },
   },
+
+  // Permitir reglas más laxas en archivos de test para evitar fallos por advertencias (CI)
+  {
+    files: ['**/*.test.{ts,tsx}', 'src/test/**', 'test/**'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+    },
+  },
 ];

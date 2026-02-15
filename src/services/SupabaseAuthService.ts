@@ -87,6 +87,11 @@ export class SupabaseAuthService {
         expiresAt: new Date(data.session.expires_at! * 1000),
       };
 
+      // Guardar tokens en localStorage para checkSession y reuso
+      LocalStorageUtils.setItem('auth_token', authToken.accessToken);
+      LocalStorageUtils.setItem('refresh_token', authToken.refreshToken);
+      LocalStorageUtils.setItem('token_expires_at', authToken.expiresAt.toISOString());
+
       this.resetAutoLogoutTimer();
 
       return Ok(authToken);
@@ -167,8 +172,11 @@ export class SupabaseAuthService {
         console.error('Error al cerrar sesión en Supabase:', error);
       }
 
-      // Limpiar información local
+      // Limpiar información local y tokens
       this.clearUserInfo();
+      LocalStorageUtils.removeItem('auth_token');
+      LocalStorageUtils.removeItem('refresh_token');
+      LocalStorageUtils.removeItem('token_expires_at');
       this.clearAutoLogoutTimer();
 
       return Ok(undefined);
@@ -191,11 +199,23 @@ export class SupabaseAuthService {
   }
 
   checkSession(): SessionStatus {
-    // Para Supabase, usamos el método asíncrono isAuthenticated
-    // Este método es síncrono por compatibilidad, pero no es preciso
-    const token = LocalStorageUtils.getItem<string>('user_id');
+    // Revisar tokens almacenados en localStorage para determinar validez
+    const token = LocalStorageUtils.getItem<string>('auth_token');
+    const expiresAtStr = LocalStorageUtils.getItem<string>('token_expires_at');
+
+    if (!token || !expiresAtStr) {
+      return { isValid: false };
+    }
+
+    const expiresAt = new Date(expiresAtStr);
+    if (Number.isNaN(expiresAt.getTime())) {
+      return { isValid: false };
+    }
+
     return {
-      isValid: !!token,
+      isValid: expiresAt.getTime() > Date.now(),
+      expiresAt,
+      userId: LocalStorageUtils.getItem<string>('user_id') || undefined,
     };
   }
 
@@ -263,6 +283,19 @@ export class SupabaseAuthService {
     }, this.autoLogoutMinutes * 60 * 1000);
   }
 
+  /**
+   * Permite forzar el tiempo de auto-logout en minutos (expuesto para tests y configuración)
+   */
+  enforceAutoLogout(minutes: number) {
+    if (!Number.isInteger(minutes) || minutes <= 0) {
+      return Err({ code: ErrorCode.VALIDATION_REQUIRED_FIELD, message: 'Valor de minutos inválido' });
+    }
+
+    this.autoLogoutMinutes = minutes;
+    this.resetAutoLogoutTimer();
+    return Ok(undefined);
+  }
+
   private clearAutoLogoutTimer(): void {
     if (this.autoLogoutTimeout) {
       clearTimeout(this.autoLogoutTimeout);
@@ -306,7 +339,50 @@ export class SupabaseAuthService {
     this.clearAutoLogoutTimer();
     this.cleanupActivityListeners();
   }
+
+  /**
+   * Refrescar tokens usando refresh token (expone funcionalidad usada por tests)
+   */
+  async refreshToken(refreshToken: string): Promise<Result<AuthToken>> {
+    try {
+      if (!refreshToken) {
+        return Err({ code: ErrorCode.VALIDATION_REQUIRED_FIELD, message: 'Refresh token es requerido' });
+      }
+
+      // Usar setSession para intercambiar refresh token por nueva sesión
+      // Nota: supabase.auth.setSession acepta { refresh_token }
+      // (si la API cambia, el test deberá adaptarse)
+      const { data, error } = await supabase.auth.setSession({ refresh_token: refreshToken });
+
+      if (error || !data || !data.session) {
+        return Err({ code: ErrorCode.AUTH_INVALID_CREDENTIALS, message: 'No se pudo refrescar el token', details: error });
+      }
+
+      const authToken: AuthToken = {
+        accessToken: data.session.access_token,
+        refreshToken: data.session.refresh_token,
+        expiresAt: new Date(data.session.expires_at! * 1000),
+      };
+
+      // Actualizar almacenamiento local
+      LocalStorageUtils.setItem('auth_token', authToken.accessToken);
+      LocalStorageUtils.setItem('refresh_token', authToken.refreshToken);
+      LocalStorageUtils.setItem('token_expires_at', authToken.expiresAt.toISOString());
+
+      // Si hay usuario en sesión, guardar info básica
+      if (data.session.user) {
+        await this.saveUserInfo(data.session.user.id, data.session.user.email || '');
+      }
+
+      this.resetAutoLogoutTimer();
+
+      return Ok(authToken);
+    } catch (err) {
+      return Err({ code: ErrorCode.AUTH_INVALID_CREDENTIALS, message: 'Error al refrescar token', details: err });
+    }
+  }
 }
+
 
 let supabaseAuthServiceInstance: SupabaseAuthService | null = null;
 

@@ -18,12 +18,13 @@ vi.mock('../config/supabase', () => ({
   },
 }));
 
-// Mock de FamilyManager
+// Mock de FamilyManager (usar instancia compartida para que los tests y el proveedor accedan al mismo mock)
+const _mockFamilyManager = {
+  getUserFamilies: vi.fn(),
+  getFamilyMembers: vi.fn(),
+};
 vi.mock('../services/FamilyManager', () => ({
-  getFamilyManager: vi.fn(() => ({
-    getUserFamilies: vi.fn(),
-    getFamilyMembers: vi.fn(),
-  })),
+  getFamilyManager: vi.fn(() => _mockFamilyManager),
 }));
 
 import { supabase } from '../config/supabase';

@@ -29,3 +29,5 @@ export { NotificationSettingsScreen } from './NotificationSettingsScreen';
 export { UserPreferencesScreen } from './UserPreferencesScreen';
 export { HistoryScreen } from './HistoryScreen';
 export { HistoryExportScreen } from './HistoryExportScreen';
+export { BitacoraScreen } from './BitacoraScreen';
+export { FamilyScreen } from './FamilyScreen';

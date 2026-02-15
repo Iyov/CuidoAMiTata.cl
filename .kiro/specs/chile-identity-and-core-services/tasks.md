@@ -10,21 +10,21 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
 
 ## Tareas
 
-- [ ] 1. Configurar esquema de base de datos en Supabase
+- [x] 1. Configurar esquema de base de datos en Supabase
   - Crear tablas: profiles, families, family_members, patients, bitacora_entries, panic_events, panic_notifications, invitations
   - Configurar políticas RLS para aislamiento por familia
   - Crear tipos ENUM: family_role, mood_type, invitation_status, notification_status
   - Documentar esquemas SQL en docs/supabase-schema.sql
   - _Requisitos: 5.1, 5.2, 5.3, 5.4, 10.1, 10.2, 11.1, 11.2, 11.4, 11.5_
 
-- [ ] 2. Actualizar tipos TypeScript para nuevos modelos
+- [x] 2. Actualizar tipos TypeScript para nuevos modelos
   - Agregar tipos en src/types/models.ts: Family, FamilyMember, FamilyRole, BitacoraEntry, BitacoraEntryInput, MoodType, PanicEvent, PanicNotification, Invitation, EmailResult, NotificationResult
   - Agregar códigos de error en src/types/enums.ts para bitácora, familia y pánico
   - Actualizar exports en src/types/index.ts
   - _Requisitos: 3.1, 3.2, 5.1, 5.2, 8.4, 9.3_
 
 - [ ] 3. Actualizar identidad Chile en landing page
-  - [ ] 3.1 Actualizar index.html con contenido chileno
+  - [x] 3.1 Actualizar index.html con contenido chileno
     - Modificar meta tags con keywords chilenas (Chile, SENAMA, cuidado adultos mayores Chile)
     - Actualizar títulos y descripciones en español chileno
     - Reemplazar referencias a España/SEGG con contexto chileno
@@ -38,19 +38,19 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 1.2, 1.3, 1.4, 1.5_
 
 - [ ] 4. Actualizar textos de aplicación a español chileno
-  - [ ] 4.1 Actualizar src/App.tsx
+  - [x] 4.1 Actualizar src/App.tsx
     - Cambiar textos de navegación a español chileno
     - Actualizar títulos de secciones
     - Usar términos chilenos (tata, cuidador)
     - _Requisitos: 2.1, 2.3, 2.4_
   
-  - [ ] 4.2 Actualizar pantallas existentes
+  - [x] 4.2 Actualizar pantallas existentes
     - Revisar y actualizar textos en src/screens/*.tsx
     - Reemplazar terminología española con chilena
     - Actualizar mensajes de error y confirmación
     - _Requisitos: 2.1, 2.3, 2.5, 14.2, 15.1, 15.4_
   
-  - [ ] 4.3 Crear utilidad de formato de fecha chileno
+  - [x] 4.3 Crear utilidad de formato de fecha chileno
     - Crear src/utils/dateFormat.ts con función formatDateChile(date: Date): string
     - Formato: DD/MM/YYYY
     - Exportar desde src/utils/index.ts
@@ -60,18 +60,18 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - **Propiedad 2: Formato de fecha chileno**
     - **Valida: Requisitos 2.2**
 
-- [ ] 5. Checkpoint - Verificar identidad Chile
+- [x] 5. Checkpoint - Verificar identidad Chile
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
 - [ ] 6. Implementar servicios de bitácora
-  - [ ] 6.1 Crear BitacoraService
+  - [x] 6.1 Crear BitacoraService
     - Crear src/services/BitacoraService.ts
     - Implementar métodos: save, findByPatientAndDate, findByPatientAndDateRange, update
     - Usar cliente de Supabase para operaciones CRUD
     - Manejar errores con patrón Result
     - _Requisitos: 3.1, 3.2, 3.3, 3.4, 3.5_
   
-  - [ ] 6.2 Crear BitacoraManager
+  - [x] 6.2 Crear BitacoraManager
     - Crear src/services/BitacoraManager.ts
     - Implementar lógica de negocio: createEntry, getEntriesByDate, getEntriesByDateRange, updateEntry, canEdit
     - Validar fecha no futura, al menos un campo completo, ventana de edición 24h
@@ -97,7 +97,7 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 4.5_
 
 - [ ] 7. Implementar interfaz de bitácora
-  - [ ] 7.1 Crear BitacoraScreen
+  - [x] 7.1 Crear BitacoraScreen
     - Crear src/screens/BitacoraScreen.tsx
     - Implementar selector de fecha (por defecto: hoy)
     - Implementar formulario con campos: comidas (desayuno, almuerzo, cena, colaciones), ánimo, actividades
@@ -112,18 +112,18 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - Entradas se muestran ordenadas por fecha
     - _Requisitos: 4.1, 4.2, 4.4_
 
-- [ ] 8. Checkpoint - Verificar bitácora funcional
+- [x] 8. Checkpoint - Verificar bitácora funcional
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
 - [ ] 9. Implementar servicios multi-familiar
-  - [ ] 9.1 Crear FamilyService
+  - [x] 9.1 Crear FamilyService
     - Crear src/services/FamilyService.ts
     - Implementar métodos CRUD para families, family_members, invitations
     - Usar cliente de Supabase con políticas RLS
     - Manejar errores con patrón Result
     - _Requisitos: 5.1, 5.2, 5.3, 6.1_
   
-  - [ ] 9.2 Crear FamilyManager
+  - [x] 9.2 Crear FamilyManager
     - Crear src/services/FamilyManager.ts
     - Implementar lógica: createFamily, inviteMember, removeMember, updateMemberRole, getFamilyMembers, getUserFamilies, acceptInvitation
     - Validar permisos (solo admins pueden invitar/remover)
@@ -159,14 +159,14 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 6.2, 6.3_
 
 - [ ] 10. Implementar contexto y selector de familia
-  - [ ] 10.1 Crear FamilyContext
+  - [x] 10.1 Crear FamilyContext
     - Crear src/contexts/FamilyContext.tsx
     - Implementar estado global: currentFamily, families, members, isLoading
     - Implementar funciones: switchFamily, refreshMembers
     - Persistir familia seleccionada en localStorage
     - _Requisitos: 5.5, 7.1, 7.2, 7.3, 7.5_
   
-  - [ ] 10.2 Crear FamilySelector component
+  - [x] 10.2 Crear FamilySelector component
     - Crear src/components/FamilySelector.tsx
     - Mostrar dropdown con familias del usuario
     - Mostrar nombre de familia actual
@@ -185,7 +185,7 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 7.1, 7.4, 7.5_
 
 - [ ] 11. Implementar interfaz de gestión familiar
-  - [ ] 11.1 Crear FamilyScreen
+  - [x] 11.1 Crear FamilyScreen
     - Crear src/screens/FamilyScreen.tsx
     - Implementar lista de miembros con roles
     - Implementar formulario de invitación (email + rol)
@@ -201,11 +201,11 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - Botones de gestión solo para admins
     - _Requisitos: 6.5_
 
-- [ ] 12. Checkpoint - Verificar multi-familiar funcional
+- [x] 12. Checkpoint - Verificar multi-familiar funcional
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
 - [ ] 13. Implementar servicios de pánico
-  - [ ] 13.1 Crear EmailService
+  - [x] 13.1 Crear EmailService
     - Crear src/services/EmailService.ts
     - Implementar sendPanicAlert usando Supabase Edge Functions
     - Implementar sendInvitation
@@ -213,7 +213,7 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - Registrar estado de envío en panic_notifications
     - _Requisitos: 9.1, 9.2, 9.3, 9.4, 9.5_
   
-  - [ ] 13.2 Crear PanicManager
+  - [x] 13.2 Crear PanicManager
     - Crear src/services/PanicManager.ts
     - Implementar triggerPanic: registrar evento, obtener contactos, enviar notificaciones
     - Implementar getPanicHistory
@@ -251,7 +251,7 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - _Requisitos: 9.1, 9.5_
 
 - [ ] 14. Implementar interfaz de botón de pánico
-  - [ ] 14.1 Crear PanicButton component
+  - [x] 14.1 Crear PanicButton component
     - Crear src/components/PanicButton.tsx
     - Implementar botón rojo prominente con ícono de alerta
     - Implementar diálogo de confirmación
@@ -266,14 +266,14 @@ Este plan implementa la identidad chilena y los cuatro servicios centrales de Cu
     - Botón es visualmente prominente
     - _Requisitos: 8.3, 8.5_
 
-- [ ] 15. Integrar botón de pánico en pantallas
+- [x] 15. Integrar botón de pánico en pantallas
   - Agregar PanicButton a HomePage
   - Agregar PanicButton a MedicationListScreen
   - Agregar PanicButton a FallPreventionScreen
   - Usar position="fixed" para visibilidad constante
   - _Requisitos: 8.1_
 
-- [ ] 16. Checkpoint - Verificar botón de pánico funcional
+- [x] 16. Checkpoint - Verificar botón de pánico funcional
   - Asegurar que todos los tests pasan, preguntar al usuario si surgen dudas.
 
 - [ ] 17. Actualizar autenticación y perfiles

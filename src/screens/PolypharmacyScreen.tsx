@@ -196,15 +196,16 @@ export const PolypharmacyScreen: React.FC = () => {
           )}
         </Card>
 
-        {/* Botón de Puntos SIGRE */}
+        {/* Disposición Segura de Medicamentos */}
         <Card>
           <h2 className="text-xl font-semibold mb-3">Disposición Segura de Medicamentos</h2>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-            Encuentre los puntos SIGRE más cercanos para desechar medicamentos caducados o no
-            utilizados de forma segura.
+            Consulte con su farmacia local para desechar medicamentos caducados o no
+            utilizados de forma segura. En Chile, las farmacias están obligadas a recibir
+            medicamentos vencidos.
           </p>
-          <Button onClick={handleShowSIGREMap} variant="secondary">
-            🗺️ Ver Mapa de Puntos SIGRE
+          <Button onClick={() => navigate('/')} variant="secondary">
+            🏥 Información sobre Disposición
           </Button>
         </Card>
       </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { Alert } from '../components/Alert';
+import { PanicButton } from '../components/PanicButton';
 import type { RiskChecklist, FallIncident, Patient } from '../types/models';
 import { RiskFactorType, Severity } from '../types/enums';
 import * as IndexedDBUtils from '../utils/indexedDB';
@@ -12,6 +13,7 @@ export const FallPreventionScreen: React.FC = () => {
   const [recentIncidents, setRecentIncidents] = useState<FallIncident[]>([]);
   const [hasRiskFactors, setHasRiskFactors] = useState(false);
   const [loading, setLoading] = useState(true);
+  const currentPatientId = localStorage.getItem('currentPatientId') || 'default-patient';
 
   useEffect(() => {
     loadData();
@@ -240,6 +242,13 @@ export const FallPreventionScreen: React.FC = () => {
           )}
         </div>
       </div>
+      
+      {/* Botón de pánico flotante */}
+      <PanicButton 
+        patientId={currentPatientId}
+        size="medium"
+        position="fixed"
+      />
     </div>
   );
 };

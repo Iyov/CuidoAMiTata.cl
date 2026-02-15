@@ -549,3 +549,145 @@ export interface DateRange {
   start: Date;
   end: Date;
 }
+
+/**
+ * Rol en familia
+ */
+export type FamilyRole = 'admin' | 'cuidador' | 'familiar';
+
+/**
+ * Familia
+ */
+export interface Family {
+  id: string;
+  name: string;
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Miembro de familia
+ */
+export interface FamilyMember {
+  id: string;
+  familyId: string;
+  userId: string;
+  userEmail: string;
+  userName: string;
+  role: FamilyRole;
+  joinedAt: Date;
+}
+
+/**
+ * Tipo de ánimo
+ */
+export type MoodType = 'bien' | 'regular' | 'bajo' | 'irritable' | 'otro';
+
+/**
+ * Entrada de bitácora
+ */
+export interface BitacoraEntry {
+  id: string;
+  patientId: string;
+  familyId: string;
+  createdBy: string;
+  entryDate: Date;
+  
+  // Comidas
+  breakfast?: string;
+  lunch?: string;
+  dinner?: string;
+  snacks?: string;
+  
+  // Ánimo
+  mood?: MoodType;
+  moodNotes?: string;
+  
+  // Actividades
+  activities?: string[];
+  activityNotes?: string;
+  
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Input para crear entrada de bitácora
+ */
+export interface BitacoraEntryInput {
+  patientId: string;
+  entryDate: Date;
+  breakfast?: string;
+  lunch?: string;
+  dinner?: string;
+  snacks?: string;
+  mood?: MoodType;
+  moodNotes?: string;
+  activities?: string[];
+  activityNotes?: string;
+}
+
+/**
+ * Evento de pánico
+ */
+export interface PanicEvent {
+  id: string;
+  patientId: string;
+  familyId: string;
+  triggeredBy: string;
+  location?: string;
+  notes?: string;
+  triggeredAt: Date;
+  createdAt: Date;
+}
+
+/**
+ * Notificación de pánico
+ */
+export interface PanicNotification {
+  id: string;
+  panicEventId: string;
+  recipientEmail: string;
+  recipientUserId?: string;
+  status: 'pending' | 'sent' | 'failed';
+  attempts: number;
+  sentAt?: Date;
+  errorMessage?: string;
+  createdAt: Date;
+}
+
+/**
+ * Invitación a familia
+ */
+export interface Invitation {
+  id: string;
+  familyId: string;
+  email: string;
+  role: FamilyRole;
+  invitedBy: string;
+  token: string;
+  status: 'pending' | 'accepted' | 'expired';
+  expiresAt: Date;
+  acceptedAt?: Date;
+  createdAt: Date;
+}
+
+/**
+ * Resultado de envío de email
+ */
+export interface EmailResult {
+  recipient: string;
+  success: boolean;
+  error?: string;
+}
+
+/**
+ * Resultado de notificación
+ */
+export interface NotificationResult {
+  notificationId: string;
+  recipient: string;
+  status: 'sent' | 'failed';
+  error?: string;
+}

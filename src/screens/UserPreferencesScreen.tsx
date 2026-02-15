@@ -176,7 +176,7 @@ export const UserPreferencesScreen: React.FC = () => {
                 Idioma de la aplicación
               </p>
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                Español (España)
+                Español (Chile)
               </p>
             </div>
             <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 rounded-lg text-sm font-medium">
@@ -263,12 +263,12 @@ export const UserPreferencesScreen: React.FC = () => {
             <div className="flex justify-between items-center">
               <span className="text-slate-600 dark:text-slate-400">Última actualización</span>
               <span className="font-medium text-slate-900 dark:text-white">
-                {new Date().toLocaleDateString('es-ES')}
+                {new Date().toLocaleDateString('es-CL')}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600 dark:text-slate-400">Basado en directrices</span>
-              <span className="font-medium text-slate-900 dark:text-white">SEGG</span>
+              <span className="text-slate-600 dark:text-slate-400">Contexto</span>
+              <span className="font-medium text-slate-900 dark:text-white">Chile - SENAMA</span>
             </div>
           </div>
         </Card>

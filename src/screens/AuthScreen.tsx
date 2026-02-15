@@ -82,7 +82,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             msg.includes('placeholder.supabase');
           setError(
             isConfigError
-              ? 'Supabase no está configurado en este despliegue. Añade VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
+              ? 'Supabase no está configurado en este despliegue. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
               : `${result.error.message} (Código: ${result.error.code})`
           );
         }
@@ -97,7 +97,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         msg.includes('Failed to fetch') || msg.includes('ERR_NAME_NOT_RESOLVED') || msg.includes('placeholder');
       setError(
         isConfigError
-          ? 'Supabase no está configurado en este despliegue. Añade VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
+          ? 'Supabase no está configurado en este despliegue. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en GitHub Secrets y vuelve a desplegar.'
           : `Error al procesar la solicitud: ${msg}`
       );
     } finally {
@@ -126,7 +126,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             CuidoAMiTata
           </h1>
           <p className="text-slate-600 dark:text-slate-400">
-            Gestión de cuidados geriátricos basada en evidencia
+            Cuidado de adultos mayores en Chile
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             <Alert variant="error" className="mb-4">
               <strong>Supabase no está configurado.</strong> No se puede iniciar sesión hasta que el administrador
               configure las variables de entorno. En GitHub Pages: repositorio → Settings → Secrets and variables →
-              Actions → añadir <code className="text-xs">VITE_SUPABASE_URL</code> y{' '}
+              Actions → agregar <code className="text-xs">VITE_SUPABASE_URL</code> y{' '}
               <code className="text-xs">VITE_SUPABASE_ANON_KEY</code>, luego volver a desplegar (push a main).
             </Alert>
           )}
@@ -205,7 +205,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              {isLogin ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'}
+              {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
               {' '}
               <button
                 onClick={handleToggleMode}

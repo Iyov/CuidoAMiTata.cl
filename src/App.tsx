@@ -1,7 +1,9 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { FamilyProvider } from './contexts/FamilyContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { PanicButton } from './components/PanicButton';
 import { getIntegrationService } from './services';
 import { getAuthService } from './services/AuthService';
 
@@ -51,6 +53,12 @@ const SIGREMapScreen = lazy(() =>
 const EthicalCareScreen = lazy(() =>
   import('./screens').then((m) => ({ default: m.EthicalCareScreen }))
 );
+const BitacoraScreen = lazy(() =>
+  import('./screens').then((m) => ({ default: m.BitacoraScreen }))
+);
+const FamilyScreen = lazy(() =>
+  import('./screens').then((m) => ({ default: m.FamilyScreen }))
+);
 
 // Componente de carga optimizado
 const LoadingFallback: React.FC = () => (
@@ -65,13 +73,14 @@ const LoadingFallback: React.FC = () => (
 const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const userName = localStorage.getItem('user_name') || 'Usuario';
   const userRole = localStorage.getItem('user_role') || 'cuidador';
+  const currentPatientId = localStorage.getItem('currentPatientId') || 'default-patient';
   
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">CuidoAMiTata</h1>
+            <h1 className="text-3xl font-bold">Cuido a mi Tata</h1>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Bienvenido, {userName} ({userRole})
             </p>
@@ -86,7 +95,7 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             </button>
           </div>
         </div>
-        <p className="text-lg mb-6">Aplicación de gestión de cuidados geriátricos</p>
+        <p className="text-lg mb-6">Cuidado de adultos mayores en Chile</p>
       
       <nav aria-label="Navegación principal">
         <ul className="space-y-4" role="list">
@@ -96,8 +105,8 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               className="block p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               aria-label="Ir a gestión de medicamentos"
             >
-              <h2 className="text-xl font-semibold">Gestión de Medicamentos</h2>
-              <p className="text-sm opacity-90">Administrar medicamentos y horarios</p>
+              <h2 className="text-xl font-semibold">Medicamentos</h2>
+              <p className="text-sm opacity-90">Gestión de medicamentos y horarios de tu tata</p>
             </Link>
           </li>
           
@@ -116,10 +125,10 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             <Link
               to="/skin-integrity"
               className="block p-4 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
-              aria-label="Ir a integridad de la piel"
+              aria-label="Ir a cuidado de la piel"
             >
-              <h2 className="text-xl font-semibold">Integridad de la Piel</h2>
-              <p className="text-sm opacity-90">Cambios posturales y monitoreo de úlceras</p>
+              <h2 className="text-xl font-semibold">Cuidado de la Piel</h2>
+              <p className="text-sm opacity-90">Cambios posturales y prevención de úlceras</p>
             </Link>
           </li>
           
@@ -129,7 +138,7 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               className="block p-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
               aria-label="Ir a gestión de polifarmacia"
             >
-              <h2 className="text-xl font-semibold">Gestión de Polifarmacia</h2>
+              <h2 className="text-xl font-semibold">Polifarmacia</h2>
               <p className="text-sm opacity-90">Hoja de medicamentos, alertas y puntos SIGRE</p>
             </Link>
           </li>
@@ -144,8 +153,39 @@ const HomePage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               <p className="text-sm opacity-90">Evaluación de restricciones y alternativas</p>
             </Link>
           </li>
+          
+          <li>
+            <Link
+              to="/bitacora"
+              className="block p-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2"
+              aria-label="Ir a bitácora diaria"
+            >
+              <h2 className="text-xl font-semibold">Bitácora Diaria</h2>
+              <p className="text-sm opacity-90">Registro de comidas, ánimo y actividades</p>
+            </Link>
+          </li>
+          
+          <li>
+            <Link
+              to="/family"
+              className="block p-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
+              aria-label="Ir a gestión familiar"
+            >
+              <h2 className="text-xl font-semibold">Gestión Familiar</h2>
+              <p className="text-sm opacity-90">Administrar miembros y roles de la familia</p>
+            </Link>
+          </li>
         </ul>
       </nav>
+      
+      {/* Botón de pánico - siempre visible */}
+      <div className="mt-8 flex justify-center">
+        <PanicButton 
+          patientId={currentPatientId}
+          size="large"
+          position="inline"
+        />
+      </div>
     </div>
   </div>
   );
@@ -247,28 +287,32 @@ export const App: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <Router basename={basename}>
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<HomePage onLogout={handleLogout} />} />
-            <Route path="/medications" element={<MedicationListScreen />} />
-            <Route path="/medications/add" element={<MedicationFormScreen />} />
-            <Route path="/medications/:id/edit" element={<MedicationFormScreen />} />
-            <Route path="/medications/:id/confirm" element={<MedicationConfirmScreen />} />
-            <Route path="/fall-prevention" element={<FallPreventionScreen />} />
-            <Route path="/fall-prevention/checklist" element={<FallPreventionChecklistScreen />} />
-            <Route path="/fall-prevention/incident" element={<FallIncidentScreen />} />
-            <Route path="/fall-prevention/alerts" element={<FallRiskAlertsScreen />} />
-            <Route path="/skin-integrity" element={<SkinIntegrityScreen />} />
-            <Route path="/skin-integrity/postural-change" element={<PosturalChangeScreen />} />
-            <Route path="/skin-integrity/bed-elevation" element={<BedElevationScreen />} />
-            <Route path="/skin-integrity/pressure-ulcer" element={<PressureUlcerScreen />} />
-            <Route path="/polypharmacy" element={<PolypharmacyScreen />} />
-            <Route path="/polypharmacy/sigre-map" element={<SIGREMapScreen />} />
-            <Route path="/ethical-care" element={<EthicalCareScreen />} />
-          </Routes>
-        </Suspense>
-      </Router>
+      <FamilyProvider>
+        <Router basename={basename}>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<HomePage onLogout={handleLogout} />} />
+              <Route path="/medications" element={<MedicationListScreen />} />
+              <Route path="/medications/add" element={<MedicationFormScreen />} />
+              <Route path="/medications/:id/edit" element={<MedicationFormScreen />} />
+              <Route path="/medications/:id/confirm" element={<MedicationConfirmScreen />} />
+              <Route path="/fall-prevention" element={<FallPreventionScreen />} />
+              <Route path="/fall-prevention/checklist" element={<FallPreventionChecklistScreen />} />
+              <Route path="/fall-prevention/incident" element={<FallIncidentScreen />} />
+              <Route path="/fall-prevention/alerts" element={<FallRiskAlertsScreen />} />
+              <Route path="/skin-integrity" element={<SkinIntegrityScreen />} />
+              <Route path="/skin-integrity/postural-change" element={<PosturalChangeScreen />} />
+              <Route path="/skin-integrity/bed-elevation" element={<BedElevationScreen />} />
+              <Route path="/skin-integrity/pressure-ulcer" element={<PressureUlcerScreen />} />
+              <Route path="/polypharmacy" element={<PolypharmacyScreen />} />
+              <Route path="/polypharmacy/sigre-map" element={<SIGREMapScreen />} />
+              <Route path="/ethical-care" element={<EthicalCareScreen />} />
+              <Route path="/bitacora" element={<BitacoraScreen />} />
+              <Route path="/family" element={<FamilyScreen />} />
+            </Routes>
+          </Suspense>
+        </Router>
+      </FamilyProvider>
     </ThemeProvider>
   );
 };

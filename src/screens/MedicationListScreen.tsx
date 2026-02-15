@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Alert } from '../components/Alert';
+import { PanicButton } from '../components/PanicButton';
 import { getMedicationManager } from '../services/MedicationManager';
 import type { Medication, MedicationEvent } from '../types/models';
 import { MedicationEventStatus } from '../types/enums';
@@ -14,6 +15,7 @@ export const MedicationListScreen: React.FC = () => {
   const [pendingEvents, setPendingEvents] = useState<Map<string, MedicationEvent>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const currentPatientId = localStorage.getItem('currentPatientId') || 'default-patient';
 
   useEffect(() => {
     loadMedications();
@@ -130,6 +132,13 @@ export const MedicationListScreen: React.FC = () => {
           </div>
         )}
       </div>
+      
+      {/* Botón de pánico flotante */}
+      <PanicButton 
+        patientId={currentPatientId}
+        size="medium"
+        position="fixed"
+      />
     </div>
   );
 };

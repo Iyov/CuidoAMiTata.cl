@@ -93,9 +93,9 @@ export const NutritionScreen: React.FC = () => {
           <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/nutrition/meal-plan')}>
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold">Plan de Comidas SEGG</h3>
+                <h3 className="text-lg font-semibold">Plan de Comidas</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Ver plan dietético basado en directrices SEGG
+                  Ver plan dietético para adultos mayores
                 </p>
               </div>
               <span className="text-2xl">🍽️</span>

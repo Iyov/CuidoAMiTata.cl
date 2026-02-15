@@ -89,7 +89,7 @@ export const FallIncidentScreen: React.FC = () => {
                 Información importante
               </p>
               <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
-                El campo "tiempo en el suelo" es obligatorio según las directrices SEGG.
+                El campo "tiempo en el suelo" es obligatorio según las mejores prácticas de cuidado.
                 Este dato es crítico para evaluar la gravedad del incidente.
               </p>
             </div>

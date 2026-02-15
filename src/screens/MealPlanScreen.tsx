@@ -101,7 +101,7 @@ export const MealPlanScreen: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Plan de Comidas SEGG</h1>
+          <h1 className="text-2xl font-bold">Plan de Comidas</h1>
           <Button variant="secondary" onClick={() => navigate('/nutrition')}>
             Volver
           </Button>
@@ -118,7 +118,7 @@ export const MealPlanScreen: React.FC = () => {
                 No hay un plan de comidas generado
               </p>
               <p className="text-sm mb-6 text-slate-600 dark:text-slate-400">
-                Genera un plan de comidas basado en las directrices de la Sociedad Española de Geriatría y Gerontología (SEGG)
+                Genera un plan de comidas balanceado para adultos mayores
               </p>
               <Button onClick={handleGeneratePlan} disabled={generating}>
                 {generating ? 'Generando...' : 'Generar Plan de Comidas'}
@@ -130,7 +130,7 @@ export const MealPlanScreen: React.FC = () => {
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-green-600 dark:text-green-400 font-semibold">
-                  ✓ Plan conforme a SEGG
+                  ✓ Plan nutricional balanceado
                 </span>
               </div>
               <Button size="sm" onClick={handleGeneratePlan} disabled={generating}>
@@ -179,12 +179,12 @@ export const MealPlanScreen: React.FC = () => {
 
             <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
               <h3 className="text-lg font-semibold mb-3 text-blue-900 dark:text-blue-100">
-                ℹ️ Sobre el Plan SEGG
+                ℹ️ Sobre el Plan Nutricional
               </h3>
               <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
                 <li>• 5 comidas diarias para mantener energía constante</li>
                 <li>• Pescado rico en omega-3 para salud cardiovascular</li>
-                <li>• Aceite de oliva virgen extra como grasa principal</li>
+                <li>• Aceite de oliva como grasa principal</li>
                 <li>• Yogur para salud digestiva y aporte de calcio</li>
                 <li>• Frutas, verduras y cereales integrales</li>
               </ul>

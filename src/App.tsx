@@ -318,21 +318,26 @@ export const App: React.FC = () => {
     );
   }
 
+  console.log('✅ Determining basename for routing');
+  // Basename para GitHub Pages: /app.html o /repo/app.html; en local / o /app.html
+  const pathname = window.location.pathname;
+  const appIdx = pathname.indexOf('app.html');
+  const basename = appIdx >= 0 ? pathname.slice(0, appIdx) + 'app.html' : '/';
+  console.log('📍 Basename calculated:', basename);
+
   // Show login screen if not authenticated
   if (!isAuthenticated) {
-    console.log('🔐 Showing login screen');
+    console.log('🔐 Showing login screen with basename:', basename);
     return (
       <ThemeProvider>
-        <AuthScreen onLoginSuccess={handleLoginSuccess} />
+        <Router basename={basename}>
+          <AuthScreen onLoginSuccess={handleLoginSuccess} />
+        </Router>
       </ThemeProvider>
     );
   }
 
   console.log('✅ Showing main app');
-  // Basename para GitHub Pages: /app.html o /repo/app.html; en local / o /app.html
-  const pathname = window.location.pathname;
-  const appIdx = pathname.indexOf('app.html');
-  const basename = appIdx >= 0 ? pathname.slice(0, appIdx) + 'app.html' : '/';
 
   return (
     <ThemeProvider>

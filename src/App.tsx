@@ -293,11 +293,11 @@ export const App: React.FC = () => {
       await authService.logout();
       setIsAuthenticated(false);
       // Redirigir a la landing page
-      window.location.href = '/index.html';
+      window.location.href = '/';
     } catch (error) {
       console.error('❌ Error during logout:', error);
       // Aún así redirigir a la landing page
-      window.location.href = '/index.html';
+      window.location.href = '/';
     }
   };
 
